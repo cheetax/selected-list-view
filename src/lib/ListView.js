@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 //import StyleSheet  from 'react-style'
 import { List } from 'react-virtualized'
 
-
-
 class SelectedListView extends Component {
 
     constructor(props) {
@@ -32,7 +30,7 @@ class SelectedListView extends Component {
         this.onSelectedIndex = props.onSelectedIndex;
         this._rowRenderer = this._rowRenderer.bind(this)
         this.resize = this.resize.bind(this);
-        this._setHeader();
+        //this._setHeader();
         //this._rowHeight = this._rowHeight.bind(this)
         // this._onClick = this._onClick.bind(this);
     }
@@ -119,10 +117,6 @@ class SelectedListView extends Component {
             var columnWidth = this.state.columnWidth;
             columnWidth[index] = elem.clientWidth
             columnHeigth[index] = elem.clientHeight
-            // this.setState({
-            //     columnWidth: columnWidth,
-            //     columnHeigth: columnHeigth
-            // })
         }
     }
 
@@ -145,7 +139,9 @@ class SelectedListView extends Component {
     _className = (index) => this.state.items_select[index].active ? 'collection-item active' : 'collection-item'
 
     _rowRendererElem = (param) => {
-        var rowColumns = this.rowRenderer(param)
+        var {index} = param;
+        var item = this.props.items[index]
+        var rowColumns = this.rowRenderer({item})
         if (!Array.isArray(rowColumns)) rowColumns = [rowColumns];
         var columnWidth = this.state.columnWidth;
         return (
@@ -153,9 +149,6 @@ class SelectedListView extends Component {
                 {rowColumns.map((item, index) => {
                     var style = {
                         width: columnWidth[index],
-                        // display: 'flex',
-                        // justifyContent: 'center',
-                        // alignItems: 'center',
                         flex: columnWidth[index] !== 'auto' ? 'none' : 'auto',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
@@ -170,6 +163,7 @@ class SelectedListView extends Component {
 
     _rowRenderer = (param) => {
         //var _style = {...style , height: 'auto'};
+        console.log(param)
         var { key, style, index } = param;
         style = {
             ...style,
@@ -211,11 +205,10 @@ class SelectedListView extends Component {
             }
             return (<span key={index} style={style} >{item} </span>)
         })
-        this.state = ({
-            ...this.state,
-            columnWidth: columnWidth,
-            header: e
-        })
+        // this.setState({
+        //     columnWidth: columnWidth,
+        //     header: e
+        // })
     }
 
     _toolsPanelRenderer = () => {
@@ -235,8 +228,8 @@ class SelectedListView extends Component {
     render() {
         return (
             <div style={{ width: 'auto', height: '100%', margin: 0, border: '1px solid #e0e0e0', borderRadius: '2px' }}>
-                {this._toolsPanelRenderer()}
-                {this._headerRenderer()}
+                {/* {this._toolsPanelRenderer()} */}
+                {/* {this._headerRenderer()} */}
                 <div
                     style={{ width: 'auto', height: '100%', margin: 0, }}
                     ref={this._getElem}>

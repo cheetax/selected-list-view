@@ -1,28 +1,34 @@
 
-import SelectedListView from './lib/index'
+import { SelectedListView } from './lib/index'
 import React, { Component } from 'react';
 import './App.css';
+
+var users = [
+  {
+    firstName: 'user',
+    surName: 'user',
+    email: 'user@mail.com'
+  },
+  {
+    firstName: 'user1',
+    surName: 'user1',
+    email: 'user1@mail.com'
+  },
+]
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      dateFrom: new Date(),
-      dateTo: new Date()
     }
   }
 
   rowRenderer = ({
-    key,         // Unique key within array of rows
-    index,       // Index of row within collection
-    isScrolling, // The List is currently being scrolled
-    isVisible,   // This row is visible within the List (eg it is not an overscanned row)
-    style        // Style object to be applied to row (to position it)
+    item,       // Index of row within collection
   }) => {
-    if (this.props.users.length - 1 < index) return null;
     return [
-      <span style={{ paddingRight: 10, }} >{this.props.users[index].firstName} {this.props.users[index].surName}</span>,
-      <span style={{ paddingRight: 10 }} >{this.props.users[index].email}</span>
+      <span style={{ paddingRight: 10, }} >{item.firstName} {item.surName}</span>,
+      <span style={{ paddingRight: 10 }} >{item.email}</span>
     ]
   }
 
@@ -30,7 +36,6 @@ class App extends Component {
   <span style={param.style}  >Email</span>]
 
   render() {
-    //    console.log(this.state)
     return (
       <div className="App">
         <header className="App-header">
@@ -38,7 +43,22 @@ class App extends Component {
         </header>
         <h3>Filled text fields</h3>
         <div className='App-intro' >
-          <SelectedListView isField isButtonActive dateFrom={this.state.dateFrom} dateTo={this.state.dateTo} onSelect={(period) => this.setState({ ...period })} />
+          <SelectedListView
+            headerRenderer={this.headerRenderer}
+            className='collection'
+            items={users}
+            rowHeight={42}
+            rowRenderer={this.rowRenderer}
+            onSelectedIndex={(index) => {
+              this.setState({
+                selectedUser: users[index],
+                edit: false,
+                selectedIndex: index,
+                newUser: {},
+              })
+            }}
+          //setSelectedIndex={this.state.selectedIndex}
+          />
         </div>
       </div>
     );
