@@ -4,7 +4,7 @@ import { List } from 'react-virtualized'
 
 
 
-class ListView extends Component {
+class SelectedListView extends Component {
 
     constructor(props) {
 
@@ -259,4 +259,4 @@ class ListView extends Component {
     }
 }
 
-export default ListView;
+export default SelectedListView;

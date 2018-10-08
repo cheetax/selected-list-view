@@ -1,8 +1,7 @@
 
-import SelectPeriod from './lib/select-period'
+import SelectedListView from './lib/index'
 import React, { Component } from 'react';
 import './App.css';
-import 'ch-calendar/dist/ch-calendar.css'
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +21,7 @@ class App extends Component {
         </header> 
         <h3>Filled text fields</h3>
         <div className='App-intro' >
-          <SelectPeriod isField isButtonActive dateFrom={this.state.dateFrom} dateTo={this.state.dateTo} onSelect={(period) => this.setState({...period})} />          
+          <SelectedListView isField isButtonActive dateFrom={this.state.dateFrom} dateTo={this.state.dateTo} onSelect={(period) => this.setState({...period})} />          
         </div>        
       </div>
     );

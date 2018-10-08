@@ -1,5 +1,5 @@
-import ListView from "./ListView";
+import SelectedListView from "./ListView";
 
 export {
-    ListView,
+    SelectedListView,
 };
