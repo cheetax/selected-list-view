@@ -1,0 +1,26 @@
+.rwt__tablist:not([aria-orientation="vertical"]) .rwt__tab[aria-selected="true"]::after {
+    
+    border-bottom: 3px solid #00b259;
+}
+
+.rwt__tab[aria-selected="true"]:hover {
+    background-color: rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.rwt__tabpanel[aria-expanded='true'] {
+    display: flex;
+}
+
+.input-edit {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: flex-start;
+    margin: 8px 0px 0 0px ;
+    font-weight: normal;
+}
+
+/* div {
+    display: flex;
+} */
