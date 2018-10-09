@@ -23,12 +23,10 @@ class App extends Component {
     }
   }
 
-  rowRenderer = ({
-    item,       // Index of row within collection
-  }) => {
+  rowRenderer = ({ item }) => {
     return [
-      <span style={{ paddingRight: 10, }} >{item.firstName} {item.surName}</span>,
-      <span style={{ paddingRight: 10 }} >{item.email}</span>
+      <span>{item.firstName} {item.surName}</span>,
+      <span>{item.email}</span>
     ]
   }
 
@@ -44,11 +42,13 @@ class App extends Component {
         <h3>Filled text fields</h3>
         <div className='App-intro' >
           <SelectedListView
+            isModal
+            isButtonActive
             headerRenderer={this.headerRenderer}
             className='collection'
             items={users}
-            rowHeight={42}
             rowRenderer={this.rowRenderer}
+            setSelectedIndex={this.state.selectedIndex}
             onSelectedIndex={(index) => {
               this.setState({
                 selectedUser: users[index],

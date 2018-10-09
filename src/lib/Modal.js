@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import SelectPeriodCore from './select-period-core';
+import ListViewCore from './list-view-core';
 import './Modal.css'
-import './select-period-core.css';
-
 const ClassModal = ({ openModal }) => openModal ? 'modal-dialog-button active' : 'modal-dialog-button'
 
 const ClassModalOverlay = ({ openModal }) => '' //openModal ? 'modal-dialog-overlay active' : 'modal-dialog-overlay'
@@ -49,7 +47,7 @@ export class Modal extends Component {
         return <div>
             {this.props.elemSize && <div className={ClassModalOverlay({ openModal })} >
                 <div ref={this._ref} style={this._style()} className={ClassModal({ openModal })} >
-                    <SelectPeriodCore {...this.props} />
+                    <ListViewCore {...this.props} />
                 </div>
             </div>}
 

@@ -1,6 +1,7 @@
 import React from 'react';
+import './BtnSpin.css'
 
-const BtnPeriod = ({ onClick, onFocus, children }) => <div className='btn-spin browser-default'
+const BtnSpin = ({ onClick, onFocus, children }) => <div className='btn-spin browser-default'
     onClick={onClick ? (event) => onClick(event) : null}>
     <input
         type='url'
@@ -9,5 +10,5 @@ const BtnPeriod = ({ onClick, onFocus, children }) => <div className='btn-spin b
     </input>{children}</div>
 
 export {
-    BtnPeriod,
+    BtnSpin,
 }

@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-//import StyleSheet  from 'react-style'
-import { List } from 'react-virtualized'
+import { List } from 'react-virtualized';
 
-class SelectedListView extends Component {
+class ListViewCore extends Component {
 
     constructor(props) {
 
         super(props)
-        var setSelectedIndex = -1;
-        if (props.setSelectedIndex) setSelectedIndex = props.setSelectedIndex
+        var setSelectedIndex = (props.setSelectedIndex !== undefined) ? props.setSelectedIndex : -1;
         this.state = {
-            rowHeight: props.rowHeight,
             items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
-            items: props.items,
             setSelectedIndex: setSelectedIndex,
             prevItem: -1,
             height: 0,
@@ -22,17 +18,6 @@ class SelectedListView extends Component {
             columnWidth: [],
             header: null,
         }
-        this.toolsPanelRenderer = props.toolsPanelRenderer || null;
-        this.headerRenderer = props.headerRenderer;
-        this._headerRenderer = this._headerRenderer.bind(this);
-        this.rowRenderer = props.rowRenderer;
-        this.onSelected = props.onSelected;
-        this.onSelectedIndex = props.onSelectedIndex;
-        this._rowRenderer = this._rowRenderer.bind(this)
-        this.resize = this.resize.bind(this);
-        //this._setHeader();
-        //this._rowHeight = this._rowHeight.bind(this)
-        // this._onClick = this._onClick.bind(this);
     }
 
     _getRowHeight = (elemRow) => {
@@ -70,16 +55,15 @@ class SelectedListView extends Component {
         })())
     })
 
-    componentWillUpdate(props, prevProps) {
-        if (props.items !== prevProps.items) {
-            this.getIndexAsync(props.items, prevProps.items).then((index) => {
+    componentWillReceiveProps(nextProps) {
+        let props = this.props
+        if (props.items !== nextProps.items) {
+            this.getIndexAsync(nextProps.items, props.items).then((index) => {
                 if (index === -1) index = this.state.prevItem;
-                index = props.items.length === index ? index - 1 : index;
-                this.rowRenderer = props.rowRenderer;
+                index = nextProps.items.length === index ? index - 1 : index;
                 this.setState({
-                    rowHeight: props.rowHeight,
-                    items: props.items,
-                    items_select: props.items.map((item, i) => ({ active: (i === index) })),
+                    rowHeight: nextProps.rowHeight,
+                    items_select: nextProps.items.map((item, i) => ({ active: (i === index) })),
                     setSelectedIndex: index,
                     prevItem: index,
                     readHeader: true,
@@ -129,19 +113,20 @@ class SelectedListView extends Component {
             items_select: _items_select,
             prevItem: _key
         });
-
-        (this.onSelected) ? this.onSelected(this.state.items[_key]) : null;
-        (this.onSelectedIndex) ? this.onSelectedIndex(_key) : null;
+        let props = this.props;
+        (props.onSelected) && props.onSelected(this.props.items[_key]);
+        (props.onSelectedIndex) && props.onSelectedIndex(_key);
+        (props.onClose) && props.onClose()
     }
 
-    _rowHeight = ({ index }) => this.state.rowHeight ? this.state.rowHeight : 32;
+    _rowHeight = ({ index }) => this.props.rowHeight ? this.props.rowHeight : 48;
 
-    _className = (index) => this.state.items_select[index].active ? 'collection-item active' : 'collection-item'
+    _className = (index) => this.state.items_select[index].active ? 'lv-collection-item active' : 'lv-collection-item'
 
     _rowRendererElem = (param) => {
-        var {index} = param;
+        var { index } = param;
         var item = this.props.items[index]
-        var rowColumns = this.rowRenderer({item})
+        var rowColumns = this.props.rowRenderer({ item })
         if (!Array.isArray(rowColumns)) rowColumns = [rowColumns];
         var columnWidth = this.state.columnWidth;
         return (
@@ -153,7 +138,7 @@ class SelectedListView extends Component {
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
-                        margin: '0 10px'
+                        margin: '0 0px'
                     }
                     return <span key={index} style={style} >{item}</span>
                 })}
@@ -162,8 +147,6 @@ class SelectedListView extends Component {
     }
 
     _rowRenderer = (param) => {
-        //var _style = {...style , height: 'auto'};
-        console.log(param)
         var { key, style, index } = param;
         style = {
             ...style,
@@ -190,7 +173,7 @@ class SelectedListView extends Component {
             style
         }
         var columnWidth = [];
-        var headerColumns = this.headerRenderer(param)
+        var headerColumns = this.props.headerRenderer(param)
         if (!Array.isArray(headerColumns)) headerColumns = [headerColumns]
 
         var e = headerColumns.map((item, index) => {
@@ -205,31 +188,23 @@ class SelectedListView extends Component {
             }
             return (<span key={index} style={style} >{item} </span>)
         })
-        // this.setState({
-        //     columnWidth: columnWidth,
-        //     header: e
-        // })
     }
 
-    _toolsPanelRenderer = () => {
-        if (this.toolsPanelRenderer) {
-            var style = {
-                display: 'flex',
-                fontWeight: 'bold',
-                borderBottom: '1px solid #e0e0e0',
-                padding: '10px 20px'
-            };
-            return <div style={style} >{this.toolsPanelRenderer()}</div >
-        }
-        else return null;
-    }
+    _toolsPanelRenderer = () => (this.props.toolsPanelRenderer) && <div
+        style={{
+            display: 'flex',
+            fontWeight: 'bold',
+            borderBottom: '1px solid #e0e0e0',
+            padding: '10px 20px'
+        }} >{this.toolsPanelRenderer()}</div >
+
     _headerRenderer = () => < div style={{ display: 'flex', paddingLeft: '20px', fontWeight: 'bold', borderBottom: '1px solid #e0e0e0' }} >{this.state.header}</div >
 
     render() {
         return (
-            <div style={{ width: 'auto', height: '100%', margin: 0, border: '1px solid #e0e0e0', borderRadius: '2px' }}>
-                {/* {this._toolsPanelRenderer()} */}
-                {/* {this._headerRenderer()} */}
+            <div style={{ width: 'auto', height: '100%', margin: 0, }}>
+                {this._toolsPanelRenderer()}
+                {this._headerRenderer()}
                 <div
                     style={{ width: 'auto', height: '100%', margin: 0, }}
                     ref={this._getElem}>
@@ -238,18 +213,15 @@ class SelectedListView extends Component {
                         width={this.state.width}
                         height={this.state.height}
                         style={{ width: 'auto', height: '100%', margin: 0, }}
-                        rowCount={this.state.items.length}
+                        rowCount={this.props.items.length}
                         rowHeight={this._rowHeight}
                         rowRenderer={this._rowRenderer}
                         scrollToIndex={this.state.setSelectedIndex}
                     />
                 </div>
             </div>
-
-
-
         )
     }
 }
 
-export default SelectedListView;
+export default ListViewCore;
