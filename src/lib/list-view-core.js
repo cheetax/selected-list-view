@@ -138,7 +138,7 @@ class ListViewCore extends Component {
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
-                        margin: '0 0px'
+                        margin: '0 10px 0 0'
                     }
                     return <span key={index} style={style} >{item}</span>
                 })}
@@ -176,14 +176,14 @@ class ListViewCore extends Component {
         var headerColumns = this.props.headerRenderer(param)
         if (!Array.isArray(headerColumns)) headerColumns = [headerColumns]
 
-        var e = headerColumns.map((item, index) => {
+        return headerColumns.map((item, index) => {
             columnWidth[index] = item.props.width || 'auto';
             var style = {
                 width: columnWidth[index],
                 display: 'flex',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
-                margin: '10px 10px',
+                margin: '12px 16px',
                 flex: item.props.width ? 'none' : 'auto'
             }
             return (<span key={index} style={style} >{item} </span>)
@@ -193,12 +193,18 @@ class ListViewCore extends Component {
     _toolsPanelRenderer = () => (this.props.toolsPanelRenderer) && <div
         style={{
             display: 'flex',
-            fontWeight: 'bold',
-            borderBottom: '1px solid #e0e0e0',
+            //fontWeight: 'bold',
+            //  borderBottom: '1px solid #e0e0e0',
             padding: '10px 20px'
         }} >{this.toolsPanelRenderer()}</div >
 
-    _headerRenderer = () => < div style={{ display: 'flex', paddingLeft: '20px', fontWeight: 'bold', borderBottom: '1px solid #e0e0e0' }} >{this.state.header}</div >
+    _headerRenderer = () => < div
+        style={{
+            display: 'flex',
+          //  paddingLeft: '20px',
+          //  fontWeight: 'bold',
+          //  borderBottom: '1px solid #e0e0e0'
+        }} >{this._setHeader()}</div >
 
     render() {
         return (

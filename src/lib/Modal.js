@@ -37,8 +37,9 @@ export class Modal extends Component {
             cursor: 'default',
             left: this.state.left,
             top: this.state.top,
-            width: '560px',
-            height: '495px'
+            width: this.props.Width + 'px' || '560px',
+            height: this.props.Height + 'px' || '495px',
+            boxSizing: 'content-box'
         }
     }
 

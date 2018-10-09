@@ -30,8 +30,8 @@ class App extends Component {
     ]
   }
 
-  headerRenderer = (param) => [<span width={150} style={param.style}   >Имя, Фамилия</span>,
-  <span style={param.style}  >Email</span>]
+  headerRenderer = (param) => [<span width={50} style={param.style}   >Имя, Фамилия</span>,
+  <span />]
 
   render() {
     return (
@@ -42,8 +42,10 @@ class App extends Component {
         <h3>Filled text fields</h3>
         <div className='App-intro' >
           <SelectedListView
-            isModal
+         //   isModal
             isButtonActive
+            Width={300}
+            Height={500}
             headerRenderer={this.headerRenderer}
             className='collection'
             items={users}
