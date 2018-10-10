@@ -88,6 +88,7 @@ class ListViewCore extends Component {
 
     componentWillReceiveProps(e) {
         console.log(e)
+        this.forceUpdate()
     }
 
     componentDidUpdate() {
