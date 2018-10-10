@@ -7,6 +7,7 @@ class ListViewCore extends Component {
 
         super(props)
         var setSelectedIndex = (props.setSelectedIndex !== undefined) ? props.setSelectedIndex : -1;
+        this.columnWidth = [];
         this.state = {
             items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             setSelectedIndex: setSelectedIndex,
@@ -76,17 +77,30 @@ class ListViewCore extends Component {
     resize = () => this._getElem(this.state.elem)
 
     componentDidMount() {
-        window.addEventListener('resize', this.resize)
+    //    window.addEventListener('resize', this.resize)
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.resize)
+       // var elem = this.state.elem;
+      //  window.removeEventListener('resize', this.resize)
+        //elem && elem.removeEventListener('resize', this.resize)
+    }
+
+    componentWillReceiveProps(e) {
+        console.log(e)
+    }
+
+    componentDidUpdate() {
+        var elem = this.state.elem;
+
+        elem && elem.parentElement.clientWidth !== this.state.width  && this.setState({width: elem.parentElement.clientWidth})
     }
 
     _getElem = (elem) => {
         if (elem) {
-            var elemHeight = elem.clientHeight;
-            var elemWidth = elem.clientWidth;
+            elem.parentElement && elem.parentElement.addEventListener('resize', this.resize)
+            var elemHeight = elem.parentElement.clientHeight;
+            var elemWidth = elem.parentElement.clientWidth;
             this.setState({
                 height: elemHeight,
                 width: elemWidth,
@@ -128,7 +142,7 @@ class ListViewCore extends Component {
         var item = this.props.items[index]
         var rowColumns = this.props.rowRenderer({ item })
         if (!Array.isArray(rowColumns)) rowColumns = [rowColumns];
-        var columnWidth = this.state.columnWidth;
+        var columnWidth = this.columnWidth;
         return (
             <div style={{ display: 'flex', }} >
                 {rowColumns.map((item, index) => {
@@ -172,14 +186,13 @@ class ListViewCore extends Component {
         var param = {
             style
         }
-        var columnWidth = [];
         var headerColumns = this.props.headerRenderer(param)
         if (!Array.isArray(headerColumns)) headerColumns = [headerColumns]
 
         return headerColumns.map((item, index) => {
-            columnWidth[index] = item.props.width || 'auto';
+            this.columnWidth[index] = item.props.width || 'auto';
             var style = {
-                width: columnWidth[index],
+                width: this.columnWidth[index],
                 display: 'flex',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
@@ -208,17 +221,17 @@ class ListViewCore extends Component {
 
     render() {
         return (
-            <div style={{ width: 'auto', height: '100%', margin: 0, }}>
+            <div style={{ width: 'auto', height: '100%', display: 'flex', flexDirection: 'column' }}>
                 {this._toolsPanelRenderer()}
                 {this._headerRenderer()}
                 <div
-                    style={{ width: 'auto', height: '100%', margin: 0, }}
+                    style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
                     ref={this._getElem}>
                     <List
                         className={this.props.className}
                         width={this.state.width}
                         height={this.state.height}
-                        style={{ width: 'auto', height: '100%', margin: 0, }}
+                        style={{ width: '100%', height: '100%', margin: 0, }}
                         rowCount={this.props.items.length}
                         rowHeight={this._rowHeight}
                         rowRenderer={this._rowRenderer}

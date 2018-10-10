@@ -30,7 +30,7 @@ class App extends Component {
     ]
   }
 
-  headerRenderer = (param) => [<span width={50} style={param.style}   >Имя, Фамилия</span>,
+  headerRenderer = (param) => [<span width={100} style={param.style}   >Пользователи</span>,
   <span />]
 
   render() {
@@ -42,7 +42,8 @@ class App extends Component {
         <h3>Filled text fields</h3>
         <div className='App-intro' >
           <SelectedListView
-         //   isModal
+            isField
+            isModal
             isButtonActive
             Width={300}
             Height={500}

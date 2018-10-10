@@ -13,8 +13,8 @@ export class Modal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            clientHeight: 0,
-            clientWidth: 0,
+            clientHeight:  props.Height || 495,
+            clientWidth: props.Width || 560,
             elem: null
         }
     }
@@ -27,8 +27,14 @@ export class Modal extends Component {
         if (this.state.elem) {
             let props = this.props
             let left = (props.elemSize) && positiveNum(props.elemSize.offsetLeft - this.state.elem.clientWidth) + 'px' || 0
+            let clientWidth = props.Width && props.Width || this.state.clientWidth;
+            let clientHeight = props.Height && props.Height || this.state.clientHeight;
+            if (props.isField) { 
+                left = props.elemSize.offsetLeft
+                clientWidth = props.elemSize.clientWidth
+            }
             let top = (props.elemSize) && ((props.elemSize.offsetTop < (props.elemSize.innerHeight - this.state.elem.clientHeight)) ? props.elemSize.offsetTop : positiveNum(props.elemSize.innerHeight - this.state.elem.clientHeight)) + 'px' || 0;
-            (this.state.left !== left || this.state.top !== top) && this.setState({ left, top })
+            (this.state.left !== left || this.state.top !== top) && this.setState({ left, top, clientHeight, clientWidth })
         }
     }
 
@@ -37,8 +43,8 @@ export class Modal extends Component {
             cursor: 'default',
             left: this.state.left,
             top: this.state.top,
-            width: this.props.Width + 'px' || '560px',
-            height: this.props.Height + 'px' || '495px',
+            width:  this.state.clientWidth,
+            height: this.state.clientHeight,
             boxSizing: 'content-box'
         }
     }
