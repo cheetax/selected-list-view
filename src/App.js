@@ -1,6 +1,8 @@
 
 import { SelectedListView } from './lib/index'
 import React, { Component } from 'react';
+import { NumberField } from 'material-inputfield';
+
 import './App.css';
 
 var users = [
