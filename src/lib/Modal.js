@@ -13,8 +13,8 @@ export class Modal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            clientHeight:  props.Height || 495,
-            clientWidth: props.Width || 560,
+            clientHeight: props.Height || 495,
+            clientWidth: props.elemSize.clientWidth || props.Width || 560,
             elem: null
         }
     }

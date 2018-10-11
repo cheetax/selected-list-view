@@ -12,6 +12,7 @@ class SelectedListView extends Component {
 
         this.state = {
             openModal: !!props.isActive || false,
+            elemSize: null
         }
     }
 
@@ -66,11 +67,12 @@ class SelectedListView extends Component {
 
 
     _Modal = () => this.state.openModal && <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
-        <Modal ref={this._refModal}
+        {
+            !!this.state.elemSize && <Modal ref={this._refModal}
             {...this.props}
             {...this.state}
             onClose={this._onClose}
-        />
+        />}
     </div>
 
     _btnCalendarOnClick = () => {
