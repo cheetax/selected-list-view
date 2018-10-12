@@ -187,7 +187,7 @@ class ListViewCore extends Component {
         var param = {
             style
         }
-        var headerColumns = this.props.headerRenderer(param)
+        var headerColumns = this.props.headerRenderer && this.props.headerRenderer(param) || []
         if (!Array.isArray(headerColumns)) headerColumns = [headerColumns]
 
         return headerColumns.map((item, index) => {

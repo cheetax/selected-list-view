@@ -24,15 +24,15 @@ class SelectedListView extends Component {
         if (!!elem) {
             if (elem.offsetParent.offsetParent) {
                 var {
-                    clientWidth,
                     clientHeight,
                     offsetLeft,
                     offsetTop,
                     offsetHeight,
                     offsetWidth,
                 } = elem.offsetParent;
-                offsetTop += elem.offsetTop
-                offsetLeft += elem.offsetLeft
+                offsetTop += elem.offsetParent.offsetHeight
+                clientWidth = elem.offsetParent.offsetWidth
+               // offsetLeft += elem.offsetLeft
             }
             else {
                 var {

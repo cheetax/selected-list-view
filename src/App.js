@@ -42,7 +42,7 @@ class App extends Component {
     isButtonActive
     Width={300}
     Height={500}
-    headerRenderer={this.headerRenderer}
+    //  headerRenderer={this.headerRenderer}
     className='collection'
     items={users}
     rowRenderer={this.rowRenderer}
@@ -74,6 +74,26 @@ class App extends Component {
             type='number'
             label='Label'
             extSpinButton={this._selectedListView} />
+          <SelectedListView
+            //isField
+            //isModal
+            //isButtonActive
+            Width={300}
+            Height={500}
+            headerRenderer={this.headerRenderer}
+            className='collection'
+            items={users}
+            rowRenderer={this.rowRenderer}
+            setSelectedIndex={this.state.selectedIndex}
+            onSelectedIndex={(index) => {
+              this.setState({
+                selectedUser: users[index],
+                edit: false,
+                selectedIndex: index,
+                newUser: {},
+              })
+            }}
+          />
         </div>
       </div>
     );
