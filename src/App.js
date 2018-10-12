@@ -76,8 +76,8 @@ class App extends Component {
             extSpinButton={this._selectedListView} />
           <SelectedListView
             //isField
-            //isModal
-            //isButtonActive
+            isModal
+            isButtonActive
             Width={300}
             Height={500}
             headerRenderer={this.headerRenderer}
