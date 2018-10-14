@@ -28,11 +28,12 @@ class SelectedListView extends Component {
                     offsetLeft,
                     offsetTop,
                     offsetHeight,
+                    clientWidth,
                     offsetWidth,
                 } = elem.offsetParent;
                 offsetTop += elem.offsetParent.offsetHeight
-                clientWidth = elem.offsetParent.offsetWidth
-               // offsetLeft += elem.offsetLeft
+                clientWidth = this.props.isField && elem.offsetParent.offsetWidth
+                offsetLeft += !this.props.isField && elem.offsetLeft || 0;
             }
             else {
                 var {
@@ -68,21 +69,21 @@ class SelectedListView extends Component {
 
     _Modal = () => this.state.openModal && <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
         {
-            !!this.state.elemSize && <Modal ref={this._refModal}
+            !!this.state.elemSize && <Modal
             {...this.props}
             {...this.state}
             onClose={this._onClose}
         />}
     </div>
 
-    _btnCalendarOnClick = () => {
+    _btnOnClick = () => {
         this.setState({
             openModal: !this.state.openModal
         })
     }
 
     _renderSpinButton = () => <div>
-        {this.props.isButtonActive && <BtnSpin onClick={this._btnCalendarOnClick}
+        {this.props.isButtonActive && <BtnSpin onClick={this._btnOnClick}
         ><SvgExpandMore /></BtnSpin>}
         {this._Modal()}
     </div>

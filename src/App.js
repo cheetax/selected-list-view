@@ -60,10 +60,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        {/* <header className="App-header">
           <h1 className="App-title">Test Input Field</h1>
         </header>
-        <h3>Filled text fields</h3>
+        <h3>Filled text fields</h3> */}
 
         <div className='App-intro' >
           <NumberField

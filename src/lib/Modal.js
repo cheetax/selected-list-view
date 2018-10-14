@@ -14,7 +14,7 @@ export class Modal extends Component {
         super(props)
         this.state = {
             clientHeight: props.Height || 495,
-            clientWidth: props.elemSize.clientWidth || props.Width || 560,
+            clientWidth: props.isField && props.elemSize.clientWidth || props.Width || 560,
             elem: null
         }
     }
