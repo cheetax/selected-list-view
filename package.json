@@ -13,7 +13,8 @@
     "url": "git+https://github.com/cheetax/selected-list-view.git"
   },
   "keywords": [
-    "select-period",
+    "selected-list-view",
+    "list-view",
     "react"
   ],
   "author": "cheetax",
