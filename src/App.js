@@ -1,5 +1,5 @@
 
-import { SelectedListView } from 'selected-list-view'
+import { SelectedListView } from './lib/index'
 import React, { Component } from 'react';
 import { NumberField } from 'material-inputfield';
 import 'material-inputfield/dist/material-inputfield.css';
