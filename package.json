@@ -1,5 +1,5 @@
 {
-  "name": "select-period",
+  "name": "selected-list-view",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cheetax/select-period.git"
+    "url": "git+https://github.com/cheetax/selected-list-view.git"
   },
   "keywords": [
     "select-period",
@@ -19,9 +19,9 @@
   "author": "cheetax",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cheetax/select-period"
+    "url": "https://github.com/cheetax/selected-list-view"
   },
-  "homepage": "https://github.com/cheetax/select-period#readme",
+  "homepage": "https://github.com/cheetax/selected-list-view#readme",
   "files": [
     "dist"
   ],

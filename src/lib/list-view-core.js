@@ -19,11 +19,7 @@ class ListViewCore extends Component {
             columnWidth: [],
             header: null,
         }
-    }
-
-    _getRowHeight = (elemRow) => {
-        console.log('1')
-    }
+    }    
 
     getIndexAsync = async (items1, items2) => await new Promise(async (resolve) => {
         resolve(await (async () => {
@@ -60,36 +56,29 @@ class ListViewCore extends Component {
         let props = this.props
         if (props.items !== nextProps.items) {
             this.getIndexAsync(nextProps.items, props.items).then((index) => {
-                if (index === -1) index = this.state.prevItem;
-                index = nextProps.items.length === index ? index - 1 : index;
+                var _index = -1;
+                if (index === -1) _index = this.state.prevItem;
+                _index = nextProps.items.length === index ? index - 1 : index;
                 this.setState({
                     rowHeight: nextProps.rowHeight,
-                    items_select: nextProps.items.map((item, i) => ({ active: (i === index) })),
-                    setSelectedIndex: index,
-                    prevItem: index,
+                    items_select: nextProps.items.map((item, i) => ({ active: (i === _index) })),
+                    setSelectedIndex: _index,
+                    prevItem: _index,
                     readHeader: true,
                 })
 
             })
         }
+        else {
+            let index = nextProps.setSelectedIndex
+            this.setState({
+                items_select: nextProps.items.map((item, i) => ({ active: (i === index) })),
+                setSelectedIndex: index,
+            })
+        }
     }
 
     resize = () => this._getElem(this.state.elem)
-
-    componentDidMount() {
-    //    window.addEventListener('resize', this.resize)
-    }
-
-    componentWillUnmount() {
-       // var elem = this.state.elem;
-      //  window.removeEventListener('resize', this.resize)
-        //elem && elem.removeEventListener('resize', this.resize)
-    }
-
-    componentWillReceiveProps(e) {
-        console.log(e)
-       // this.forceUpdate()
-    }
 
     componentDidUpdate() {
         var elem = this.state.elem;
@@ -99,7 +88,6 @@ class ListViewCore extends Component {
 
     _getElem = (elem) => {
         if (elem) {
-            elem.parentElement && elem.parentElement.addEventListener('resize', this.resize)
             var elemHeight = elem.parentElement.clientHeight;
             var elemWidth = elem.parentElement.clientWidth;
             this.setState({
@@ -215,9 +203,6 @@ class ListViewCore extends Component {
     _headerRenderer = () => < div
         style={{
             display: 'flex',
-          //  paddingLeft: '20px',
-          //  fontWeight: 'bold',
-          //  borderBottom: '1px solid #e0e0e0'
         }} >{this._setHeader()}</div >
 
     render() {

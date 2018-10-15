@@ -12,12 +12,14 @@ class SelectedListView extends Component {
 
         this.state = {
             openModal: !!props.isActive || false,
-            elemSize: null
+            elemSize: null,
+            elemSpin: null
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        nextProps.isActive !== undefined && this.setState({ openModal: !!nextProps.isActive })
+       nextProps.isActive !== undefined && this.setState({ openModal: !!nextProps.isActive })
+       // this.forceUpdate()
     }
 
     _ref = (elem) => {
@@ -44,6 +46,7 @@ class SelectedListView extends Component {
                     offsetHeight,
                     offsetWidth,
                 } = elem;
+                offsetLeft += this.state.elemSpin.clientWidth;
             }
             let {
                 innerWidth,
@@ -55,8 +58,8 @@ class SelectedListView extends Component {
         }
     }
 
-    _refModal = (elem) => {
-        //console.log(elem)
+    _refSpin = (elem) => {
+        elem && this.setState({ elemSpin: elem })
     }
 
     // _onSelected = (period) => {
@@ -67,13 +70,13 @@ class SelectedListView extends Component {
     _onClose = () => this.setState({ openModal: !this.state.openModal })
 
 
-    _Modal = () => this.state.openModal && <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
+    _Modal = () => this.state.openModal && <div  ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
         {
             !!this.state.elemSize && <Modal
-            {...this.props}
-            {...this.state}
-            onClose={this._onClose}
-        />}
+                {...this.props}
+                {...this.state}
+                onClose={this._onClose}
+            />}
     </div>
 
     _btnOnClick = () => {
@@ -82,9 +85,11 @@ class SelectedListView extends Component {
         })
     }
 
-    _renderSpinButton = () => <div>
-        {this.props.isButtonActive && <BtnSpin onClick={this._btnOnClick}
-        ><SvgExpandMore /></BtnSpin>}
+    _renderSpinButton = () => <div  >
+        {this.props.isButtonActive && <div style={{display: 'inline-block'}} ref={this._refSpin} >
+            <BtnSpin  onClick={this._btnOnClick}
+            ><SvgExpandMore /></BtnSpin>
+        </div>}
         {this._Modal()}
     </div>
 

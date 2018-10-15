@@ -1,6 +1,6 @@
 
 .lv-collection-item.active {
-    background-color: #4caf50;    
+    background-color: rgb(76, 175, 80);    
     transition: .25s;
     text-decoration: none;
 }
@@ -12,19 +12,17 @@
     align-items: center;
     line-height: 1.5rem;
     padding: 12px 16px;
-    /* border-bottom: 1px solid #e0e0e0; */
     -webkit-tap-highlight-color: transparent;
     transition: .25s;
     text-decoration: none;
     box-sizing: border-box;
 }
 .lv-collection-item:hover {
-    background-color: #4caf4f70;
+    background-color: rgba(76, 175, 79, 0.439);
 }
 
 .lv-collection-item.active:hover {
-    background-color: #4caf4fd5;
-    /* border: 1px solid #e0e0e0; */
+    background-color: rgba(76, 175, 79, 0.835);
 }
 
 :focus {

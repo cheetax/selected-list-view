@@ -1,5 +1,5 @@
 
-import { SelectedListView } from './lib/index'
+import { SelectedListView } from 'selected-list-view'
 import React, { Component } from 'react';
 import { NumberField } from 'material-inputfield';
 import 'material-inputfield/dist/material-inputfield.css';
@@ -8,15 +8,26 @@ import './App.css';
 
 var users = [
   {
-    firstName: 'user',
-    surName: 'user',
-    email: 'user@mail.com'
+    firstName: 'Ivan',
+    surName: 'Petrov',
+    email: 'ivan@mail.com'
   },
   {
-    firstName: 'user1',
-    surName: 'user1',
-    email: 'user1@mail.com'
+    firstName: 'Petro',
+    surName: 'Ivanov',
+    email: 'petro@mail.com'
   },
+  {
+    firstName: 'John',
+    surName: 'Ivanov',
+    email: 'john@mail.com'
+  },
+  {
+    firstName: 'Ilon',
+    surName: 'Petrov',
+    email: 'ilon@mail.com'
+  },
+  
 ]
 
 class App extends Component {
@@ -33,6 +44,8 @@ class App extends Component {
     ]
   }
 
+  _valueSelectedUser = () => this.state.selectedUser && this.state.selectedUser.firstName + ' ' + this.state.selectedUser.surName
+ 
   headerRenderer = (param) => [<span width={100} style={param.style}   >Пользователи</span>,
   <span />]
 
@@ -68,15 +81,14 @@ class App extends Component {
         <div className='App-intro' >
           <NumberField
             outlined
+            readOnly
             //onSpinButtons
             onChange={(event) => console.log(event)}
-            name='label' value={123456789}
-            type='number'
+            name='label' value={this._valueSelectedUser()}
+            type='text'
             label='Label'
             extSpinButton={this._selectedListView} />
           <SelectedListView
-            //isField
-            isModal
             isButtonActive
             Width={300}
             Height={500}
