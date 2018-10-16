@@ -22,7 +22,7 @@ class ListViewCore extends Component {
     }    
 
     getIndexAsync = async (items1, items2) => await new Promise(async (resolve) => {
-        resolve(await (async () => {
+        resolve(await (() => {
             var i = -1;
             var _itemsSearch = [...items1];
             var _itemsElements = [...items2];
@@ -124,7 +124,7 @@ class ListViewCore extends Component {
 
     _rowHeight = ({ index }) => this.props.rowHeight ? this.props.rowHeight : 48;
 
-    _className = (index) => this.state.items_select[index].active ? 'lv-collection-item active' : 'lv-collection-item'
+    _getClassName = (index) => this.state.items_select[index].active ? 'lv-collection-item active' : 'lv-collection-item'
 
     _rowRendererElem = (param) => {
         var { index } = param;
@@ -157,7 +157,7 @@ class ListViewCore extends Component {
         }
         return (
             <a
-                className={this._className(index)}
+                className={this._getClassName(index)}
                 key={key}
                 style={style}
                 onClick={() => this._onClick(key)}

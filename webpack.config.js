@@ -11,8 +11,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: "select-period.css",
-      chunkFilename: "select-period.css"
+      filename: "selected-list-view.css",
+      chunkFilename: "selected-list-view.css"
     })
   ],
   module: {
