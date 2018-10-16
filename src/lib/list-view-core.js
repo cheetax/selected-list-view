@@ -22,7 +22,7 @@ class ListViewCore extends Component {
     }    
 
     getIndexAsync = async (items1, items2) => await new Promise(async (resolve) => {
-        resolve(await (() => {
+        resolve(await (async() => {
             var i = -1;
             var _itemsSearch = [...items1];
             var _itemsElements = [...items2];
