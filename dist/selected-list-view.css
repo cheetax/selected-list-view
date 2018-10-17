@@ -170,6 +170,7 @@ div.btn-spin {
     transition: .25s;
     text-decoration: none;
     box-sizing: border-box;
+    text-align: left;
 }
 .lv-collection-item:hover {
     background-color: rgba(76, 175, 79, 0.439);

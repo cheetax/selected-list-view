@@ -2,12 +2,14 @@ var path = require('path');
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
-  entry: './src/lib/index.js',
+  entry: [
+    './src/lib/index.js'
+  ],
   output: {
     filename: 'index.js',
     libraryTarget: 'commonjs2'
   },
-  plugins: [   
+  plugins: [
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
@@ -41,7 +43,7 @@ module.exports = {
           },
           "css-loader"
         ]
-      },      
+      },
     ],
 
   },

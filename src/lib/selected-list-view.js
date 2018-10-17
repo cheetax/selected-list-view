@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { SvgExpandMore } from './Svg'
 import { BtnSpin } from './BtnSpin'
 import ListViewCore from './list-view-core'
-import './selected-list-view.css'
+import './selected-list-view-core.css'
 
 class SelectedListView extends Component {
 

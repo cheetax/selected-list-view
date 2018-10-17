@@ -1,8 +1,8 @@
 
 import { SelectedListView } from './lib/index'
 import React, { Component } from 'react';
-//import { NumberField } from 'material-inputfield';
-//import 'material-inputfield/dist/material-inputfield.css';
+import { NumberField } from 'material-inputfield';
+import 'material-inputfield/dist/material-inputfield.css';
 
 import './App.css';
 
@@ -79,7 +79,7 @@ class App extends Component {
         <h3>Filled text fields</h3> */}
 
         <div className='App-intro' >
-          {/* <NumberField
+          <NumberField
             outlined
             readOnly
             //onSpinButtons
@@ -87,7 +87,7 @@ class App extends Component {
             name='label' value={this._valueSelectedUser()}
             type='text'
             label='Label'
-            extSpinButton={this._selectedListView} /> */}
+            extSpinButton={this._selectedListView} />
           <SelectedListView
             isButtonActive
             Width={300}
