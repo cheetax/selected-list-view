@@ -11,20 +11,21 @@
 
 .modal-dialog-button {
     position: fixed;
-    opacity: .5;
+    /* opacity: .5; */
     background: #FFFFFF;
     /* overflow: hidden; */
-    transform: scale(0);
-    transform-origin: left top;
+    /* transform: scale(0); */
+    transform-origin: top;
     padding: 8px 0px;
     /* margin: 10px; */
     border-radius: 4px;
     box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
     z-index: 900;
-    transition: 0.5s;
+    /* transition: 0.5s; */
+    animation: modal-dialog-expand-anim 0.5s;
 }
 
-.modal-dialog-button.active, .modal-dialog-flex.active, .modal-dialog-overlay.active {
+.modal-dialog-button.active, .modal-dialog-overlay.active {
     opacity: 1;
     transform: scale(1);    
     transition: .5s;
@@ -32,17 +33,36 @@
 
 .modal-dialog-flex {
     position: absolute;
-    opacity: .5;
+    
     background: #FFFFFF;
     /* overflow: hidden; */
-    transform: scale(0);
+    /* transform: scale(0); */
     transform-origin: center;
     /* padding: 8px 0px;
     margin: 10px; */
     border-radius: 4px;
     box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
     z-index: 1003;
-    transition: 0.5s;
+    animation: modal-dialog-flex-anim 0.5s;
+    /* transition: 0.5s; */
+}
+
+@keyframes modal-dialog-flex-anim {
+    from { 
+        transform: scale(0);
+        opacity: 1; }
+    to { 
+        transform: scale(1);
+        opacity: 1; }
+}
+
+@keyframes modal-dialog-expand-anim {
+    from { 
+        transform: scaleY(0);
+        opacity: 1; }
+    to { 
+        transform: scaleY(1);
+        opacity: 1; }
 }
 
 .modal-dialog-overlay {
