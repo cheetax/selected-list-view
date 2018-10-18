@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import ListViewCore from './list-view-core';
 import './Modal.css'
-const ClassModal = ({ openModal }) => openModal ? 'modal-dialog-button active' : 'modal-dialog-button'
+const ClassModal = ({ openModal, openFlex }) => (((openFlex) ? 'modal-dialog-flex ' : 'modal-dialog-button ') + ((openModal) && 'active'))
 
-const ClassModalOverlay = ({ openModal }) => '' //openModal ? 'modal-dialog-overlay active' : 'modal-dialog-overlay'
+const ClassModalOverlay = ({ openModal, openFlex }) => (openFlex) && ((openModal) ? 'modal-dialog-overlay active' : 'modal-dialog-overlay')
 
 const positiveNum = (num) => num < 0 ? 0 : num
 
@@ -24,12 +24,12 @@ export class Modal extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snap) {
-        if (this.state.elem) {
+        if (this.state.elem && !this.props.openFlex) {
             let props = this.props
             let left = (props.elemSize) && positiveNum(props.elemSize.offsetLeft - this.state.elem.clientWidth) + 'px' || 0
             let clientWidth = props.Width && props.Width || this.state.clientWidth;
             let clientHeight = props.Height && props.Height || this.state.clientHeight;
-            if (props.isField) { 
+            if (props.isField) {
                 left = props.elemSize.offsetLeft
                 clientWidth = props.elemSize.clientWidth
             }
@@ -39,23 +39,28 @@ export class Modal extends Component {
     }
 
     _style = () => {
-        return {
+        return !this.props.openFlex ? {
             cursor: 'default',
             left: this.state.left,
             top: this.state.top,
-            width:  this.state.clientWidth,
+            width: this.state.clientWidth,
             height: this.state.clientHeight,
             boxSizing: 'content-box'
-        }
+        } : {
+                cursor: 'default',
+                left: this.state.left,
+                width: this.state.clientWidth,
+                height: this.state.clientHeight,
+            }
     }
 
     render() {
         const openModal = this.props.openModal
-        return <div>
-            {this.props.elemSize && <div className={ClassModalOverlay({ openModal })} >
-                <div ref={this._ref} style={this._style()} className={ClassModal({ openModal })} >
-                    <ListViewCore {...this.props} />
-                </div>
+        const openFlex = this.props.openFlex
+        return <div className={ClassModalOverlay({ openModal, openFlex })}
+        >
+            {this.props.elemSize && <div ref={this._ref} style={this._style()} className={ClassModal({ openModal, openFlex })} >
+                <ListViewCore {...this.props} />
             </div>}
 
         </div>

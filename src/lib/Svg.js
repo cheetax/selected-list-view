@@ -24,6 +24,8 @@ const SvgCenterFocus = () => <Svg  ><path d="M5 15H3v4c0 1.1.9 2 2 2h4v-2H5v-4zM
 
 const SvgExpandMore = () => <Svg><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" /></Svg>
 
+const SvgMoreHoriz = () => <Svg><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></Svg>
+
 export {
     SvgPlus,
     SvgMinus,
@@ -33,5 +35,6 @@ export {
     SvgArrowDown,
     SvgCenterFocus,
     SvgDateRange,
-    SvgExpandMore
+    SvgExpandMore,
+    SvgMoreHoriz
 }

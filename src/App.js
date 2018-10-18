@@ -52,7 +52,8 @@ class App extends Component {
   _selectedListView = () => <SelectedListView
     isField
     isModal
-    isButtonActive
+    isButtonExpand
+    isButtonMore
     Width={300}
     Height={500}
     //  headerRenderer={this.headerRenderer}

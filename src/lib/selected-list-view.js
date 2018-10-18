@@ -1,7 +1,7 @@
 
 import { Modal } from './Modal'
 import React, { Component } from 'react';
-import { SvgExpandMore } from './Svg'
+import { SvgExpandMore, SvgMoreHoriz } from './Svg'
 import { BtnSpin } from './BtnSpin'
 import ListViewCore from './list-view-core'
 import './selected-list-view-core.css'
@@ -12,16 +12,17 @@ class SelectedListView extends Component {
         super(props)
 
         this.state = {
-            openModal: !!props.isActive || false,
+            openModal: false,
+            openFlex: true,
             elemSize: null,
             elemSpin: null
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-       nextProps.isActive !== undefined && this.setState({ openModal: !!nextProps.isActive })
-       // this.forceUpdate()
-    }
+    // componentWillReceiveProps(nextProps) {
+    //    nextProps.isActiveExpand !== undefined && this.setState({ openModalExpand: !!nextProps.isActiveExpand })
+    //    // this.forceUpdate()
+    // }
 
     _ref = (elem) => {
         if (!!elem) {
@@ -71,7 +72,7 @@ class SelectedListView extends Component {
     _onClose = () => this.setState({ openModal: !this.state.openModal })
 
 
-    _Modal = () => this.state.openModal && <div  ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
+    _Modal = () => this.state.openModal && <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
         {
             !!this.state.elemSize && <Modal
                 {...this.props}
@@ -80,16 +81,20 @@ class SelectedListView extends Component {
             />}
     </div>
 
-    _btnOnClick = () => {
+    _btnOnClick = (status) => {
         this.setState({
-            openModal: !this.state.openModal
+            openModal: !this.state.openModal,
+            openFlex: status
         })
     }
 
     _renderSpinButton = () => <div  >
-        {this.props.isButtonActive && <div style={{display: 'inline-block'}} ref={this._refSpin} >
-            <BtnSpin  onClick={this._btnOnClick}
-            ><SvgExpandMore /></BtnSpin>
+        {(this.props.isButtonExpand || this.props.isButtonMore) && <div style={{ display: 'flex' }} ref={this._refSpin}>
+            {this.props.isButtonMore && <BtnSpin onClick={() => this._btnOnClick(true)}
+            ><SvgMoreHoriz /></BtnSpin>}
+            {this.props.isButtonExpand && <BtnSpin onClick={() => this._btnOnClick(false)}
+            ><SvgExpandMore /></BtnSpin>}
+
         </div>}
         {this._Modal()}
     </div>
