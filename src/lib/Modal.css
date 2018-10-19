@@ -15,25 +15,39 @@
     background: #FFFFFF;
     /* overflow: hidden; */
     /* transform: scale(0); */
+    max-height: 0;
     transform-origin: top;
-    padding: 8px 0px;
+    padding: 0;
     /* margin: 10px; */
     border-radius: 4px;
-    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
+    box-shadow: none;
     z-index: 900;
-    /* transition: 0.5s; */
-    animation: modal-dialog-expand-anim 0.5s;
+    transition: all 0s .3s;
+    animation: modal-dialog-expandOff-anim 0.3s;
 }
 
 .modal-dialog-button.active, .modal-dialog-overlay.active {
+    animation: modal-dialog-expandOn-anim 0.3s;
+    max-height: 100%;
+    padding: 8px 0px;
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
+    transition: box-shadow 0s;
+    /* transform: scale(1); */
+}
+
+.modal-dialog-flex.active {
+    animation: modal-dialog-flexOn-anim 0.3s;
+    transform: scale(1);
     opacity: 1;
-    transform: scale(1);    
-    transition: .5s;
+}
+
+.modal-dialog-overlay.active {
+    transform: scale(1);
+    opacity: 1;
 }
 
 .modal-dialog-flex {
-    position: absolute;
-    
+    position: absolute;    
     background: #FFFFFF;
     /* overflow: hidden; */
     /* transform: scale(0); */
@@ -43,25 +57,52 @@
     border-radius: 4px;
     box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
     z-index: 1003;
-    animation: modal-dialog-flex-anim 0.5s;
-    /* transition: 0.5s; */
+    /* tran    sition: 0.5s; */
 }
 
-@keyframes modal-dialog-flex-anim {
+.modal-dialog-flex:not(.active) {
+    animation: modal-dialog-flexOff-anim 0.3s;
+    transform: scale(0);
+}
+
+@keyframes modal-dialog-flexOn-anim {
     from { 
         transform: scale(0);
         opacity: 1; }
     to { 
         transform: scale(1);
         opacity: 1; }
+        
 }
 
-@keyframes modal-dialog-expand-anim {
+@keyframes modal-dialog-flexOff-anim {
+    to { 
+        transform: scale(0);
+        opacity: 1; }
     from { 
-        transform: scaleY(0);
+        transform: scale(1);
+        opacity: 1; }
+}
+
+@keyframes modal-dialog-expandOn-anim {
+    from { 
+        /* transform: scaleY(0); */
+        max-height: 0;
         opacity: 1; }
     to { 
-        transform: scaleY(1);
+        /* transform: scaleY(1); */
+        max-height: 100%;
+        opacity: 1; }
+}
+
+@keyframes modal-dialog-expandOff-anim {
+    to { 
+        /* transform: scaleY(0); */
+        max-height: 0;
+        opacity: 1; }
+    from { 
+        /* transform: scaleY(1); */
+        max-height: 100%;
         opacity: 1; }
 }
 
@@ -71,7 +112,7 @@
     justify-content: center;
     align-items: center;    
     transform: scale(0);
-    opacity: 0;
+    /* opacity: 0; */
     height: 100%;
     top: 0;
     left: 0;

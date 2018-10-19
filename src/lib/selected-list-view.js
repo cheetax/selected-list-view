@@ -72,7 +72,7 @@ class SelectedListView extends Component {
     _onClose = () => this.setState({ openModal: !this.state.openModal })
 
 
-    _Modal = () => this.state.openModal && <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
+    _Modal = () => <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
         {
             !!this.state.elemSize && <Modal
                 {...this.props}

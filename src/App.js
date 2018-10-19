@@ -89,7 +89,7 @@ class App extends Component {
             type='text'
             label='Label'
             extSpinButton={this._selectedListView} />
-          <SelectedListView
+          {/* <SelectedListView
             isButtonActive
             Width={300}
             Height={500}
@@ -106,7 +106,7 @@ class App extends Component {
                 newUser: {},
               })
             }}
-          />
+          /> */}
         </div>
       </div>
     );

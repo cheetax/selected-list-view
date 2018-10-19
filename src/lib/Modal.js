@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ListViewCore from './list-view-core';
 import './Modal.css'
-const ClassModal = ({ openModal, openFlex }) => (((openFlex) ? 'modal-dialog-flex ' : 'modal-dialog-button ') + ((openModal) && 'active'))
+const ClassModal = ({ openModal, openFlex }) => (((openFlex) ? 'modal-dialog-flex ' : 'modal-dialog-button ') + ((openModal) ? 'active': ''))
 
 const ClassModalOverlay = ({ openModal, openFlex }) => (openFlex) && ((openModal) ? 'modal-dialog-overlay active' : 'modal-dialog-overlay')
 
