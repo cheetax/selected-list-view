@@ -44,6 +44,7 @@
 .modal-dialog-overlay.active {
     transform: scale(1);
     opacity: 1;
+    transition: 0s;
 }
 
 .modal-dialog-flex {
@@ -112,13 +113,13 @@
     justify-content: center;
     align-items: center;    
     transform: scale(0);
-    /* opacity: 0; */
+    opacity: 0;
     height: 100%;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 999;
-    transition: 0.5s;
+    transition: 0s;
 }
 
 .modal-btn-flat {
