@@ -26,7 +26,7 @@
     animation: modal-dialog-expandOff-anim 0.3s;
 }
 
-.modal-dialog-button.active, .modal-dialog-overlay.active {
+.modal-dialog-button.active {
     animation: modal-dialog-expandOn-anim 0.3s;
     max-height: 100%;
     padding: 8px 0px;
