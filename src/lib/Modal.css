@@ -13,7 +13,7 @@
     position: fixed;
     /* opacity: .5; */
     background: #FFFFFF;
-    /* overflow: hidden; */
+    overflow: hidden;
     /* transform: scale(0); */
     max-height: 0;
     transform-origin: top;
@@ -37,6 +37,7 @@
 
 .modal-dialog-flex.active {
     animation: modal-dialog-flexOn-anim 0.3s;
+    padding: 8px 0px;
     transform: scale(1);
     opacity: 1;
 }
@@ -50,7 +51,7 @@
 .modal-dialog-flex {
     position: absolute;    
     background: #FFFFFF;
-    /* overflow: hidden; */
+    overflow: hidden;
     /* transform: scale(0); */
     transform-origin: center;
     /* padding: 8px 0px;

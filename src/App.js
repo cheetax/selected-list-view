@@ -55,7 +55,7 @@ class App extends Component {
     isButtonExpand
     isButtonMore
     Width={300}
-    Height={500}
+    //Height={500}
     //  headerRenderer={this.headerRenderer}
     className='collection'
     items={users}

@@ -37,7 +37,7 @@ class SelectedListView extends Component {
                 } = elem.offsetParent;
                 offsetTop += elem.offsetParent.offsetHeight
                 clientWidth = this.props.isField && elem.offsetParent.offsetWidth
-                offsetLeft += !this.props.isField && elem.offsetLeft || 0;
+                offsetLeft += !this.props.isField ? elem.offsetLeft : 0;
             }
             else {
                 var {

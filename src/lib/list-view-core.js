@@ -89,7 +89,7 @@ class ListViewCore extends Component {
             var elemHeight = elem.clientHeight;
             var elemWidth = elem.clientWidth;
             this.setState({
-                height: elemHeight,
+                height: elemHeight ? elemHeight : this.props.items.length && this.props.items.length * this._rowHeight({}),
                 width: elemWidth,
                 elem: elem
             })

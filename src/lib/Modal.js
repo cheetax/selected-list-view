@@ -13,7 +13,7 @@ export class Modal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            clientHeight: props.Height || 495,
+            clientHeight: props.Height || 'auto',
             clientWidth: props.isField && props.elemSize.clientWidth || props.Width || 560,
             elem: null
         }
@@ -44,7 +44,7 @@ export class Modal extends Component {
             left: this.state.left,
             top: this.state.top,
             width: this.state.clientWidth,
-            height: this.state.clientHeight,
+            height: this.state.clientHeight && this.state.clientHeight,
             boxSizing: 'content-box'
         } : {
                 cursor: 'default',
