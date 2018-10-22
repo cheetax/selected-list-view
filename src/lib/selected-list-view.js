@@ -12,8 +12,8 @@ class SelectedListView extends Component {
         super(props)
 
         this.state = {
-            openModal: false,
-            openFlex: true,
+            openModalFlex: false,
+            openModalExpand: false,
             elemSize: null,
             elemSpin: null
         }
@@ -69,34 +69,42 @@ class SelectedListView extends Component {
     //     this.props.onSelected && this.props.onSelected(period)
     // }
 
-    _onClose = () => this.setState({ openModal: !this.state.openModal })
+    _onClose = () => this.setState({
+        openModalFlex: false,
+        openModalExpand: false
+    })
 
 
-    _Modal = () => <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
+    _Modal = (openFlex) => <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
         {
             !!this.state.elemSize && <Modal
                 {...this.props}
                 {...this.state}
+                openFlex={openFlex}
                 onClose={this._onClose}
             />}
     </div>
 
     _btnOnClick = (status) => {
         this.setState({
-            openModal: !this.state.openModal,
+            openModalFlex: status,
+            openModalExpand: !status,
             openFlex: status
         })
     }
 
     _renderSpinButton = () => <div  >
         {(this.props.isButtonExpand || this.props.isButtonMore) && <div style={{ display: 'flex' }} ref={this._refSpin}>
-            {this.props.isButtonMore && <BtnSpin onClick={() => this._btnOnClick(true)}
-            ><SvgMoreHoriz /></BtnSpin>}
-            {this.props.isButtonExpand && <BtnSpin onClick={() => this._btnOnClick(false)}
-            ><SvgExpandMore /></BtnSpin>}
-
+            {this.props.isButtonMore && <div>
+                <BtnSpin onClick={() => this._btnOnClick(true)}><SvgMoreHoriz /></BtnSpin>
+                {this._Modal(true)}
+            </div>
+            }
+            {this.props.isButtonExpand && <div>
+                <BtnSpin onClick={() => this._btnOnClick(false)}><SvgExpandMore /></BtnSpin>
+                {this._Modal(false)}
+            </div>}
         </div>}
-        {this._Modal()}
     </div>
 
     _onChangeObject = (period) => {

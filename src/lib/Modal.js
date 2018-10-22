@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ListViewCore from './list-view-core';
 import './Modal.css'
-const ClassModal = ({ openModal, openFlex }) => (((openFlex) ? 'modal-dialog-flex ' : 'modal-dialog-button ') + ((openModal) ? 'active': ''))
+const ClassModal = ({ openModalFlex, openModalExpand, openFlex }) => (((openFlex) ? 'modal-dialog-flex ' + ((openModalFlex) ? 'active': '') : 'modal-dialog-button ' + ((openModalExpand) ? 'active': '')) )
 
 const ClassModalOverlay = ({ openModal, openFlex }) => (openFlex) && ((openModal) ? 'modal-dialog-overlay active' : 'modal-dialog-overlay')
 
@@ -55,11 +55,12 @@ export class Modal extends Component {
     }
 
     render() {
-        const openModal = this.props.openModal
+        const openModalFlex = this.props.openModalFlex
+        const openModalExpand = this.props.openModalExpand
         const openFlex = this.props.openFlex
-        return <div className={ClassModalOverlay({ openModal, openFlex })}
+        return <div className={ClassModalOverlay({ openModal: openModalFlex, openFlex })}
         >
-            {this.props.elemSize && <div ref={this._ref} style={this._style()} className={ClassModal({ openModal, openFlex })} >
+            {this.props.elemSize && <div ref={this._ref} style={this._style()} className={ClassModal({ openModalFlex, openModalExpand, openFlex })} >
                 <ListViewCore {...this.props} />
             </div>}
 
