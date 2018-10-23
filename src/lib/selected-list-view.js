@@ -84,7 +84,7 @@ class SelectedListView extends Component {
                 Height={openFlex && this.props.Height}
                 openFlex={openFlex}
                 onClose={this._onClose}
-            >{!openFlex && <div style={{flex: 'auto', display: 'flex', justifyContent: 'flex-end'}} >{this._btnSpinMore()}</div>}</Modal>}
+            >{(!openFlex && !this.props.isButtonMore) && <div style={{ flex: 'auto', display: 'flex', justifyContent: 'flex-end' }} >{this._btnSpinMore()}</div>}</Modal>}
     </div>
 
     _btnOnClick = (status) => {
@@ -103,9 +103,8 @@ class SelectedListView extends Component {
         {(this.props.isButtonExpand || this.props.isButtonMore) && <div style={{ display: 'flex' }} ref={this._refSpin}>
             {this.props.isButtonMore && <div>
                 {this._btnSpinMore()}
-                {this._Modal(true)}
-            </div>
-            }
+            </div>}
+            {this._Modal(true)}
             {this.props.isButtonExpand && <div>
                 <BtnSpin onClick={() => this._btnOnClick(false)}><SvgExpandMore /></BtnSpin>
                 {this._Modal(false)}
