@@ -60,8 +60,9 @@ export class Modal extends Component {
         const openFlex = this.props.openFlex
         return <div className={ClassModalOverlay({ openModal: openModalFlex, openFlex })}
         >
-            {this.props.elemSize && <div ref={this._ref} style={this._style()} className={ClassModal({ openModalFlex, openModalExpand, openFlex })} >
+            {this.props.elemSize && <div ref={this._ref} style={this._style()} className={'modal-flex-column ' + ClassModal({ openModalFlex, openModalExpand, openFlex })} >
                 <ListViewCore {...this.props} />
+                {this.props.children && this.props.children}
             </div>}
 
         </div>

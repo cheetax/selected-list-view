@@ -56,10 +56,11 @@ class App extends Component {
     isButtonExpand
     isButtonMore
     Width={300}
-    //Height={500}
-    //  headerRenderer={this.headerRenderer}
+    //Height={300}
+    //headerRenderer={this.headerRenderer}
     className='collection'
     items={users}
+    itemsQuickSelection={[users[0], users[2]]}
     rowRenderer={this.rowRenderer}
     setSelectedIndex={this.state.selectedIndex}
     selectItem={this.state.selectUser}

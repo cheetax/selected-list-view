@@ -126,10 +126,18 @@ export default App;
 
 Common props you may want to specify include:
 
-* `isButtonActive` - [boolean] If 'true' show 'open' button. If False, the opens is through isActive = 'true'
+* `isButtonExpand` - [boolean] If 'true' show 'open expand' button. If False, the opens is through isActive = 'true'
+* `isButtonMore` - [boolean] If 'true' show 'open more horizontal' button. If False, the opens is through isActive = 'true'
 * `isActive` - [boolean] If 'true' show window
 * `isField` - [boolean] 
 * `isModal` - [boolean] 
-* `onSelectedIndex` - [number] 
-* `onSelected` - [object] 
 
+'List' props you may want to specify include:
+
+* `Width` - [number] 
+* `Height` - [number] 
+* `headerRenderer` - [nodeObject] 
+* `rowRenderer` - [nodeObject] 
+* `items` - [Array] List array 
+* `setSelectedIndex` - [number] 
+* `onSelectedIndex` - [function(number)] 
