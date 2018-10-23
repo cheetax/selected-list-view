@@ -138,6 +138,8 @@ Common props you may want to specify include:
 * `Height` - [number] 
 * `headerRenderer` - [nodeObject] 
 * `rowRenderer` - [nodeObject] 
-* `items` - [Array] List array 
-* `setSelectedIndex` - [number] 
-* `onSelectedIndex` - [function(number)] 
+* `items` - [array] all collection items for select
+* `itemsQuickSelection` - [array] collection items for quick select
+* `selectItem` - [object] selected item of array
+* `onSelectedItem` - [function(object)] call function on selected item of array
+* `onSelectedIndex` - [function(number)] call function on selected of item index on array
