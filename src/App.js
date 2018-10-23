@@ -27,13 +27,14 @@ var users = [
     surName: 'Petrov',
     email: 'ilon@mail.com'
   },
-  
+
 ]
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      selectUser: null,
     }
   }
 
@@ -44,8 +45,8 @@ class App extends Component {
     ]
   }
 
-  _valueSelectedUser = () => this.state.selectedUser && this.state.selectedUser.firstName + ' ' + this.state.selectedUser.surName
- 
+  _valueSelectedUser = () => this.state.selectUser && this.state.selectUser.firstName + ' ' + this.state.selectUser.surName
+
   headerRenderer = (param) => [<span width={100} style={param.style}   >Пользователи</span>,
   <span />]
 
@@ -61,12 +62,16 @@ class App extends Component {
     items={users}
     rowRenderer={this.rowRenderer}
     setSelectedIndex={this.state.selectedIndex}
+    selectItem={this.state.selectUser}
     onSelectedIndex={(index) => {
       this.setState({
-        selectedUser: users[index],
-        edit: false,
-        selectedIndex: index,
-        newUser: {},
+        selectItem: users[index],
+        
+      })
+    }}
+    onSelectedItem={(item) => {
+      this.setState({
+        selectUser: item,
       })
     }}
   />

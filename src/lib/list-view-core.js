@@ -6,9 +6,14 @@ class ListViewCore extends Component {
     constructor(props) {
 
         super(props)
-        var setSelectedIndex = (props.setSelectedIndex !== undefined) ? props.setSelectedIndex : -1;
+        //var setSelectedIndex = (props.setSelectedIndex !== undefined) ? props.setSelectedIndex : -1;
+        
+
+        var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
+        var setSelectedIndex = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
         this.columnWidth = [];
         this.state = {
+            //items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             setSelectedIndex: setSelectedIndex,
             prevItem: -1,
@@ -59,7 +64,7 @@ class ListViewCore extends Component {
                 _index = nextProps.items.length === index ? index - 1 : index;
                 this.setState({
                     rowHeight: nextProps.rowHeight,
-                    items_select: nextProps.items.map((item, i) => ({ active: (i === _index) })),
+                    items_select: nextProps.items.map((item, i) => ({ active: (i === _index) })),                    
                     setSelectedIndex: _index,
                     prevItem: _index,
                     readHeader: true,
@@ -68,9 +73,12 @@ class ListViewCore extends Component {
             })
         }
         else {
-            let index = nextProps.setSelectedIndex
+            //let index = nextProps.setSelectedIndex
+            let selectItemJson = JSON.stringify(props.selectItem)
+            let index = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
             this.setState({
                 items_select: nextProps.items.map((item, i) => ({ active: (i === index) })),
+                //items_select: props.items.map((item) => ({ active: (index === JSON.stringify(item)) })),
                 setSelectedIndex: index,
             })
         }
@@ -115,7 +123,7 @@ class ListViewCore extends Component {
             prevItem: _key
         });
         let props = this.props;
-        (props.onSelected) && props.onSelected(this.props.items[_key]);
+        (props.onSelectedItem) && props.onSelectedItem(this.props.items[_key]);
         (props.onSelectedIndex) && props.onSelectedIndex(_key);
         (props.onClose) && props.onClose()
     }
