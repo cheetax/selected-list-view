@@ -80,9 +80,11 @@ class SelectedListView extends Component {
             !!this.state.elemSize && <Modal
                 {...this.props}
                 {...this.state}
+                items={!openFlex ? this.props.itemsQuickSelection : this.props.items}
+                setSelectedIndex={!openFlex ? -1 : this.props.setSelectedIndex}
                 openFlex={openFlex}
                 onClose={this._onClose}
-            />}
+            >{!openFlex && <div style={{flex: 'auto', display: 'flex', justifyContent: 'flex-end'}} >{this._btnSpinMore()}</div>}</Modal>}
     </div>
 
     _btnOnClick = (status) => {
@@ -93,10 +95,14 @@ class SelectedListView extends Component {
         })
     }
 
+    _btnSpinMore = () => {
+        return <BtnSpin onClick={() => this._btnOnClick(true)}><SvgMoreHoriz /></BtnSpin>
+    }
+
     _renderSpinButton = () => <div  >
         {(this.props.isButtonExpand || this.props.isButtonMore) && <div style={{ display: 'flex' }} ref={this._refSpin}>
             {this.props.isButtonMore && <div>
-                <BtnSpin onClick={() => this._btnOnClick(true)}><SvgMoreHoriz /></BtnSpin>
+                {this._btnSpinMore()}
                 {this._Modal(true)}
             </div>
             }
