@@ -10,7 +10,7 @@ class ListViewCore extends Component {
         
 
         var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
-        var setSelectedIndex = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
+        var setSelectedIndex = props.items ? props.items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1 ;
         this.columnWidth = [];
         this.state = {
             //items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),

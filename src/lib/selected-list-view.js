@@ -80,8 +80,8 @@ class SelectedListView extends Component {
             !!this.state.elemSize && <Modal
                 {...this.props}
                 {...this.state}
-                items={!openFlex ? this.props.itemsQuickSelection : this.props.items}
-                Height={openFlex && this.props.Height}
+                items={(!openFlex && this.props.itemsQuickSelection) ? this.props.itemsQuickSelection : this.props.items}
+                Height={(openFlex || !this.props.itemsQuickSelection) && this.props.Height}
                 headerRenderer={openFlex && this.props.headerRenderer}
                 openFlex={openFlex}
                 onClose={this._onClose}
