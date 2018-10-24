@@ -62,7 +62,7 @@ export class Modal extends Component {
         >
             {this.props.elemSize && <div ref={this._ref} style={this._style()} className={'modal-flex-column ' + ClassModal({ openModalFlex, openModalExpand, openFlex })} >
                 <ListViewCore {...this.props} />
-                {this.props.children && <div style={{margin: 8}} >{this.props.children}</div> }
+                {this.props.children && <div style={{margin: '8px 8px 0 8px'}} >{this.props.children}</div> }
             </div>}
 
         </div>

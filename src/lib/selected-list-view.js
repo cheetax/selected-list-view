@@ -82,6 +82,7 @@ class SelectedListView extends Component {
                 {...this.state}
                 items={!openFlex ? this.props.itemsQuickSelection : this.props.items}
                 Height={openFlex && this.props.Height}
+                headerRenderer={openFlex && this.props.headerRenderer}
                 openFlex={openFlex}
                 onClose={this._onClose}
             >{(!openFlex && !this.props.isButtonMore) && <div style={{ flex: 'auto', display: 'flex', justifyContent: 'flex-end' }} >{this._btnSpinMore()}</div>}</Modal>}

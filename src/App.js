@@ -57,7 +57,7 @@ class App extends Component {
     isButtonMore
     Width={300}
     Height={300}
-    //headerRenderer={this.headerRenderer}
+    headerRenderer={this.headerRenderer}
     className='collection'
     items={users}
     itemsQuickSelection={[users[0], users[2]]}
@@ -66,8 +66,7 @@ class App extends Component {
     selectItem={this.state.selectUser}
     onSelectedIndex={(index) => {
       this.setState({
-        selectItem: users[index],
-        
+        selectItem: users[index]        
       })
     }}
     onSelectedItem={(item) => {
