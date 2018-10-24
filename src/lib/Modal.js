@@ -7,7 +7,6 @@ const ClassModalOverlay = ({ openModal, openFlex }) => (openFlex) && ((openModal
 
 const positiveNum = (num) => num < 0 ? 0 : num
 
-//export const Modal = (props) => {
 export class Modal extends Component {
 
     constructor(props) {
@@ -44,13 +43,13 @@ export class Modal extends Component {
             left: this.state.left,
             top: this.state.top,
             width: this.state.clientWidth,
-            height: this.state.clientHeight && this.state.clientHeight,
+            maxHeight: this.state.clientHeight && this.state.clientHeight,
             boxSizing: 'content-box'
         } : {
                 cursor: 'default',
                 left: this.state.left,
                 width: this.state.clientWidth,
-                height: this.state.clientHeight,
+                maxHeight: this.state.clientHeight,
             }
     }
 
