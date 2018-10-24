@@ -43,12 +43,13 @@ export class Modal extends Component {
             left: this.state.left,
             top: this.state.top,
             width: this.state.clientWidth,
-            maxHeight: this.state.clientHeight && this.state.clientHeight,
+            height: this.state.clientHeight && this.state.clientHeight,
             boxSizing: 'content-box'
         } : {
                 cursor: 'default',
                 left: this.state.left,
                 width: this.state.clientWidth,
+                height: '100%',
                 maxHeight: this.state.clientHeight,
             }
     }

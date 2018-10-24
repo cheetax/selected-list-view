@@ -42,6 +42,16 @@ var users = [
     surName: 'Petrov',
     email: 'ilon@mail.com'
   },
+  {
+    firstName: 'Ilon',
+    surName: 'Petrov',
+    email: 'ilon@mail.com'
+  },
+  {
+    firstName: 'Ilon',
+    surName: 'Petrov',
+    email: 'ilon@mail.com'
+  },
 ]
 
 class App extends Component {
