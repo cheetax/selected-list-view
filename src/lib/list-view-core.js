@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { List } from 'react-virtualized';
+import Baron from 'react-baron';
+import 'react-baron/src/styles.css'
 
 class ListViewCore extends Component {
 
@@ -7,10 +9,14 @@ class ListViewCore extends Component {
 
         super(props)
         //var setSelectedIndex = (props.setSelectedIndex !== undefined) ? props.setSelectedIndex : -1;
-        
+        //props.params = {defaultParams} // Object that will be passed to baron as `params` (see baron API https://github.com/Diokuz/baron)
+        // props.clipperCls = "clipper"   // className for clipper/root dom node
+        // props.scrollerCls = "scroller" // className for scroller dom node
+        // props.trackCls = "track"       // className for track dom node
+        // props.barCls = "bar"           // className for bar dom node       
 
         var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
-        var setSelectedIndex = props.items ? props.items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1 ;
+        var setSelectedIndex = props.items ? props.items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
         this.columnWidth = [];
         this.state = {
             //items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
@@ -64,7 +70,7 @@ class ListViewCore extends Component {
                 _index = nextProps.items.length === index ? index - 1 : index;
                 this.setState({
                     rowHeight: nextProps.rowHeight,
-                    items_select: nextProps.items.map((item, i) => ({ active: (i === _index) })),                    
+                    items_select: nextProps.items.map((item, i) => ({ active: (i === _index) })),
                     setSelectedIndex: _index,
                     prevItem: _index,
                     readHeader: true,
@@ -219,16 +225,19 @@ class ListViewCore extends Component {
                 <div
                     style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
                     ref={this._getElem}>
-                    <List
-                        className={this.props.className}
-                        width={this.state.width}
-                        height={this.state.height}
-                        style={{ width: '100%', height: '100%', margin: 0, }}
-                        rowCount={this.props.items.length}
-                        rowHeight={this._rowHeight}
-                        rowRenderer={this._rowRenderer}
-                        scrollToIndex={this.state.setSelectedIndex}
-                    />
+                    <Baron>
+                        <List
+                            className={this.props.className}
+                            width={this.state.width}
+                            height={this.state.height}
+                            style={{ width: '100%', height: '100%', margin: 0, }}
+                            rowCount={this.props.items.length}
+                            rowHeight={this._rowHeight}
+                            rowRenderer={this._rowRenderer}
+                            scrollToIndex={this.state.setSelectedIndex}
+                        />
+                    </Baron>
+
                 </div>
             </div>
         )
