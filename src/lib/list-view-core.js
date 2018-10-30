@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { List } from 'react-virtualized';
-import Baron from 'react-baron';
-import 'react-baron/src/styles.css'
+import CustomScroll from 'react-custom-scroll';
+//import Baron from 'react-baron';
+import './scroll.css'
 
 class ListViewCore extends Component {
-
+    static defaultProps = {
+        sss: 1
+      }
     constructor(props) {
 
         super(props)
@@ -218,15 +221,17 @@ class ListViewCore extends Component {
         }} >{this._setHeader()}</div >
 
     render() {
+        console.log(this.state.height)
         return (
             <div style={{ width: 'auto', height: '100%', display: 'flex', flexDirection: 'column' }}>
                 {this._toolsPanelRenderer()}
                 {this._headerRenderer()}
                 <div
-                    style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
+                    style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', flex: 'auto' }}
                     ref={this._getElem}>
-                    <Baron>
-                        <List
+                    <CustomScroll allowOuterScroll="{true}" flex="1">
+                        <div>
+                            <List
                             className={this.props.className}
                             width={this.state.width}
                             height={this.state.height}
@@ -236,7 +241,9 @@ class ListViewCore extends Component {
                             rowRenderer={this._rowRenderer}
                             scrollToIndex={this.state.setSelectedIndex}
                         />
-                    </Baron>
+                        </div>
+                        
+                    </CustomScroll>
 
                 </div>
             </div>

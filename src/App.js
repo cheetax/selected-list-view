@@ -62,6 +62,8 @@ class App extends Component {
     }
   }
 
+  
+
   rowRenderer = ({ item }) => {
     return [
       <span>{item.firstName} {item.surName}</span>,
@@ -103,6 +105,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        
+        {/* <div style={{width: 300, height: 600, }} >
+          <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', background: 'green' }} >
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 'auto' }} >
+              <div style={{padding: 8, background: 'red'}}>
+                Пользователи
+              </div>
+              <div style={{height: '100%', width: '100%', flex: 'auto', background: 'blue'}}>
+                
+              </div>
+            </div>
+
+          </div>
+        </div> */}
         {/* <header className="App-header">
           <h1 className="App-title">Test Input Field</h1>
         </header>
@@ -118,24 +134,7 @@ class App extends Component {
             type='text'
             label='Label'
             extSpinButton={this._selectedListView} />
-          {/* <SelectedListView
-            isButtonActive
-            Width={300}
-            Height={500}
-            headerRenderer={this.headerRenderer}
-            className='collection'
-            items={users}
-            rowRenderer={this.rowRenderer}
-            setSelectedIndex={this.state.selectedIndex}
-            onSelectedIndex={(index) => {
-              this.setState({
-                selectedUser: users[index],
-                edit: false,
-                selectedIndex: index,
-                newUser: {},
-              })
-            }}
-          /> */}
+          
         </div>
       </div>
     );
