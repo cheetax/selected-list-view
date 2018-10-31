@@ -227,7 +227,7 @@ class ListViewCore extends Component {
                 {this._toolsPanelRenderer()}
                 {this._headerRenderer()}
                 <div
-                    style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', flex: 'auto' }}
+                    style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto' }}
                     ref={this._getElem}>
                     <CustomScroll allowOuterScroll="{true}" flex="1">
                         <div>
@@ -235,7 +235,7 @@ class ListViewCore extends Component {
                             className={this.props.className}
                             width={this.state.width}
                             height={this.state.height}
-                            style={{ width: '100%', height: '100%', margin: 0, }}
+                            style={{ width: '100%', height: this.state.height, margin: 0, }}
                             rowCount={this.props.items.length}
                             rowHeight={this._rowHeight}
                             rowRenderer={this._rowRenderer}
