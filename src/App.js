@@ -114,7 +114,7 @@ class App extends Component {
     style={
       {
         display: 'flex',
-     //   flex: 'auto'
+        flex: 'auto'
       }
     }><span
       style={
@@ -129,18 +129,18 @@ class App extends Component {
     return (
       <div className="App">
 
-        <div style={{ width: 300, height: 400, }} >
-          <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', background: 'green' }} >
+        <div style={{ width: 200, height: 300, }} >
+          <div style={{ width: '100%', height: '100%', background: 'green' }} >
             <div style={{ height: '100%', display: 'flex', flexDirection: 'column', flex: 'auto' }} >
               <div style={{ padding: 8, background: 'red' }}>
                 Пользователи
               </div>
               <div style={{ height: '100%', width: '100%', flex: 'auto', display: 'flex'}}>
-                <CustomScroll allowOuterScroll="{true}" flex="1">
+                {/* <CustomScroll allowOuterScroll="{true}" flex="1">
                   <div style={{ height: 600, width: '100%', flex: 'auto', background: 'blue' }}>
 
                   </div>
-                </CustomScroll>
+                </CustomScroll> */}
               </div>
 
             </div>
@@ -162,14 +162,14 @@ class App extends Component {
             type='text'
             label='Label'
             extSpinButton={this._selectedListView} /> */}
-          
-        {/* </div> */}
+
+          {/* </div> */}
           <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', flex: 'auto', border: '1px solid grey' }}>
             {this._headerRenderer()}
             <div
               style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto' }}
               ref={this._getElem}>
-              <CustomScroll allowOuterScroll="{true}"  flex= '1'>
+              <CustomScroll allowOuterScroll="{true}" flex='1'>
                 <div>
                   <div style={{ background: 'red', height: 342, width: '100%' }} />
                   {/* <List
