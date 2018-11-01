@@ -3,7 +3,7 @@ import ListViewCore from './list-view-core';
 import './Modal.css'
 const ClassModal = ({ openModalFlex, openModalExpand, openFlex }) => (((openFlex) ? 'modal-dialog-flex ' + ((openModalFlex) ? 'active': '') : 'modal-dialog-button ' + ((openModalExpand) ? 'active': '')) )
 
-const ClassModalOverlay = ({ openModal, openFlex }) => (openFlex) && ((openModal) ? 'modal-dialog-overlay active' : 'modal-dialog-overlay')
+const ClassModalOverlay = ({ openModal, openFlex }) => ((openFlex) ? ('modal-dialog-overlay ' + ((openModal) ? 'active' : '')) : ((!openModal) ?  'modal-dialog-button-overlay' : ''))
 
 const positiveNum = (num) => num < 0 ? 0 : num
 
@@ -58,7 +58,7 @@ export class Modal extends Component {
         const openModalFlex = this.props.openModalFlex
         const openModalExpand = this.props.openModalExpand
         const openFlex = this.props.openFlex
-        return <div className={ClassModalOverlay({ openModal: openModalFlex, openFlex })}
+        return <div className={ClassModalOverlay({ openModal: (openModalFlex || openModalExpand), openFlex })}
         >
             {this.props.elemSize && <div ref={this._ref} style={this._style()} className={'modal-flex-column ' + ClassModal({ openModalFlex, openModalExpand, openFlex })} >
                 <ListViewCore {...this.props} />

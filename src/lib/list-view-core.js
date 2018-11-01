@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { List } from 'react-virtualized';
 import CustomScroll from 'react-custom-scroll';
-//import Baron from 'react-baron';
 import './scroll.css'
 
 class ListViewCore extends Component {
-    static defaultProps = {
-        sss: 1
-      }
     constructor(props) {
 
         super(props)
@@ -166,6 +162,7 @@ class ListViewCore extends Component {
 
     _rowRenderer = (param) => {
         var { key, style, index } = param;
+        console.log(key, index)
         style = {
             ...style,
             cursor: 'pointer',
@@ -221,27 +218,26 @@ class ListViewCore extends Component {
         }} >{this._setHeader()}</div >
 
     render() {
-        console.log(this.state.height)
         return (
             <div style={{ width: 'auto', height: '100%', display: 'flex', flexDirection: 'column' }}>
                 {this._toolsPanelRenderer()}
                 {this._headerRenderer()}
                 <div
-                    style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto' }}
+                    style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0 }}
                     ref={this._getElem}>
-                    <CustomScroll allowOuterScroll="{true}" flex="1">
-                        <div>
-                            <List
-                            className={this.props.className}
-                            width={this.state.width}
-                            height={this.state.height}
-                            style={{ width: '100%', height: this.state.height, margin: 0, }}
-                            rowCount={this.props.items.length}
-                            rowHeight={this._rowHeight}
-                            rowRenderer={this._rowRenderer}
-                            scrollToIndex={this.state.setSelectedIndex}
-                        />
-                        </div>
+                    <CustomScroll allowOuterScroll={true} flex="1">
+                        {/* <div style={{overflow: 'auto'}} > */}
+                    <List
+                        className={this.props.className}
+                        width={this.state.width}
+                        height={this.state.height}
+                        style={{ width: '100%', height: '100%', margin: 0, minHeight: 0}}
+                        rowCount={this.props.items.length}
+                        rowHeight={this._rowHeight}
+                        rowRenderer={this._rowRenderer}
+                        scrollToIndex={this.state.setSelectedIndex}
+                    />
+                    {/* </div> */}
                         
                     </CustomScroll>
 

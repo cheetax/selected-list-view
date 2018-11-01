@@ -30,47 +30,9 @@
     outline: none
 }
 
-.clipper {
-    position: relative;
-    overflow: hidden;
-    height: 100%;
-  }
-  .scroller {
-    overflow: auto;
-    height: 100%;
-  }
+
   .scroller::-webkit-scrollbar {
     width: 0;
     height: 0;
   }
-  
-  .track {
-    display: none;
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    bottom: 2px;
-    width: 0;
-  }
-  .track._h {
-    top: auto;
-    width: auto;
-    height: 0;
-    left: 2px;
-  }
-  .baron > .track {
-    display: block;
-  }
-  .bar {
-    position: absolute;
-    right: 0;
-    width: 6px;
-    border-radius: 3px;
-    background: #ccc;
-  }
-  /* .bar._h {
-    bottom: 0;
-    right: auto;
-    width: auto;
-    height: 6px;
-  } */
+ 
