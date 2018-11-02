@@ -1,44 +1,25 @@
-.rcs-custom-scroll {
-    min-height: 0;
-    min-width: 0;
-}
-.rcs-custom-scroll .rcs-outer-container {
-    overflow: hidden;
-}
-.rcs-custom-scroll .rcs-outer-container .rcs-positioning {
-    position: relative;
-}
-.rcs-custom-scroll .rcs-inner-container {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-}
-.rcs-custom-scroll .rcs-custom-scrollbar {
-    position: absolute;
-    height: 100%;
-    width: 3px;
-    right: 3px;
-    opacity: 0;
-    z-index: 1;
-    transition: opacity 0.4s ease-out;
-    padding: 6px 0;
-    box-sizing: border-box;
-    will-change: opacity;
-    pointer-events: none;
-}
-.rcs-custom-scroll .rcs-custom-scroll-handle {
-    position: absolute;
-    width: 100%;
-    top: 0;
-}
-.rcs-custom-scroll .rcs-inner-handle {
-    height: calc(100% - 12px);
-    margin-top: 6px;
-    background-color: rgba(146, 146, 146, 0.7);
-    border-radius: 3px;
+.collection::-webkit-scrollbar{
+    width: 5px;
+    background: transparent;
 }
 
-.rcs-custom-scroll .rcs-outer-container:hover .rcs-custom-scrollbar {
-    opacity: 1;
-    transition-duration: 0.2s;
+.collection::-webkit-scrollbar-thumb{
+    background: gray
+}
+
+.collection::-webkit-scrollbar-track {
+    background: transparent
+}
+
+.collection::-webkit-scrollbar-track-piece {
+}
+
+.collection::before {
+    position: absolute;
+    content: '';
+    margin-right: 10px;
+    height: 100%;
+    width: 10px;
+    top: 0;
+    right: 0;
 }

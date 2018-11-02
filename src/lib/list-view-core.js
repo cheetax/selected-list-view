@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { List } from 'react-virtualized';
-import CustomScroll from 'react-custom-scroll';
 import './scroll.css'
 
 class ListViewCore extends Component {
@@ -225,22 +224,16 @@ class ListViewCore extends Component {
                 <div
                     style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0 }}
                     ref={this._getElem}>
-                    <CustomScroll allowOuterScroll={true} flex="1">
-                        {/* <div style={{overflow: 'auto'}} > */}
                     <List
                         className={this.props.className}
                         width={this.state.width}
                         height={this.state.height}
-                        style={{ width: '100%', height: '100%', margin: 0, minHeight: 0}}
+                        style={{ width: '100%', height: '100%', margin: 0, minHeight: 0 }}
                         rowCount={this.props.items.length}
                         rowHeight={this._rowHeight}
                         rowRenderer={this._rowRenderer}
                         scrollToIndex={this.state.setSelectedIndex}
                     />
-                    {/* </div> */}
-                        
-                    </CustomScroll>
-
                 </div>
             </div>
         )

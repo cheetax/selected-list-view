@@ -58,11 +58,10 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "material-inputfield": "^0.7.1",
-    "react-baron": "^3.0.0",
-    "react-custom-scroll": "^4.0.0",
     "react-virtualized": "^9.20.1",
     "react-web-tabs": "^1.0.1",
-    "save": "^2.3.2"
+    "save": "^2.3.2",
+    "simplebar-react": "0.1.0-beta.3"
   },
   "browserslist": [
     ">0.2%",

@@ -2,11 +2,7 @@
 import { SelectedListView } from './lib/index'
 import React, { Component } from 'react';
 import { NumberField } from 'material-inputfield';
-import { List } from 'react-virtualized';
-import CustomScroll from 'react-custom-scroll';
 import 'material-inputfield/dist/material-inputfield.css';
-import './lib/selected-list-view-core.css'
-
 import './App.css';
 
 var users = [
