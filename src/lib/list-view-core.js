@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { List } from 'react-virtualized';
-import './scroll.css'
+import { Scrollbars } from 'react-custom-scrollbars'
+//import 'react-custom-scrollbars/lib/react-custom-scrollbar.css'
+//import './scroll.css'
 
 class ListViewCore extends Component {
     constructor(props) {
@@ -29,6 +31,16 @@ class ListViewCore extends Component {
             header: null,
         }
     }
+
+    handleScroll = ({ target }) => {
+        const { scrollTop, scrollLeft } = target;
+
+        const { Grid: grid } = this.List;
+
+        grid.handleScrollEvent({ scrollTop, scrollLeft });
+    }
+
+    List = null;
 
     getIndexAsync = (items1, items2) => new Promise((resolve) => {
         var i = -1;
@@ -224,16 +236,24 @@ class ListViewCore extends Component {
                 <div
                     style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0 }}
                     ref={this._getElem}>
-                    <List
-                        className={this.props.className}
-                        width={this.state.width}
-                        height={this.state.height}
-                        style={{ width: '100%', height: '100%', margin: 0, minHeight: 0 }}
-                        rowCount={this.props.items.length}
-                        rowHeight={this._rowHeight}
-                        rowRenderer={this._rowRenderer}
-                        scrollToIndex={this.state.setSelectedIndex}
-                    />
+                    <Scrollbars
+                        autoHide
+                        style={{ width: this.state.width, height: this.state.height }}
+                        onScroll={this.handleScroll}
+                    >
+                        <List
+                            ref={instance => (this.List = instance)}
+                            className={this.props.className}
+                            width={this.state.width}
+                            height={this.state.height}
+                            style={{ width: '100%', height: '100%', margin: 0, minHeight: 0, overflowX: false, overflowY: false }}
+                            rowCount={this.props.items.length}
+                            rowHeight={this._rowHeight}
+                            rowRenderer={this._rowRenderer}
+                            scrollToIndex={this.state.setSelectedIndex}
+                        />
+                    </Scrollbars>
+
                 </div>
             </div>
         )

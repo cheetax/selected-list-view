@@ -5,153 +5,36 @@ import { NumberField } from 'material-inputfield';
 import 'material-inputfield/dist/material-inputfield.css';
 import './App.css';
 
-var users = [
-  {
-    firstName: 'Ivan',
-    surName: 'Petrov',
-    email: 'ivan@mail.com'
-  },
-  {
-    firstName: 'Petro',
-    surName: 'Ivanov',
-    email: 'petro@mail.com'
-  },
-  {
+
+
+const getUsers = ({ users, user }) => {
+  var _users = []
+  for (var i = 1; i <= 100; i++) {
+    _users.push({
+      ...user,
+      firstName: user.firstName + i
+    })
+  }
+  return [...users, ..._users]
+}
+
+var users = getUsers({
+  users: [], 
+  user: {
     firstName: 'John',
     surName: 'Ivanov',
     email: 'john@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ivan',
-    surName: 'Petrov',
-    email: 'ivan@mail.com'
-  },
-  {
-    firstName: 'Petro',
-    surName: 'Ivanov',
-    email: 'petro@mail.com'
-  },
-  {
-    firstName: 'John',
-    surName: 'Ivanov',
-    email: 'john@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ivan',
-    surName: 'Petrov',
-    email: 'ivan@mail.com'
-  },
-  {
-    firstName: 'Petro',
-    surName: 'Ivanov',
-    email: 'petro@mail.com'
-  },
-  {
-    firstName: 'John',
-    surName: 'Ivanov',
-    email: 'john@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon',
-    surName: 'Petrov',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon21',
-    surName: 'Petrov21',
-    email: 'ilon@mail.com'
-  },
-  {
-    firstName: 'Ilon22',
-    surName: 'Petrov22',
-    email: 'ilon@mail.com'
-  },
-]
+  }
+})
 
 class App extends Component {
   constructor(props) {
     super(props)
+    //users = 
     this.state = {
       selectUser: null,
     }
   }
-
-
 
   rowRenderer = ({ item }) => {
     return [
@@ -159,7 +42,7 @@ class App extends Component {
       <span>{item.email}</span>
     ]
   }
-  
+
   _valueSelectedUser = () => this.state.selectUser ? this.state.selectUser.firstName + ' ' + this.state.selectUser.surName : ''
 
   headerRenderer = (param) => [<span width={100} style={param} >Пользователи</span>,
@@ -210,7 +93,7 @@ class App extends Component {
     return (
       <div className="App">
 
-        
+
         {/* <header className="App-header">
           <h1 className="App-title">Test Input Field</h1>
         </header>
@@ -225,7 +108,7 @@ class App extends Component {
             name='label' value={this._valueSelectedUser()}
             type='text'
             label='Label'
-            extSpinButton={this._selectedListView} />          
+            extSpinButton={this._selectedListView} />
         </div>
       </div>
     );
