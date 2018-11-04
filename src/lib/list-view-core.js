@@ -29,6 +29,8 @@ class ListViewCore extends Component {
             readHeader: true,
             columnWidth: [],
             header: null,
+            onScroll: true,
+            scroll: null
         }
     }
 
@@ -38,6 +40,20 @@ class ListViewCore extends Component {
         const { Grid: grid } = this.List;
 
         grid.handleScrollEvent({ scrollTop, scrollLeft });
+    }
+
+    listScroll = (target) => {
+        if (this.state.onScroll) {
+            const { scrollTop } = target;
+            const scroll = this.state.scroll;
+            (scroll) && scroll.scrollTop(scrollTop)
+            this.setState({ onScroll: false })
+        }
+    }
+
+    refScroll = (elem) => {
+        
+        elem && this.setState({ scroll: elem })
     }
 
     List = null;
@@ -73,7 +89,9 @@ class ListViewCore extends Component {
 
     componentWillReceiveProps(nextProps) {
         let props = this.props
-        if (props.items !== nextProps.items) {
+        const list = this.List;
+        list && list.forceUpdateGrid();
+        if (JSON.stringify(props.items) !== JSON.stringify(nextProps.items)) {
             this.getIndexAsync(nextProps.items, props.items).then((index) => {
                 var _index = -1;
                 if (index === -1) _index = this.state.prevItem;
@@ -89,12 +107,10 @@ class ListViewCore extends Component {
             })
         }
         else {
-            //let index = nextProps.setSelectedIndex
             let selectItemJson = JSON.stringify(props.selectItem)
             let index = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
             this.setState({
                 items_select: nextProps.items.map((item, i) => ({ active: (i === index) })),
-                //items_select: props.items.map((item) => ({ active: (index === JSON.stringify(item)) })),
                 setSelectedIndex: index,
             })
         }
@@ -136,7 +152,8 @@ class ListViewCore extends Component {
         _items_select[_key].active = true;
         this.setState({
             items_select: _items_select,
-            prevItem: _key
+            prevItem: _key,
+            onScroll: true,
         });
         let props = this.props;
         (props.onSelectedItem) && props.onSelectedItem(this.props.items[_key]);
@@ -173,7 +190,7 @@ class ListViewCore extends Component {
 
     _rowRenderer = (param) => {
         var { key, style, index } = param;
-        console.log(key, index)
+        //        console.log(key, index)
         style = {
             ...style,
             cursor: 'pointer',
@@ -240,9 +257,11 @@ class ListViewCore extends Component {
                         autoHide
                         style={{ width: this.state.width, height: this.state.height }}
                         onScroll={this.handleScroll}
+                        ref={this.refScroll}
                     >
                         <List
                             ref={instance => (this.List = instance)}
+                            onScroll={this.listScroll}
                             className={this.props.className}
                             width={this.state.width}
                             height={this.state.height}
