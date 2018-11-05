@@ -43,6 +43,7 @@ class ListViewCore extends Component {
     }
 
     listScroll = (target) => {
+        console.log(target)
         if (this.state.onScroll) {
             const { scrollTop } = target;
             const scroll = this.state.scroll;
@@ -51,8 +52,7 @@ class ListViewCore extends Component {
         }
     }
 
-    refScroll = (elem) => {
-        
+    refScroll = (elem) => {        
         elem && this.setState({ scroll: elem })
     }
 
@@ -89,8 +89,6 @@ class ListViewCore extends Component {
 
     componentWillReceiveProps(nextProps) {
         let props = this.props
-        const list = this.List;
-        list && list.forceUpdateGrid();
         if (JSON.stringify(props.items) !== JSON.stringify(nextProps.items)) {
             this.getIndexAsync(nextProps.items, props.items).then((index) => {
                 var _index = -1;
@@ -107,6 +105,10 @@ class ListViewCore extends Component {
             })
         }
         else {
+            const scroll = this.state.scroll;
+            const { scrollTop } = scroll ? scroll.getValues() : {scrollTop: null};
+            (scrollTop !== null ) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
+            console.log(scrollTop)
             let selectItemJson = JSON.stringify(props.selectItem)
             let index = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
             this.setState({

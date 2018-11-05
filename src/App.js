@@ -104,7 +104,7 @@ class App extends Component {
             outlined
             readOnly
             //onSpinButtons
-            onChange={(event) => console.log(event)}
+//            onChange={(event) => console.log(event)}
             name='label' value={this._valueSelectedUser()}
             type='text'
             label='Label'
