@@ -107,18 +107,19 @@ class ListViewCore extends Component {
             // const { scrollTop } = scroll ? scroll.getValues() : {scrollTop: null};
             // (scrollTop !== null ) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
             // console.log(scrollTop)
-            let selectItemJson = JSON.stringify(props.selectItem)
+            let selectItemJson = JSON.stringify(nextProps.selectItem)
             let index = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
             if (index !== -1) {
                 let list = this.List;
                 const scroll = this.state.scroll;
                 const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
-                (scrollTop !== null && scroll) && scroll.scrollTop(scrollTop + 1)
+                (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + 1)
                 //console.log(index, scrollTop)
             }
-            this.setState({
-                items_select: nextProps.items.map((item, i) => ({ active: (i === index) })),
+            (this.state.setSelectedIndex !== index) && this.setState({
+                items_select: props.items.map((item, i) => ({ active: (i === index) })),
                 setSelectedIndex: index,
+                prevItem: this.state.setSelectedIndex
             })
         }
     }
@@ -153,25 +154,35 @@ class ListViewCore extends Component {
     }
 
     _onClick = (key) => {
+        this._onSelected(key);
+        let props = this.props;
+        (props.onClose) && props.onClose()
+    }
+
+    _onSelected = (key) => {
         var _key = parseInt(key, 10)
-        var _items_select = this.state.items_select;
+        var _items_select = [...this.state.items_select];
         if (this.state.prevItem !== -1 && this.state.prevItem < _items_select.length) _items_select[this.state.prevItem].active = false;
         _items_select[_key].active = true;
-        
         let props = this.props;
         (props.onSelectedItem) && props.onSelectedItem(this.props.items[_key]);
         (props.onSelectedIndex) && props.onSelectedIndex(_key);
-        (props.onClose) && props.onClose()
+        console.log(key, _key, this.state.prevItem)
         this.setState({
             items_select: _items_select,
             prevItem: _key,
             onScroll: true,
         });
+
     }
+
 
     _rowHeight = ({ index }) => this.props.rowHeight ? this.props.rowHeight : 48;
 
-    _getClassName = (index) => this.state.items_select[index].active ? 'lv-collection-item active' : 'lv-collection-item'
+    _getClassName = (index) => {
+
+        return this.state.items_select[index].active ? 'lv-collection-item active' : 'lv-collection-item'
+    }
 
     _rowRendererElem = (param) => {
         var { index } = param;
@@ -208,6 +219,7 @@ class ListViewCore extends Component {
                 className={this._getClassName(index)}
                 key={key}
                 style={style}
+                //onMouseDown={() => this._onSelected(key)}
                 onClick={() => this._onClick(key)}
             >
                 {this._rowRendererElem(param)}
@@ -253,6 +265,7 @@ class ListViewCore extends Component {
             display: 'flex',
         }} >{this._setHeader()}</div >
 
+    
     render() {
         return (
             <div style={{ width: 'auto', height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -260,7 +273,8 @@ class ListViewCore extends Component {
                 {this._headerRenderer()}
                 <div
                     style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0 }}
-                    ref={this._getElem}>
+                    ref={this._getElem}                    
+                >
                     <Scrollbars
                         autoHide
                         style={{ width: this.state.width, height: this.state.height }}

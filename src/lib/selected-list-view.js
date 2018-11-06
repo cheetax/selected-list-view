@@ -69,10 +69,10 @@ class SelectedListView extends Component {
     //     this.props.onSelected && this.props.onSelected(period)
     // }
 
-    _onClose = () => setTimeout(() => this.setState({
+    _onClose = () => this.setState({
         openModalFlex: false,
         openModalExpand: false
-    }), 10000)
+    })
 
 
     _Modal = (openFlex) => <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
