@@ -36,14 +36,12 @@ class ListViewCore extends Component {
 
     handleScroll = ({ target }) => {
         const { scrollTop, scrollLeft } = target;
-
         const { Grid: grid } = this.List;
-
         grid.handleScrollEvent({ scrollTop, scrollLeft });
     }
 
     listScroll = (target) => {
-        console.log(target)
+        //console.log(target)
         if (this.state.onScroll) {
             const { scrollTop } = target;
             const scroll = this.state.scroll;
@@ -52,7 +50,7 @@ class ListViewCore extends Component {
         }
     }
 
-    refScroll = (elem) => {        
+    refScroll = (elem) => {
         elem && this.setState({ scroll: elem })
     }
 
@@ -105,12 +103,19 @@ class ListViewCore extends Component {
             })
         }
         else {
-            const scroll = this.state.scroll;
-            const { scrollTop } = scroll ? scroll.getValues() : {scrollTop: null};
-            (scrollTop !== null ) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
-            console.log(scrollTop)
+            // const scroll = this.state.scroll;
+            // const { scrollTop } = scroll ? scroll.getValues() : {scrollTop: null};
+            // (scrollTop !== null ) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
+            // console.log(scrollTop)
             let selectItemJson = JSON.stringify(props.selectItem)
             let index = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
+            if (index !== -1) {
+                let list = this.List;
+                const scroll = this.state.scroll;
+                const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
+                (scrollTop !== null && scroll) && scroll.scrollTop(scrollTop + 1)
+                //console.log(index, scrollTop)
+            }
             this.setState({
                 items_select: nextProps.items.map((item, i) => ({ active: (i === index) })),
                 setSelectedIndex: index,
@@ -152,15 +157,16 @@ class ListViewCore extends Component {
         var _items_select = this.state.items_select;
         if (this.state.prevItem !== -1 && this.state.prevItem < _items_select.length) _items_select[this.state.prevItem].active = false;
         _items_select[_key].active = true;
+        
+        let props = this.props;
+        (props.onSelectedItem) && props.onSelectedItem(this.props.items[_key]);
+        (props.onSelectedIndex) && props.onSelectedIndex(_key);
+        (props.onClose) && props.onClose()
         this.setState({
             items_select: _items_select,
             prevItem: _key,
             onScroll: true,
         });
-        let props = this.props;
-        (props.onSelectedItem) && props.onSelectedItem(this.props.items[_key]);
-        (props.onSelectedIndex) && props.onSelectedIndex(_key);
-        (props.onClose) && props.onClose()
     }
 
     _rowHeight = ({ index }) => this.props.rowHeight ? this.props.rowHeight : 48;
