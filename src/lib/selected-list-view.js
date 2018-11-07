@@ -14,6 +14,7 @@ class SelectedListView extends Component {
         this.state = {
             openModalFlex: false,
             openModalExpand: false,
+            openModal: false,
             elemSize: null,
             elemSpin: null
         }
@@ -69,10 +70,13 @@ class SelectedListView extends Component {
     //     this.props.onSelected && this.props.onSelected(period)
     // }
 
-    _onClose = () => this.setState({
-        openModalFlex: false,
-        openModalExpand: false
-    })
+    _onClose = () => {
+        this.setState({
+            openModalFlex: false,
+            openModalExpand: false
+        })
+        setTimeout(() => this.setState({ openModal: false }), 300)
+    }
 
 
     _Modal = (openFlex) => <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
@@ -92,6 +96,7 @@ class SelectedListView extends Component {
         this.setState({
             openModalFlex: status,
             openModalExpand: !status,
+            openModal: true,
             openFlex: status
         })
     }

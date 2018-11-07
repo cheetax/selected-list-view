@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List } from 'react-virtualized';
+import { List, ArrowKeyStepper } from 'react-virtualized';
 import { Scrollbars } from 'react-custom-scrollbars'
 //import 'react-custom-scrollbars/lib/react-custom-scrollbar.css'
 //import './scroll.css'
@@ -17,6 +17,7 @@ class ListViewCore extends Component {
 
         var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
         var setSelectedIndex = props.items ? props.items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
+        
         this.columnWidth = [];
         this.state = {
             //items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
@@ -38,23 +39,26 @@ class ListViewCore extends Component {
         const { scrollTop, scrollLeft } = target;
         const { Grid: grid } = this.List;
         grid.handleScrollEvent({ scrollTop, scrollLeft });
+        console.log(scrollTop)
     }
 
     listScroll = (target) => {
         //console.log(target)
-        if (this.state.onScroll) {
-            const { scrollTop } = target;
-            const scroll = this.state.scroll;
-            (scroll) && scroll.scrollTop(scrollTop)
-            this.setState({ onScroll: false })
-        }
+        // if (this.state.onScroll) {
+        //     const { scrollTop } = target;
+        //     const scroll = this.state.scroll;
+        //     (scroll) && scroll.scrollTop(scrollTop)
+        //     this.setState({ onScroll: false })
+        // }
     }
 
     refScroll = (elem) => {
-        elem && this.setState({ scroll: elem })
+        this.Scroll = elem && elem
+        //console.log(elem)
     }
 
-    List = null;
+    // List = null;
+    // Scroll = null;
 
     getIndexAsync = (items1, items2) => new Promise((resolve) => {
         var i = -1;
@@ -111,9 +115,9 @@ class ListViewCore extends Component {
             let index = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
             if (index !== -1) {
                 let list = this.List;
-                const scroll = this.state.scroll;
+                const scroll = this.Scroll;
                 const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
-                (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + 1)
+                (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
                 //console.log(index, scrollTop)
             }
             (this.state.setSelectedIndex !== index) && this.setState({
@@ -128,8 +132,30 @@ class ListViewCore extends Component {
 
     componentDidUpdate() {
         var elem = this.state.elem;
-
+        let index = this.state.setSelectedIndex;
+        if (index !== -1) {
+            let list = this.List;
+            const scroll = this.Scroll;
+            //list && list.forceUpdateGrid();
+            const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
+            (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
+            //this.forceUpdate();
+            console.log(index, scrollTop, scroll)
+        }
         elem && elem.parentElement.clientWidth !== this.state.width && this.setState({ width: elem.parentElement.clientWidth })
+    }
+
+    componentWillMount() {
+        document.addEventListener("keydown", this._onKeyDown);
+
+    }
+
+    componentDidMount() {
+        
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this._onKeyDown);
     }
 
     _getElem = (elem) => {
@@ -174,6 +200,10 @@ class ListViewCore extends Component {
             onScroll: true,
         });
 
+    }
+
+    _onKeyDown = (e) => {
+        console.log(e)
     }
 
 
@@ -265,16 +295,23 @@ class ListViewCore extends Component {
             display: 'flex',
         }} >{this._setHeader()}</div >
 
-    
+
     render() {
         return (
-            <div style={{ width: 'auto', height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ width: 'auto', height: '100%', display: 'flex', flexDirection: 'column' }}
+            >
                 {this._toolsPanelRenderer()}
                 {this._headerRenderer()}
                 <div
                     style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0 }}
-                    ref={this._getElem}                    
+                    ref={this._getElem}
                 >
+                    {/* <ArrowKeyStepper
+                        rowCount={this.props.items.length}
+                        columnCount={1}
+                    >
+                        {({ onSectionRendered, scrollToColumn, scrollToRow }) => {
+                            return */}
                     <Scrollbars
                         autoHide
                         style={{ width: this.state.width, height: this.state.height }}
@@ -283,7 +320,7 @@ class ListViewCore extends Component {
                     >
                         <List
                             ref={instance => (this.List = instance)}
-                            onScroll={this.listScroll}
+                            //onScroll={this.listScroll}
                             className={this.props.className}
                             width={this.state.width}
                             height={this.state.height}
@@ -291,9 +328,16 @@ class ListViewCore extends Component {
                             rowCount={this.props.items.length}
                             rowHeight={this._rowHeight}
                             rowRenderer={this._rowRenderer}
+                            //onSectionRendered={onSectionRendered}
+                            //scrollToRow={scrollToRow}
                             scrollToIndex={this.state.setSelectedIndex}
                         />
+
+
+
                     </Scrollbars>
+                    {/* }}
+                    </ArrowKeyStepper> */}
 
                 </div>
             </div>
