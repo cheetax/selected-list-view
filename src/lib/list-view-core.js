@@ -53,12 +53,12 @@ class ListViewCore extends Component {
     }
 
     refScroll = (elem) => {
-        this.Scroll = elem && elem
+        this.Scroll = elem
         //console.log(elem)
     }
 
-    // List = null;
-    // Scroll = null;
+    List = null;
+    Scroll = null;
 
     getIndexAsync = (items1, items2) => new Promise((resolve) => {
         var i = -1;
