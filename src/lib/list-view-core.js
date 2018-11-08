@@ -127,9 +127,9 @@ class ListViewCore extends Component {
             const clientHeight = scroll && scroll.getClientHeight();
             let scrollTop = list && list.getOffsetForRow({ alignment: '', index });
             const rowHeight = this._rowHeight();
-            scrollTop = scrollTop > clientHeight - rowHeight ? scrollTop + (clientHeight - rowHeight) / 2 : scrollTop > 0 ? clientHeight / 2 : 0;
+            scrollTop = scrollTop > (clientHeight - rowHeight) / 2 ? scrollTop + (clientHeight - rowHeight) / 2 : scrollTop > 0 ? clientHeight / 2 : 1;
             //(scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
-            (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
+            (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop)
             this.setState({ onScroll: false })
         }
         elem && elem.parentElement.clientWidth !== this.state.width && this.setState({ width: elem.parentElement.clientWidth })
