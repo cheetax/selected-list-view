@@ -37,9 +37,13 @@ class ListViewCore extends Component {
 
     handleScroll = ({ target }) => {
         const { scrollTop, scrollLeft } = target;
-        const { Grid: grid } = this.List;
-        grid.handleScrollEvent({ scrollTop, scrollLeft });
-        console.log(scrollTop)
+        const scroll = this.Scroll
+        //let scrTop = scroll && scroll.getScrollTop();
+        //const { Grid: grid } = this.List;
+        const list = this.List;
+        list && list.scrollToPosition(scrollTop)
+        console.log(scrollTop);
+        //grid.handleScrollEvent({ scrollTop, scrollLeft });
     }
 
     listScroll = (target) => {
@@ -140,7 +144,7 @@ class ListViewCore extends Component {
             const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
             (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
             //this.forceUpdate();
-            console.log(index, scrollTop, scroll)
+//            console.log(index, scrollTop, scroll)
         }
         elem && elem.parentElement.clientWidth !== this.state.width && this.setState({ width: elem.parentElement.clientWidth })
     }
@@ -163,7 +167,7 @@ class ListViewCore extends Component {
             var elemHeight = elem.clientHeight;
             var elemWidth = elem.clientWidth;
             this.setState({
-                height: elemHeight ? elemHeight : this.props.items.length && this.props.items.length * this._rowHeight({}),
+                height: elemHeight ? elemHeight : this.props.items.length && this.props.items.length * this._rowHeight(),
                 width: elemWidth,
                 elem: elem
             })
@@ -206,13 +210,9 @@ class ListViewCore extends Component {
         console.log(e)
     }
 
+    _rowHeight = () => this.props.rowHeight ? this.props.rowHeight : 48
 
-    _rowHeight = ({ index }) => this.props.rowHeight ? this.props.rowHeight : 48;
-
-    _getClassName = (index) => {
-
-        return this.state.items_select[index].active ? 'lv-collection-item active' : 'lv-collection-item'
-    }
+    _getClassName = (index) => this.state.items_select[index].active ? 'lv-collection-item active' : 'lv-collection-item'
 
     _rowRendererElem = (param) => {
         var { index } = param;
@@ -297,6 +297,7 @@ class ListViewCore extends Component {
 
 
     render() {
+        //console.log(this.state.height)
         return (
             <div style={{ width: 'auto', height: '100%', display: 'flex', flexDirection: 'column' }}
             >
@@ -326,11 +327,11 @@ class ListViewCore extends Component {
                             height={this.state.height}
                             style={{ width: '100%', height: '100%', margin: 0, minHeight: 0, overflowX: false, overflowY: false }}
                             rowCount={this.props.items.length}
-                            rowHeight={this._rowHeight}
+                            rowHeight={this._rowHeight()}
                             rowRenderer={this._rowRenderer}
                             //onSectionRendered={onSectionRendered}
-                            //scrollToRow={scrollToRow}
-                            scrollToIndex={this.state.setSelectedIndex}
+                            scrollToRow={this.state.setSelectedIndex + 1}
+                            //scrollToIndex={this.state.setSelectedIndex}
                         />
 
 

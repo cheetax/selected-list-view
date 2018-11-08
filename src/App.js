@@ -53,6 +53,7 @@ class App extends Component {
     isModal
     isButtonExpand
     isButtonMore
+    //rowHeight={48}
     Width={300}
     Height={300}
     headerRenderer={this.headerRenderer}
