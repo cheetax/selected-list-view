@@ -96,7 +96,7 @@ class SelectedListView extends Component {
         this.setState({
             openModalFlex: status,
             openModalExpand: !status,
-            openModal: true,
+            //openModal: true,
             openFlex: status
         })
     }
