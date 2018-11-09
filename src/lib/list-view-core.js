@@ -135,10 +135,6 @@ class ListViewCore extends Component {
 
     }
 
-    componentDidMount() {
-
-    }
-
     componentWillUnmount() {
         document.removeEventListener("keydown", this._onKeyDown);
     }
@@ -285,6 +281,8 @@ class ListViewCore extends Component {
                 {this._headerRenderer()}
                 <div
                     style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0 }}
+                    onKeyDown={(e) => console.log(e)}
+                    tabIndex='0'
                     ref={this._getElem}
                 >
                     {/* <ArrowKeyStepper
@@ -301,7 +299,6 @@ class ListViewCore extends Component {
                     >
                         <List
                             ref={instance => (this.List = instance)}
-                            //onScroll={this.listScroll}
                             className={this.props.className}
                             width={this.state.width}
                             height={this.state.height}
@@ -309,9 +306,7 @@ class ListViewCore extends Component {
                             rowCount={this.props.items.length}
                             rowHeight={this._rowHeight()}
                             rowRenderer={this._rowRenderer}
-                            //onSectionRendered={onSectionRendered}
                             scrollToRow={this.state.setSelectedIndex + 1}
-                        //scrollToIndex={this.state.setSelectedIndex}
                         />
 
 

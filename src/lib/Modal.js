@@ -67,7 +67,7 @@ export class Modal extends Component {
             className={ClassModalOverlay({ openModal: (openModalFlex || openModalExpand), openFlex })}
         >
             {this.props.elemSize && <div ref={this._ref} style={this._style()} className={'modal-flex-column ' + ClassModal({ openModalFlex, openModalExpand, openFlex })} >
-                {this.props.openModal && <ListViewCore {...this.props} />}
+                {((openModalFlex && openFlex) || (openModalExpand && !openFlex)) && <ListViewCore {...this.props} />}
                 {this.props.children && <div style={{ margin: '8px 8px 0 8px' }} >{this.props.children}</div>}
             </div>}
 
