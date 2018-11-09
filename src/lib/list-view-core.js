@@ -96,10 +96,6 @@ class ListViewCore extends Component {
             })
         }
         else {
-            // const scroll = this.state.scroll;
-            // const { scrollTop } = scroll ? scroll.getValues() : {scrollTop: null};
-            // (scrollTop !== null ) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
-            // console.log(scrollTop)
             let selectItemJson = JSON.stringify(nextProps.selectItem)
             let index = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
             if (index !== -1) {
@@ -128,7 +124,6 @@ class ListViewCore extends Component {
             let scrollTop = list && list.getOffsetForRow({ alignment: '', index });
             const rowHeight = this._rowHeight();
             scrollTop = scrollTop > (clientHeight - rowHeight) / 2 ? scrollTop + (clientHeight - rowHeight) / 2 : scrollTop > 0 ? clientHeight / 2 : 1;
-            //(scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
             (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop)
             this.setState({ onScroll: false })
         }
