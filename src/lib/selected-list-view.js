@@ -72,10 +72,12 @@ class SelectedListView extends Component {
 
     _onClose = () => {
         this.setState({
+            openModal: false
+        })
+        setTimeout(() => this.setState({
             openModalFlex: false,
             openModalExpand: false
-        })
-        setTimeout(() => this.setState({ openModal: false }), 300)
+        }), 300)
     }
 
 
@@ -96,7 +98,7 @@ class SelectedListView extends Component {
         this.setState({
             openModalFlex: status,
             openModalExpand: !status,
-            //openModal: true,
+            openModal: true,
             openFlex: status
         })
     }

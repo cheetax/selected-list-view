@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import ListViewCore from './list-view-core';
 import './Modal.css'
-const ClassModal = ({ openModalFlex, openModalExpand, openFlex }) => (((openFlex) ? 'modal-dialog-flex ' + ((openModalFlex) ? 'active' : '') : 'modal-dialog-button ' + ((openModalExpand) ? 'active' : '')))
+const ClassModal = ({ openModal, openFlex, openModalFlex, openModalExpand }) => {
+    return (((openFlex) ? 'modal-dialog-flex ' + ((openModal && openModalFlex) ? 'active' : '') : 'modal-dialog-button ' + ((openModal && openModalExpand) ? 'active' : '')))
+}
 
-const ClassModalOverlay = ({ openModal, openFlex }) => ((openFlex) ? ('modal-dialog-overlay ' + ((openModal) ? 'active' : '')) : ((!openModal) ? 'modal-dialog-button-overlay' : ''))
+const ClassModalOverlay = ({ openModal, openFlex, openModalFlex, openModalExpand }) => ((openFlex) ? ('modal-dialog-overlay ' + ((openModal && openModalFlex) ? 'active' : '')) : ((!openModal && !openModalExpand) ? 'modal-dialog-button-overlay' : ''))
 
 const positiveNum = (num) => num < 0 ? 0 : num
 
@@ -64,9 +66,12 @@ export class Modal extends Component {
         const openModalExpand = this.props.openModalExpand
         const openFlex = this.props.openFlex
         return <div
-            className={ClassModalOverlay({ openModal: (openModalFlex || openModalExpand), openFlex })}
+            className={ClassModalOverlay({ openModal: this.props.openModal, openFlex, openModalFlex, openModalExpand  })}
         >
-            {this.props.elemSize && <div ref={this._ref} style={this._style()} className={'modal-flex-column ' + ClassModal({ openModalFlex, openModalExpand, openFlex })} >
+            {this.props.elemSize && <div
+                ref={this._ref} style={this._style()}
+                className={'modal-flex-column ' + ClassModal({ openModal: this.props.openModal, openFlex, openModalFlex, openModalExpand })}
+            >
                 {((openModalFlex && openFlex) || (openModalExpand && !openFlex)) && <ListViewCore {...this.props} />}
                 {this.props.children && <div style={{ margin: '8px 8px 0 8px' }} >{this.props.children}</div>}
             </div>}
