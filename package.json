@@ -82,7 +82,7 @@
       [
         "@babel/plugin-proposal-decorators",
         {
-          //"legacy": true,
+          "legacy": true,
           "decoratorsBeforeExport": true
         }
       ],
