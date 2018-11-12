@@ -45,7 +45,7 @@ module.exports = {
             presets: [
               ["@babel/preset-env", { "modules": false }],
               "@babel/preset-react",
-              ["@babel/preset-stage-3", { "loose": true, "decoratorsLegacy": true }]
+              //  ["@babel/preset-stage-3", { "loose": true, "decoratorsLegacy": true }]
             ],
             plugins: [
               [
@@ -55,11 +55,12 @@ module.exports = {
                   "decoratorsBeforeExport": true
                 }
               ],
-              
+              //"transform-decorators-legacy",
               "@babel/plugin-proposal-class-properties",
-              
+
               ["@babel/plugin-transform-runtime", {
                 "helpers": true,
+                "polyfill": false,
                 "regenerator": false
               }],
               "react-hot-loader/babel"

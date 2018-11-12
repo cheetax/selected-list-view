@@ -7,8 +7,13 @@
       }
     ],
     "@babel/preset-react",
-    ["@babel/preset-stage-2", { "loose": true, "decoratorsLegacy": true }]
-
+    [
+      "@babel/preset-stage-2",
+      {
+        "loose": true,
+        "decoratorsLegacy": true
+      }
+    ]
   ],
   "plugins": [
     [
@@ -24,7 +29,14 @@
         "loose": true
       }
     ],
-    "@babel/plugin-transform-runtime"
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "helpers": true,
+        "polyfill": false,
+        "regenerator": false
+      }
+    ]
   ],
   "env": {
     "development": {

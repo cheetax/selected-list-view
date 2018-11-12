@@ -7,6 +7,11 @@ import keydown from 'react-keydown';
 
 //@keydown
 class ListViewCore extends Component {
+    @keydown  //('up', 'down')
+    _onKeyDown(e) {
+        console.log(e)
+    }
+
     constructor(props) {
 
         super(props)
@@ -134,7 +139,6 @@ class ListViewCore extends Component {
 
     componentWillMount() {
         document.addEventListener("keydown", this._onKeyDown);
-
     }
 
     componentWillUnmount() {
@@ -184,10 +188,7 @@ class ListViewCore extends Component {
         });
 
     }
-    @keydown  //('up', 'down')
-    _onKeyDown(e) {
-        console.log(e)
-    }
+    
 
     _rowHeight = () => this.props.rowHeight ? this.props.rowHeight : 48
 
