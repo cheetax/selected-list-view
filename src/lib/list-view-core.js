@@ -5,6 +5,7 @@ import keydown from 'react-keydown';
 //import 'react-custom-scrollbars/lib/react-custom-scrollbar.css'
 //import './scroll.css'
 
+//@keydown
 class ListViewCore extends Component {
     constructor(props) {
 
@@ -183,8 +184,8 @@ class ListViewCore extends Component {
         });
 
     }
-    //@keydown('up', 'down')
-    _onKeyDown = (e) => {
+    @keydown  //('up', 'down')
+    _onKeyDown(e) {
         console.log(e)
     }
 
