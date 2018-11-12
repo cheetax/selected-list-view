@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "react-scripts start",
+    "startReact": "react-scripts start",
+    "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production"
   },
   "repository": {
@@ -46,11 +47,13 @@
     "node-sass": "^4.9.4",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "react-hot-loader": "^4.3.12",
     "react-scripts": "^2.1.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
     "webpack": "^4.19.1",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -60,54 +63,6 @@
     "react-virtualized": "^9.20.1",
     "react-web-tabs": "^1.0.1",
     "save": "^2.3.2"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "modules": false
-        }
-      ],
-      "@babel/preset-react",
-      [
-        "@babel/preset-stage-2",
-        {
-          "loose": true,
-          "decoratorsLegacy": true
-        }
-      ]
-    ],
-    "plugins": [
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "legacy": true,
-          "decoratorsBeforeExport": true
-        }
-      ],
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ],
-      [
-        "@babel/plugin-transform-runtime",
-        {
-          "helpers": true,
-          "polyfill": false,
-          "regenerator": false
-        }
-      ]
-    ],
-    "env": {
-      "development": {
-        "plugins": [
-          "react-hot-loader/babel"
-        ]
-      }
-    }
   },
   "browserslist": [
     ">0.2%",

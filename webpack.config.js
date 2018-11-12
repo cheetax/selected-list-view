@@ -1,11 +1,13 @@
-var path = require('path');
-const webpack = require("webpack");
+const path = require('path');
+//const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: [
-    './src/lib/index.js'
+    './src/index.js'
   ],
   output: {
+    //path: path.resolve ('dist'),
     filename: 'index.js',
     libraryTarget: 'commonjs2'
   },
@@ -15,14 +17,18 @@ module.exports = {
       // both options are optional
       filename: "selected-list-view.css",
       chunkFilename: "selected-list-view.css"
-    })
+    }),
+    // new HtmlWebPackPlugin({
+    //   template: "./public/index.html",
+    //   filename: "./index.html"
+    // })
   ],
   module: {
     rules: [
       {
         test: /\.js$/,
         //include: path.resolve(__dirname, 'src'),
-        exclude: /(node_modules|bower_components|dist)/,
+        exclude: /(node_modules|dist)/,
         use: {
           loader: 'babel-loader',
           // query: {
@@ -44,15 +50,13 @@ module.exports = {
           options: {
             presets: [
               ["@babel/preset-env", { "modules": false }],
-              "@babel/preset-react",
-              //  ["@babel/preset-stage-3", { "loose": true, "decoratorsLegacy": true }]
+              "@babel/preset-react"
             ],
             plugins: [
               [
                 "@babel/plugin-proposal-decorators",
                 {
-                  "legacy": true,
-                  "decoratorsBeforeExport": true
+                  "legacy": true
                 }
               ],
               //"transform-decorators-legacy",
@@ -60,7 +64,6 @@ module.exports = {
 
               ["@babel/plugin-transform-runtime", {
                 "helpers": true,
-                "polyfill": false,
                 "regenerator": false
               }],
               "react-hot-loader/babel"

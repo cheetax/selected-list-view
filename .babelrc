@@ -6,21 +6,13 @@
         "modules": false
       }
     ],
-    "@babel/preset-react",
-    [
-      "@babel/preset-stage-2",
-      {
-        "loose": true,
-        "decoratorsLegacy": true
-      }
-    ]
+    "@babel/preset-react"    
   ],
   "plugins": [
     [
       "@babel/plugin-proposal-decorators",
       {
-        "legacy": true,
-        "decoratorsBeforeExport": true
+        "legacy": true
       }
     ],
     [

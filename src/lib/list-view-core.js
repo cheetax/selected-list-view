@@ -7,7 +7,7 @@ import keydown from 'react-keydown';
 
 //@keydown
 class ListViewCore extends Component {
-    @keydown  //('up', 'down')
+    //@keydown  //('up', 'down')
     _onKeyDown(e) {
         console.log(e)
     }

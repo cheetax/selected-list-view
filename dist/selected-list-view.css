@@ -267,3 +267,502 @@ div.btn-spin {
     height: 0;
   }
  
+.btn-spin:not(input):hover {
+    cursor: pointer;
+    border: 2px solid #adb0b2; 
+}
+
+.btn-spin:not(input):active {
+    background: #adb0b2;
+}
+
+a.btn-spin {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+}
+input.btn-spin {
+    cursor: pointer;  
+    user-select: none;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 99;
+    
+    border: none;
+}
+
+div.btn-spin {
+    cursor: pointer;        
+    height: 32px;
+    width: 32px;
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+    position: relative;
+    background: transparent;
+    border: 2px solid transparent;    
+    z-index: 99;
+    margin: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+input.ch-input {
+    cursor: text;
+    position: relative;
+    background: transparent;
+    height: 20px;
+    margin: 24px 12px auto 12px;
+    border: none;
+    width: 100%;
+    padding: 0;
+    z-index: 99;   
+}
+
+.ch-field {
+    cursor: text;
+    background-color: #ddd;
+    height: 56px; 
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    margin: 10px;
+    display: flex;
+    font-family: Segoe UI;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: normal;
+    padding: 1px;
+}
+
+.ch-field.outlined {
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.ch-field:not(.outlined)::before {
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    content: '';
+    border-top: none;
+    border-right: none;
+    border-left: none;    
+    border-bottom: 1px solid black;
+    transform: scaleX(0);
+    padding-bottom: 1px;
+    opacity: 0;
+    transition: opacity .3s, transform 0s .3s;
+}
+
+.ch-field:not(.outlined):not(.focus):hover::before {
+    position: absolute;
+    border-bottom: 1px solid black;
+    padding-bottom: 1px;
+    opacity: 1;    
+    transform: scaleX(1);
+    transition: transform 0.3s .1s, opacity 0s, padding-bottom 0s;
+}
+
+.ch-field:not(.outlined)::after {
+    border-bottom: 2px solid #4caf50;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    content: '';
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    transform: scaleX(0);
+    opacity: 0;
+    transition: opacity .3s, transform 0s .3s;
+}
+
+.ch-field:not(.outlined).focus::after {
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    content: '';
+    opacity: 1;
+    border-bottom: 2px solid  #4caf50;
+    transform: scaleX(1);
+    transition: transform .3s, opacity 0s, border-bottom 0s;
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */ 
+
+input.ch-input.outlined {    
+    margin: 16px 12px auto 14px;
+}
+
+.ch-label.outlined {
+    position: relative;
+    margin: 16px 4px auto 4px;
+}
+
+.ch-label {
+    position: absolute;
+    background: transparent;
+    height: 20px;
+    margin: 20px 12px auto 12px;
+    border: none;
+    padding: 0;
+    top: 0;
+    left: 0;
+    font-size: 14px;
+    font-weight: 400;
+    transition: .3s, margin 0s;
+}
+
+.ch-label:not(.outlined).active {
+    /* color: #4caf50; */
+    font-size: 12px;
+    transform: translateY(-16px) ;
+    transition: .3s
+}
+
+.ch-label.outlined.focus {
+    margin: 15px 4px auto 3px;
+    color: #4caf50;
+    font-size: 12px;
+    transform: translateY(-26px) ;
+    transition-property: transform, font-size, color;
+    transition: .3s, color 0s, margin 0s;
+}
+
+.ch-label-outlined-cont {
+    position: absolute;
+    background: transparent;
+    top: 0;
+    left: 0;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.ch-label.outlined:not(.focus).active {    
+    font-size: 12px;
+    transform: translateY(-26px) ;
+    transition: .3s, margin 0s;
+}
+
+.ch-field.outlined.focus, .ch-field.outlined.focus:hover {
+    border: 2px solid  #4caf50;
+    padding: 0px;
+    /* transition: 3s; */
+}
+
+.ch-field.outlined:hover, .ch-field.outlined.active:not(.focus):hover {
+    border: 1px solid;
+    /* transition: 0.3s; */
+}
+
+.ch-field.focus {
+    /* padding: 0; */
+    color: #4caf50;
+    /* transition: 0.3s; */
+}
+
+.ch-field.outlined.active:not(.focus) {
+    border: 1px solid #ddd;
+    padding: 1px;
+    /* transition: 3s; */
+}
+
+.ch-label-outlined-top {
+    position: absolute;
+    height: 4px;
+    background: #fff;
+    top: -2px;
+    /* left: 0; */
+    width: 0;
+    transition: .3s;
+}
+
+.ch-label-outlined-top.active {
+    width: 100%;
+    transition: .3s
+}
+
+input.ch-input::-webkit-inner-spin-button, 
+input.ch-input::-webkit-outer-spin-button {
+  -webkit-appearance: none; 
+  margin: 0; 
+
+}
+input.ch-input::-ms-clear {
+    display: none; 
+    margin: 0; 
+}
+
+input.ch-input, input.ch-input:not([type]) {
+    border: none;
+    padding: 0;
+}
+
+input:not([type]):focus:not([readonly]) {
+    border-bottom: none;
+    box-shadow: none;
+}
+
+*:focus {
+    outline: 0px;
+    
+}
+
+input.ch-input, textarea.ch-input{
+    font-family: Segoe UI;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: normal;
+    color: initial;
+}
+
+.btn-spin:not(input):hover {
+    cursor: pointer;
+    border: 2px solid #adb0b2; 
+}
+
+.btn-spin:not(input):active {
+    background: #adb0b2;
+}
+
+a.btn-spin {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+}
+input.btn-spin {
+    cursor: pointer;  
+    user-select: none;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 99;
+    border: none;
+}
+
+div.btn-spin {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+    position: relative;
+    background: transparent;
+    border: 2px solid transparent;    
+    z-index: 99;
+}
+
+
+.calendar-flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.calendar-flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-select-day.active:hover, .btn-select-day:hover, .btn-select-day.current:hover,  .btn-select:hover  {
+    cursor: pointer;
+    border: 2px solid #adb0b2; 
+}
+
+.btn-select-day.active:hover {
+    cursor: pointer;
+    border: 2px solid #02d86d; 
+}
+
+.btn-select-day:active, .btn-select:active {
+    /* border: 2px solid red; */
+    background: #adb0b2;
+}
+
+a.btn-select-day {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    user-select: none;
+}
+
+.no-current-month.btn-select-day {
+    color: #90c4de;
+}
+
+a.btn-select {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    user-select: none;
+}
+
+.btn-select-day.active {
+    border: 2px solid #00b259; 
+}
+.btn-select-day.current {
+    border: 2px solid #d0e8f5;
+}
+
+.icon-down-arrow {
+    transition:  0.3s;
+    fill: #013a81;
+}
+
+.icon-svg {
+    fill: #013a81;
+}
+
+.icon-down-arrow.dropdown-active{
+    transform: rotate(-180deg);
+    transition:  0.3s;
+}
+
+.select-month {
+    transition: .3s;
+}
+
+.not-year {
+    position: relative;
+    /* transform: translateX(100%); */
+    width: auto;
+    max-width: 0;
+    transition: .3s;
+    overflow: hidden;
+}
+.select-year {
+    position: relative;
+    right: 0;
+    width: auto;
+    max-width: 100%;
+    transition: .3s;
+    overflow: hidden;
+}
+
+.on-select-day {
+    height: auto;
+    transform: translateY(-100%);
+    /* max-height: 100%; */
+    transition: .3s;
+}
+
+.off-select-day {
+    height: auto;
+    transform: translateY(0%);
+    transition: .3s;
+}
+
+.on-select-month {
+    height: auto;
+    transform: translateY(0%);
+    transition: .3s;
+}
+
+.off-select-month {
+    height: auto;
+    transform: translateY(-100%);
+    transition: .3s;
+}
+.modal-calendar-button {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    opacity: .5;
+    background: #FFFFFF;
+    overflow: hidden;
+    transform: scale(0);
+    transform-origin: right top;
+    padding: 8px 0px;
+    margin: 0 10px;
+    border-radius: 4px;
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
+    z-index: 1003;
+    transition: 0.5s;
+}
+
+.modal-calendar-button.active, .modal-calendar-flex.active, .modal-calendar-overlay.active {
+    opacity: 1;
+    transform: scale(1);    
+    transition: .5s;
+}
+
+.modal-calendar-flex {
+    position: absolute;
+    opacity: .5;
+    background: #FFFFFF;
+    overflow: hidden;
+    transform: scale(0);
+    transform-origin: center;
+    padding: 8px 0px;
+    margin: 0 10px;
+    border-radius: 4px;
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
+    z-index: 1003;
+    transition: 0.5s;
+}
+
+.modal-calendar-overlay {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    transform: scale(0);
+    opacity: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    transition: 0.5s;
+}
+
+
+
+.App {
+  /* text-align: center; */
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  /* background-color: #222; */
+  /* height: 150px; */
+  padding: 20px;
+  /* color: white; */
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  width: 520px;
+  /* height: 100vh; */
+  height: 300px;
+  margin: auto;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
