@@ -6,7 +6,7 @@ import { stat } from 'fs';
 //import './scroll.css'
 
 //@keydown
-class ListViewCore extends Component {    
+class ListViewCore extends Component {
 
     constructor(props) {
 
@@ -143,32 +143,25 @@ class ListViewCore extends Component {
 
     _onKeyDown = ({ code }) => {
         //console.log(code)
-        (code === 'ArrowUp') && this._cursorUp() || (code === 'ArrowDown') && this._cursorDown()
-    }
-
-    _cursorUp = () => {
-        //console.log(this.state.setSelectedIndex--)
-        this.setState({ setSelectedIndex: this.state.setSelectedIndex > 0 ? this.state.setSelectedIndex-- : 0 })
-    }
-
-    _cursorDown = () => {
-        //console.log(this.state.setSelectedIndex++)
-        this.setState({ setSelectedIndex: this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex++ : 0 })
+        let index = this.state.setSelectedIndex < 0 ? 0 : ((code === 'ArrowUp') && this.state.setSelectedIndex--) ||
+            ((code === 'ArrowDown') && this.state.setSelectedIndex++)
+        console.log(index)
+        this._cursorScroll(index)
+        // (code === 'ArrowUp') && this._cursorScroll(this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex-- : 0) ||
+        //     (code === 'ArrowDown') && this._cursorScroll(this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex++ : 0)
     }
 
     _cursorScroll = (index) => {
-        let index = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
-            if (index !== -1) {
-                let list = this.List;
-                const scroll = this.Scroll;
-                const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
-                (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
-            }
-            (this.state.setSelectedIndex !== index) && this.setState({
-                items_select: props.items.map((item, i) => ({ active: (i === index) })),
-                setSelectedIndex: index,
-                prevItem: this.state.setSelectedIndex
-            })
+        console.log(index)
+        let list = this.List;
+        const scroll = this.Scroll;
+        const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
+        (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
+        this.setState({
+            items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
+            setSelectedIndex: index,
+            prevItem: this.state.setSelectedIndex
+        })
     }
 
     _getElem = (elem) => {
@@ -214,7 +207,7 @@ class ListViewCore extends Component {
         });
 
     }
-    
+
 
     _rowHeight = () => this.props.rowHeight ? this.props.rowHeight : 48
 
