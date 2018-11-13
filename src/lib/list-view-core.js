@@ -134,17 +134,19 @@ class ListViewCore extends Component {
     }
 
     componentWillMount() {
-        document.addEventListener("keydown", this._onKeyDown);
+        document.addEventListener("keydown", this._onKeysDown);
     }
 
     componentWillUnmount() {
-        document.removeEventListener("keydown", this._onKeyDown);
+        document.removeEventListener("keydown", this._onKeysDown);
     }
+    _onKeysDown = ({ code }) => ((code === 'ArrowUp' || code === 'ArrowDown') && this._onKeyArrow({ code }))
 
-    _onKeyDown = ({ code }) => {
-        //console.log(code)
-        let index = this.state.setSelectedIndex < 0 ? 0 : ((code === 'ArrowUp') && this.state.setSelectedIndex--) ||
-            ((code === 'ArrowDown') && this.state.setSelectedIndex++)
+    _onKeyArrow = ({ code }) => {
+        console.log(code)
+        let index = this.state.setSelectedIndex
+        index = this.state.setSelectedIndex < 0 ? 0 : ((code === 'ArrowUp') && index-- ||
+            (code === 'ArrowDown') && index++)
         console.log(index)
         this._cursorScroll(index)
         // (code === 'ArrowUp') && this._cursorScroll(this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex-- : 0) ||
