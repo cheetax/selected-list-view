@@ -145,8 +145,8 @@ class ListViewCore extends Component {
     _onKeyArrow = ({ code }) => {
         console.log(code)
         let index = this.state.setSelectedIndex
-        index = this.state.setSelectedIndex < 0 ? 0 : ((code === 'ArrowUp') && index-- ||
-            (code === 'ArrowDown') && index++)
+        index = index < 0 ? 0 : ((code === 'ArrowUp') && --index ||
+            (code === 'ArrowDown') && ++index)
         console.log(index)
         this._cursorScroll(index)
         // (code === 'ArrowUp') && this._cursorScroll(this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex-- : 0) ||
@@ -158,7 +158,7 @@ class ListViewCore extends Component {
         let list = this.List;
         const scroll = this.Scroll;
         const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
-        (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
+        (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop)
         this.setState({
             items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
             setSelectedIndex: index,
