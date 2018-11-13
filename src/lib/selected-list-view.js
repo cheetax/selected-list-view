@@ -1,13 +1,13 @@
 
 import { Modal } from './Modal'
 import React, { Component } from 'react';
-import { SvgExpandMore, SvgMoreHoriz } from './Svg'
+import { SvgExpandMore, SvgMoreHoriz } from './Svg';
 import { BtnSpin } from './BtnSpin'
 import ListViewCore from './list-view-core'
 import './selected-list-view-core.css'
 
 class SelectedListView extends Component {
-
+   
     constructor(props) {
         super(props)
 

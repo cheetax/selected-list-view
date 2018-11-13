@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startReact": "react-scripts start",
-    "start": "webpack-dev-server --mode development --open",
+    "start": "react-scripts start",
+    "startWeb": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production"
   },
   "repository": {
@@ -59,7 +59,6 @@
     "classnames": "^2.2.6",
     "material-inputfield": "^0.7.1",
     "react-custom-scrollbars": "^4.2.1",
-    "react-keydown": "^1.9.7",
     "react-virtualized": "^9.20.1",
     "react-web-tabs": "^1.0.1",
     "save": "^2.3.2"

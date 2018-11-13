@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import { List, ArrowKeyStepper } from 'react-virtualized';
-import { Scrollbars } from 'react-custom-scrollbars'
-import keydown from 'react-keydown';
+import { List } from 'react-virtualized';
+import { Scrollbars } from 'react-custom-scrollbars';
+import { stat } from 'fs';
 //import 'react-custom-scrollbars/lib/react-custom-scrollbar.css'
 //import './scroll.css'
 
 //@keydown
-class ListViewCore extends Component {
-    //@keydown  //('up', 'down')
-    _onKeyDown(e) {
-        console.log(e)
-    }
+class ListViewCore extends Component {    
 
     constructor(props) {
 
@@ -145,6 +141,36 @@ class ListViewCore extends Component {
         document.removeEventListener("keydown", this._onKeyDown);
     }
 
+    _onKeyDown = ({ code }) => {
+        //console.log(code)
+        (code === 'ArrowUp') && this._cursorUp() || (code === 'ArrowDown') && this._cursorDown()
+    }
+
+    _cursorUp = () => {
+        //console.log(this.state.setSelectedIndex--)
+        this.setState({ setSelectedIndex: this.state.setSelectedIndex > 0 ? this.state.setSelectedIndex-- : 0 })
+    }
+
+    _cursorDown = () => {
+        //console.log(this.state.setSelectedIndex++)
+        this.setState({ setSelectedIndex: this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex++ : 0 })
+    }
+
+    _cursorScroll = (index) => {
+        let index = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
+            if (index !== -1) {
+                let list = this.List;
+                const scroll = this.Scroll;
+                const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
+                (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
+            }
+            (this.state.setSelectedIndex !== index) && this.setState({
+                items_select: props.items.map((item, i) => ({ active: (i === index) })),
+                setSelectedIndex: index,
+                prevItem: this.state.setSelectedIndex
+            })
+    }
+
     _getElem = (elem) => {
         if (elem) {
             var elemHeight = elem.clientHeight;
@@ -245,7 +271,7 @@ class ListViewCore extends Component {
         var param = {
             style
         }
-        var headerColumns = this.props.headerRenderer && this.props.headerRenderer(param) || []
+        var headerColumns = this.props.headerRenderer ? this.props.headerRenderer(param) : []
         if (!Array.isArray(headerColumns)) headerColumns = [headerColumns]
 
         return headerColumns.map((item, index) => {

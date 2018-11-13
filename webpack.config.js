@@ -4,10 +4,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: [
-    './src/index.js'
+    './src/lib/index.js'
   ],
   output: {
-    //path: path.resolve ('dist'),
+    path: path.resolve ('dist'),
     filename: 'index.js',
     libraryTarget: 'commonjs2'
   },
@@ -31,22 +31,6 @@ module.exports = {
         exclude: /(node_modules|dist)/,
         use: {
           loader: 'babel-loader',
-          // query: {
-          //   babelrc: false,
-          //   presets: [
-          //     '@babel/preset-env',
-          //     '@babel/preset-react'
-          //   ],
-          //   plugins: [
-          //     ['@babel/plugin-proposal-decorators', {
-          //       legacy: true,
-          //       decoratorsBeforeExport: true
-          //     }],
-          //     ['@babel/plugin-proposal-class-properties', {
-          //       loose: true
-          //     }]
-          //   ]
-          //}
           options: {
             presets: [
               ["@babel/preset-env", { "modules": false }],
