@@ -40,8 +40,8 @@ class ListViewCore extends Component {
 
     handleScroll = ({ target }) => {
         const { scrollTop, scrollLeft, clientHeight } = target;
-        const scroll = this.Scroll
         const list = this.List;
+        //console.log(scrollTop)
         list && list.scrollToPosition(scrollTop)
     }
 
@@ -143,27 +143,34 @@ class ListViewCore extends Component {
     _onKeysDown = ({ code }) => ((code === 'ArrowUp' || code === 'ArrowDown') && this._onKeyArrow({ code }))
 
     _onKeyArrow = ({ code }) => {
-        console.log(code)
+        //console.log(code)
         let index = this.state.setSelectedIndex
         index = index < 0 ? 0 : ((code === 'ArrowUp') && --index ||
             (code === 'ArrowDown') && ++index)
-        console.log(index)
+        //console.log(index)
         this._cursorScroll(index)
-        // (code === 'ArrowUp') && this._cursorScroll(this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex-- : 0) ||
-        //     (code === 'ArrowDown') && this._cursorScroll(this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex++ : 0)
-    }
-
-    _cursorScroll = (index) => {
-        console.log(index)
-        let list = this.List;
-        const scroll = this.Scroll;
-        const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
-        (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop)
         this.setState({
             items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
             setSelectedIndex: index,
             prevItem: this.state.setSelectedIndex
         })
+        // (code === 'ArrowUp') && this._cursorScroll(this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex-- : 0) ||
+        //     (code === 'ArrowDown') && this._cursorScroll(this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex++ : 0)
+    }
+
+    _cursorScroll = async (index) => {
+        let list = this.List;
+        const scroll = this.Scroll;
+        const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
+        if (scroll && scrollTop !== null) {
+            var scrolling = scrollTop - scroll.getScrollTop();
+            var diff = scrolling / 5;
+            for (var i = 1; i <= 5; i++) {
+                var diffScroll = i * diff;
+                await(() => new Promise(resolve => setTimeout(resolve, 30)))()   
+                scroll.scrollTop(scrollTop - scrolling + diffScroll)
+            }
+        }        
     }
 
     _getElem = (elem) => {
