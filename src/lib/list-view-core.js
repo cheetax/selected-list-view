@@ -79,41 +79,7 @@ class ListViewCore extends Component {
 
         i = i - 1 + _itemsElements.findIndex(item => !_itemsSearch.includes(JSON.stringify(item)));
         resolve(i < 0 ? -1 : i)
-    })
-
-    componentWillReceiveProps(nextProps) {
-        let props = this.props
-        if (JSON.stringify(props.items) !== JSON.stringify(nextProps.items)) {
-            this.getIndexAsync(nextProps.items, props.items).then((index) => {
-                var _index = -1;
-                if (index === -1) _index = this.state.prevItem;
-                _index = nextProps.items.length === index ? index - 1 : index;
-                this.setState({
-                    rowHeight: nextProps.rowHeight,
-                    items_select: nextProps.items.map((item, i) => ({ active: (i === _index) })),
-                    setSelectedIndex: _index,
-                    prevItem: _index,
-                    readHeader: true,
-                })
-
-            })
-        }
-        else {
-            let selectItemJson = JSON.stringify(nextProps.selectItem)
-            let index = props.items.findIndex(item => JSON.stringify(item) === selectItemJson);
-            if (index !== -1) {
-                let list = this.List;
-                const scroll = this.Scroll;
-                const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
-                (scroll && scrollTop !== null) && scroll.scrollTop(scrollTop + ((scrollTop === 0) ? 1 : -1))
-            }
-            (this.state.setSelectedIndex !== index) && this.setState({
-                items_select: props.items.map((item, i) => ({ active: (i === index) })),
-                setSelectedIndex: index,
-                prevItem: this.state.setSelectedIndex
-            })
-        }
-    }
+    })    
 
     resize = () => this._getElem(this.state.elem)
 
