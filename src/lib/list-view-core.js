@@ -106,7 +106,7 @@ class ListViewCore extends Component {
     componentWillUnmount() {
         document.removeEventListener("keydown", this._onKeysDown);
     }
-    
+
     _onKeysDown = ({ code }) => ((code === 'ArrowUp' || code === 'ArrowDown') && this._onKeyArrow({ code }))
 
     _onKeyArrow = ({ code }) => {
@@ -266,6 +266,13 @@ class ListViewCore extends Component {
             display: 'flex',
         }} >{this._setHeader()}</div >
 
+    _onScrollStart = () => {
+        console.log('start')
+    }
+
+    _onScrollStop = () => {
+        console.log('stop')
+    }
 
     render() {
         return (
@@ -287,6 +294,8 @@ class ListViewCore extends Component {
                             return */}
                     <Scrollbars
                         autoHide
+                        onScrollStart={this._onScrollStart}
+                        onScrollStop={this._onScrollStop}
                         style={{ width: this.state.width, height: this.state.height }}
                         onScroll={this.handleScroll}
                         ref={this.refScroll}
