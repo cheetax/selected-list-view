@@ -282,8 +282,6 @@ class ListViewCore extends Component {
                 {this._headerRenderer()}
                 <div
                     style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0 }}
-                    onKeyDown={(e) => console.log(e)}
-                    tabIndex='0'
                     ref={this._getElem}
                 >
                     {/* <ArrowKeyStepper
