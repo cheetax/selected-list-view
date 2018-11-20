@@ -106,22 +106,19 @@ class ListViewCore extends Component {
     componentWillUnmount() {
         document.removeEventListener("keydown", this._onKeysDown);
     }
+    
     _onKeysDown = ({ code }) => ((code === 'ArrowUp' || code === 'ArrowDown') && this._onKeyArrow({ code }))
 
     _onKeyArrow = ({ code }) => {
-        //console.log(code)
         let index = this.state.setSelectedIndex
-        index = index < 0 ? 0 : ((code === 'ArrowUp') && --index ||
-            (code === 'ArrowDown') && ++index)
-        //console.log(index)
-        this._cursorScroll(index)
-        this.setState({
+        index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length-1) && ++index)) || index)         
+        index !== this.state.setSelectedIndex && (() => {
+            this._cursorScroll(index);
+            this.setState({
             items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
             setSelectedIndex: index,
             prevItem: this.state.setSelectedIndex
-        })
-        // (code === 'ArrowUp') && this._cursorScroll(this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex-- : 0) ||
-        //     (code === 'ArrowDown') && this._cursorScroll(this.state.setSelectedIndex >= 0 ? this.state.setSelectedIndex++ : 0)
+        })})()
     }
 
     _cursorScroll = async (index) => {
