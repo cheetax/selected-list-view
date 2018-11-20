@@ -20,11 +20,6 @@ class SelectedListView extends Component {
         }
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //    nextProps.isActiveExpand !== undefined && this.setState({ openModalExpand: !!nextProps.isActiveExpand })
-    //    // this.forceUpdate()
-    // }
-
     _ref = (elem) => {
         if (!!elem) {
             if (elem.offsetParent.offsetParent) {
@@ -65,11 +60,6 @@ class SelectedListView extends Component {
         elem && this.setState({ elemSpin: elem })
     }
 
-    // _onSelected = (period) => {
-    //     this.setState({ ...period, openModal: !this.state.openModal,  })
-    //     this.props.onSelected && this.props.onSelected(period)
-    // }
-
     _onClose = () => {
         this.setState({
             openModal: false
@@ -79,7 +69,6 @@ class SelectedListView extends Component {
             openModalExpand: false
         }), 300)
     }
-
 
     _Modal = (openFlex) => <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
         {
