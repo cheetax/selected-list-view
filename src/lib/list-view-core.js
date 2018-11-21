@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { List } from 'react-virtualized';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { BtnSpin } from './BtnSpin'
+import { BtnFlat } from './BtnSpin'
 import { SvgExpandMore } from './Svg';
 //import 'react-custom-scrollbars/lib/react-custom-scrollbar.css'
 //import './scroll.css'
@@ -306,7 +306,7 @@ class ListViewCore extends Component {
                         />
                     </Scrollbars>
                     <div className='btn-scroll-end'>
-                        <BtnSpin className='btn-scroll-flat' size={40} onClick={() => console.log('end')}><SvgExpandMore /></BtnSpin>
+                        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => console.log('end')}><SvgExpandMore /></BtnFlat>
                     </div>
                 </div>
             </div>

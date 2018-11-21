@@ -2,11 +2,6 @@
     cursor: pointer;
     border: 2px solid #adb0b2; 
 }
-/* .btn-spin.hover {
-    cursor: pointer;
-    border: 2px solid #4caf50; 
-
-} */
 
 .btn-spin:not(input):active {
     /* border: 2px solid red; */
@@ -20,7 +15,7 @@ a.btn-spin {
     border-color: transparent;
     user-select: none;
 }
-input.btn-spin {
+input.btn-spin, input.btn-flat {
     cursor: pointer;  
     user-select: none;
     position: relative;
@@ -48,4 +43,32 @@ div.btn-spin {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+div.btn-flat {
+    cursor: pointer;        
+    height: 40px;
+    width: 40px;
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+    position: relative;
+    background: transparent;
+    border: 2px solid transparent;    
+    z-index: 99;
+    margin: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-flat:not(input):hover {
+    cursor: pointer;
+    border: 2px solid #adb0b2; 
+}
+
+.btn-flat:not(input):active {
+    /* border: 2px solid red; */
+    background: #adb0b2;
 }
