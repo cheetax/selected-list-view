@@ -45,17 +45,22 @@ div.btn-spin {
     align-items: center;
 }
 
+input.bth-flat {
+    color: #fff;  
+}
+
 div.btn-flat {
-    cursor: pointer;        
+    cursor: pointer;
+          
     height: 40px;
     width: 40px;
     transition: all ease 0.3s;
     border-radius: 50%;
-    border-color: transparent;
+    /* border-color: transparent; */
     user-select: none;
     position: relative;
-    background: transparent;
-    border: 2px solid transparent;    
+    background: #013a81;
+    /* border: 2px solid transparent;     */
     z-index: 99;
     margin: 1px;
     display: flex;
@@ -65,10 +70,11 @@ div.btn-flat {
 
 .btn-flat:not(input):hover {
     cursor: pointer;
-    border: 2px solid #adb0b2; 
+    background-color: rgb(2, 80, 175);
+    /* border: 2px solid #adb0b2;  */
 }
 
 .btn-flat:not(input):active {
     /* border: 2px solid red; */
-    background: #adb0b2;
+    background: rgb(76, 175, 80)
 }
