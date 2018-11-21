@@ -175,6 +175,22 @@
     transition: .3s ease-out;
 }
 
-/* ::-webkit-scrollbar { 
-    width: 0; 
+.btn-scroll-end {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;  
+}
+
+.btn-scroll-flat {
+    color: #013a81;
+    background: red
+}
+
+/* .btn-scroll-flat:hover {
+    background-color: rgba(0,0,0,0.1);
+    box-shadow: none;
+}
+
+.btn-scroll-flat:active {
+    background: rgb(76, 175, 80)
 } */

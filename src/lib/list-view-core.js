@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { List } from 'react-virtualized';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { stat } from 'fs';
+import { BtnSpin } from './BtnSpin'
+import { SvgExpandMore } from './Svg';
 //import 'react-custom-scrollbars/lib/react-custom-scrollbar.css'
 //import './scroll.css'
 
@@ -284,12 +285,6 @@ class ListViewCore extends Component {
                     style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0 }}
                     ref={this._getElem}
                 >
-                    {/* <ArrowKeyStepper
-                        rowCount={this.props.items.length}
-                        columnCount={1}
-                    >
-                        {({ onSectionRendered, scrollToColumn, scrollToRow }) => {
-                            return */}
                     <Scrollbars
                         autoHide
                         onScrollStart={this._onScrollStart}
@@ -309,13 +304,10 @@ class ListViewCore extends Component {
                             rowRenderer={this._rowRenderer}
                             scrollToRow={this.state.setSelectedIndex + 1}
                         />
-
-
-
                     </Scrollbars>
-                    {/* }}
-                    </ArrowKeyStepper> */}
-
+                    <div className='btn-scroll-end'>
+                        <BtnSpin className='btn-scroll-flat' size={40} onClick={() => console.log('end')}><SvgExpandMore /></BtnSpin>
+                    </div>
                 </div>
             </div>
         )
