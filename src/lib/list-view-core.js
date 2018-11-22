@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { List } from 'react-virtualized';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { BtnFlat } from './BtnSpin'
-import { SvgExpandMore } from './Svg';
+import { SvgExpandMore, SvgArrowUp, SvgArrowEnd } from './Svg';
 //import 'react-custom-scrollbars/lib/react-custom-scrollbar.css'
 //import './scroll.css'
 
@@ -35,7 +35,10 @@ class ListViewCore extends Component {
             columnWidth: [],
             header: null,
             onScroll: true,
-            scroll: null
+            scroll: null,
+            btnScrollEnd: false,
+            btnScrollStart: false,
+            scrollActive: false,
         }
     }
 
@@ -80,7 +83,7 @@ class ListViewCore extends Component {
 
         i = i - 1 + _itemsElements.findIndex(item => !_itemsSearch.includes(JSON.stringify(item)));
         resolve(i < 0 ? -1 : i)
-    })    
+    })
 
     resize = () => this._getElem(this.state.elem)
 
@@ -101,6 +104,7 @@ class ListViewCore extends Component {
     }
 
     componentWillMount() {
+        this._setTimerScrollActive()
         document.addEventListener("keydown", this._onKeysDown);
     }
 
@@ -112,14 +116,15 @@ class ListViewCore extends Component {
 
     _onKeyArrow = ({ code }) => {
         let index = this.state.setSelectedIndex
-        index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length-1) && ++index)) || index)         
+        index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length - 1) && ++index)) || index)
         index !== this.state.setSelectedIndex && (() => {
             this._cursorScroll(index);
             this.setState({
-            items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
-            setSelectedIndex: index,
-            prevItem: this.state.setSelectedIndex
-        })})()
+                items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
+                setSelectedIndex: index,
+                prevItem: this.state.setSelectedIndex
+            })
+        })()
     }
 
     _cursorScroll = async (index) => {
@@ -131,10 +136,10 @@ class ListViewCore extends Component {
             var diff = scrolling / 5;
             for (var i = 1; i <= 5; i++) {
                 var diffScroll = i * diff;
-                await(() => new Promise(resolve => setTimeout(resolve, 30)))()   
+                await (() => new Promise(resolve => setTimeout(resolve, 30)))()
                 scroll.scrollTop(scrollTop - scrolling + diffScroll)
             }
-        }        
+        }
     }
 
     _getElem = (elem) => {
@@ -267,13 +272,39 @@ class ListViewCore extends Component {
             display: 'flex',
         }} >{this._setHeader()}</div >
 
-    _onScrollStart = () => {
-        console.log('start')
-    }
+    _onScrollStart = () => this.setState({ scrollActive: true, btnScrollEnd: false, btnScrollStart: false })
 
     _onScrollStop = () => {
-        console.log('stop')
+        this.setState({ scrollActive: false })
+        this._setTimerScrollActive()
     }
+
+    _allowBtnScroll = (index) => {
+        let list = this.List;
+        const scroll = this.Scroll;
+        const scrollTopList = list && list.getOffsetForRow({ alignment: '', index });
+        const scrollTopScroll = scroll.getScrollTop();
+        return (scrollTopList !== scrollTopScroll)
+    }
+
+    _setScrollActive = () => {
+
+        !this.state.scrollActive && this.setState({ btnScrollEnd: this._allowBtnScroll(this.props.items.length - 1), btnScrollStart: this._allowBtnScroll(0) })
+    }
+
+    _setTimerScrollActive = () => setTimeout(() => this._setScrollActive(), 500)
+
+    _classActive = (active) => {
+        return active && 'active'
+    }
+
+    _btnScrollStart = () => <div className={(() => 'btn-scroll btn-scroll-start ' + this._classActive(this.state.btnScrollStart))()}>
+        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => console.log('end')}><SvgArrowUp fill='#fff' /></BtnFlat>
+    </div>
+
+    _btnScrollEnd = () => <div className={(() => 'btn-scroll btn-scroll-end ' + this._classActive(this.state.btnScrollEnd))()}>
+        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => console.log('end')}><SvgArrowEnd fill='#fff' /></BtnFlat>
+    </div>
 
     render() {
         return (
@@ -282,7 +313,7 @@ class ListViewCore extends Component {
                 {this._toolsPanelRenderer()}
                 {this._headerRenderer()}
                 <div
-                    style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0 }}
+                    style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0, position: 'relative' }}
                     ref={this._getElem}
                 >
                     <Scrollbars
@@ -305,9 +336,8 @@ class ListViewCore extends Component {
                             scrollToRow={this.state.setSelectedIndex + 1}
                         />
                     </Scrollbars>
-                    <div className='btn-scroll-end'>
-                        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => console.log('end')}><SvgExpandMore /></BtnFlat>
-                    </div>
+                    {this._btnScrollStart()}
+                    {this._btnScrollEnd()}
                 </div>
             </div>
         )
