@@ -54,6 +54,8 @@ class App extends Component {
     isButtonExpand
     isButtonMore
     //rowHeight={48}
+    isBtnScrollStart
+    isBtnScrollEnd
     Width={300}
     Height={300}
     headerRenderer={this.headerRenderer}

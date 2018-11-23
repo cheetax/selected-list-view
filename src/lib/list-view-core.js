@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { List } from 'react-virtualized';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { BtnFlat } from './BtnSpin'
-import { SvgExpandMore, SvgArrowUp, SvgArrowEnd } from './Svg';
+import { SvgArrowStart, SvgArrowEnd } from './Svg';
 //import 'react-custom-scrollbars/lib/react-custom-scrollbar.css'
 //import './scroll.css'
 
@@ -118,7 +118,7 @@ class ListViewCore extends Component {
         let index = this.state.setSelectedIndex
         index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length - 1) && ++index)) || index)
         index !== this.state.setSelectedIndex && (() => {
-            this._cursorScroll(index);
+            this._cursorScroll({ index });
             this.setState({
                 items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
                 setSelectedIndex: index,
@@ -127,16 +127,19 @@ class ListViewCore extends Component {
         })()
     }
 
-    _cursorScroll = async (index) => {
+    _cursorScroll = async ({ index, timer = 150 }) => {
+        var stepTop = 1;
         let list = this.List;
         const scroll = this.Scroll;
         const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
         if (scroll && scrollTop !== null) {
             var scrolling = scrollTop - scroll.getScrollTop();
-            var diff = scrolling / 5;
-            for (var i = 1; i <= 5; i++) {
+            var ticTimer = timer / (Math.abs(scrolling) / stepTop) < 1 ? 1 : timer / (Math.abs(scrolling) / stepTop)            
+            var step = Math.round(timer / ticTimer);
+            var diff = scrolling / step
+            for (var i = 1; i <= step; i++) {
                 var diffScroll = i * diff;
-                await (() => new Promise(resolve => setTimeout(resolve, 30)))()
+                await (() => new Promise(resolve => setTimeout(resolve, ticTimer)))()
                 scroll.scrollTop(scrollTop - scrolling + diffScroll)
             }
         }
@@ -292,18 +295,18 @@ class ListViewCore extends Component {
         !this.state.scrollActive && this.setState({ btnScrollEnd: this._allowBtnScroll(this.props.items.length - 1), btnScrollStart: this._allowBtnScroll(0) })
     }
 
-    _setTimerScrollActive = () => setTimeout(() => this._setScrollActive(), 500)
+    _setTimerScrollActive = (timeOut = 500) => setTimeout(() => this._setScrollActive(), timeOut)
 
     _classActive = (active) => {
         return active && 'active'
     }
 
     _btnScrollStart = () => <div className={(() => 'btn-scroll btn-scroll-start ' + this._classActive(this.state.btnScrollStart))()}>
-        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => console.log('end')}><SvgArrowUp fill='#fff' /></BtnFlat>
+        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: 0, timer: 300 })}><SvgArrowStart fill='#fff' /></BtnFlat>
     </div>
 
     _btnScrollEnd = () => <div className={(() => 'btn-scroll btn-scroll-end ' + this._classActive(this.state.btnScrollEnd))()}>
-        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => console.log('end')}><SvgArrowEnd fill='#fff' /></BtnFlat>
+        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: this.props.items.length - 1, timer: 300 })}><SvgArrowEnd fill='#fff' /></BtnFlat>
     </div>
 
     render() {
@@ -336,8 +339,8 @@ class ListViewCore extends Component {
                             scrollToRow={this.state.setSelectedIndex + 1}
                         />
                     </Scrollbars>
-                    {this._btnScrollStart()}
-                    {this._btnScrollEnd()}
+                    {this.props.isBtnScrollStart && this._btnScrollStart()}
+                    {this.props.isBtnScrollEnd && this._btnScrollEnd()}
                 </div>
             </div>
         )
