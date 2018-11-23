@@ -302,11 +302,11 @@ class ListViewCore extends Component {
     }
 
     _btnScrollStart = () => <div className={(() => 'btn-scroll btn-scroll-start ' + this._classActive(this.state.btnScrollStart))()}>
-        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: 0, timer: 300 })}><SvgArrowStart fill='#fff' /></BtnFlat>
+        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: 0, timer: 200 })}><SvgArrowStart fill='#fff' /></BtnFlat>
     </div>
 
     _btnScrollEnd = () => <div className={(() => 'btn-scroll btn-scroll-end ' + this._classActive(this.state.btnScrollEnd))()}>
-        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: this.props.items.length - 1, timer: 300 })}><SvgArrowEnd fill='#fff' /></BtnFlat>
+        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: this.props.items.length - 1, timer: 200 })}><SvgArrowEnd fill='#fff' /></BtnFlat>
     </div>
 
     render() {
