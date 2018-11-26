@@ -23,6 +23,10 @@ class ListViewCore extends Component {
         var setSelectedIndex = props.items ? props.items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
 
         this.columnWidth = [];
+        this._onKeysDown = this._onKeysDown.bind(this)
+        this.scrollStart = false;
+        this.scrollStop = false;
+        this.keyDown = true;
         this.state = {
             //items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
@@ -39,6 +43,7 @@ class ListViewCore extends Component {
             btnScrollEnd: false,
             btnScrollStart: false,
             scrollActive: false,
+            keyDown: true,
         }
     }
 
@@ -106,44 +111,65 @@ class ListViewCore extends Component {
     componentWillMount() {
         this._setTimerScrollActive()
         document.addEventListener("keydown", this._onKeysDown);
+        document.addEventListener('keyup', this._onKeysUp)
     }
 
     componentWillUnmount() {
         document.removeEventListener("keydown", this._onKeysDown);
+        document.removeEventListener('keyup', this._onKeysUp)
     }
 
-    _onKeysDown = ({ code }) => ((code === 'ArrowUp' || code === 'ArrowDown') && this._onKeyArrow({ code }))
+    _onKeysUp = ({ code }) => {
+        ((code === 'ArrowUp' || code === 'ArrowDown') && this._onKeyUpArrow())
+    }
 
+    _onKeyUpArrow = () => {
+        console.log('up')
+        this.keyDown = false;
+    }
+
+    _onKeysDown = ({ code, type }) => {
+        // this.state.keyDown &&
+
+        (((code === 'ArrowUp' || code === 'ArrowDown') && this._onKeyArrow({ code })))
+    }
     _onKeyArrow = ({ code }) => {
+        console.log(code)
+
+        this.keyDown = !this.keyDown
         let index = this.state.setSelectedIndex
         index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length - 1) && ++index)) || index)
-        index !== this.state.setSelectedIndex && (() => {
-            this._cursorScroll({ index });
-            this.setState({
+        index !== this.state.setSelectedIndex && (async () => {
+            this.keyDown && this.setState({
                 items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
                 setSelectedIndex: index,
                 prevItem: this.state.setSelectedIndex
             })
+            await this._cursorScroll({ index });
+            console.log(this.keyDown, index)
+            
         })()
+
     }
 
-    _cursorScroll = async ({ index, timer = 150 }) => {
+    _cursorScroll = async ({ index, timer = 150 }) => new Promise(async res => {
         var stepTop = 1;
         let list = this.List;
         const scroll = this.Scroll;
         const scrollTop = list && list.getOffsetForRow({ alignment: '', index });
         if (scroll && scrollTop !== null) {
             var scrolling = scrollTop - scroll.getScrollTop();
-            var ticTimer = timer / (Math.abs(scrolling) / stepTop) < 1 ? 1 : timer / (Math.abs(scrolling) / stepTop)            
+            var ticTimer = timer / (Math.abs(scrolling) / stepTop) < 1 ? 1 : timer / (Math.abs(scrolling) / stepTop)
             var step = Math.round(timer / ticTimer);
             var diff = scrolling / step
             for (var i = 1; i <= step; i++) {
                 var diffScroll = i * diff;
                 await (() => new Promise(resolve => setTimeout(resolve, ticTimer)))()
-                scroll.scrollTop(scrollTop - scrolling + diffScroll)
+                this.keyDown && scroll.scrollTop(scrollTop - scrolling + diffScroll)
             }
+            res();
         }
-    }
+    })
 
     _getElem = (elem) => {
         if (elem) {
@@ -302,11 +328,11 @@ class ListViewCore extends Component {
     }
 
     _btnScrollStart = () => <div className={(() => 'btn-scroll btn-scroll-start ' + this._classActive(this.state.btnScrollStart))()}>
-        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: 0, timer: 200 })}><SvgArrowStart fill='#fff' /></BtnFlat>
+        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: 0, timer: 150 })}><SvgArrowStart fill='#fff' /></BtnFlat>
     </div>
 
     _btnScrollEnd = () => <div className={(() => 'btn-scroll btn-scroll-end ' + this._classActive(this.state.btnScrollEnd))()}>
-        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: this.props.items.length - 1, timer: 200 })}><SvgArrowEnd fill='#fff' /></BtnFlat>
+        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: this.props.items.length - 1, timer: 150 })}><SvgArrowEnd fill='#fff' /></BtnFlat>
     </div>
 
     render() {
