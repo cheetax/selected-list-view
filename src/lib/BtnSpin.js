@@ -1,5 +1,5 @@
 import React from 'react';
-import './BtnSpin.css'
+import './btnSpin.css'
 
 const _input = ({ size, className }) => <input
     type='url'

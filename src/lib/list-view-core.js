@@ -26,7 +26,8 @@ class ListViewCore extends Component {
         this._onKeysDown = this._onKeysDown.bind(this)
         this.scrollStart = false;
         this.scrollStop = false;
-        this.keyDown = true;
+        this.keyDown = false;
+
         this.state = {
             //items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
@@ -133,26 +134,29 @@ class ListViewCore extends Component {
 
         (((code === 'ArrowUp' || code === 'ArrowDown') && this._onKeyArrow({ code })))
     }
-    _onKeyArrow = ({ code }) => {
-        console.log(code)
 
-        this.keyDown = !this.keyDown
+    _onKeyArrow = async ({ code }) => {
+        console.log(code)
         let index = this.state.setSelectedIndex
-        index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length - 1) && ++index)) || index)
-        index !== this.state.setSelectedIndex && (async () => {
-            this.keyDown && this.setState({
-                items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
-                setSelectedIndex: index,
-                prevItem: this.state.setSelectedIndex
-            })
-            await this._cursorScroll({ index });
-            console.log(this.keyDown, index)
-            
-        })()
+        this.keyDown = true;
+        while (this.keyDown) {
+            index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length - 1) && ++index)) || index)
+            if (index !== this.state.setSelectedIndex) {
+                this.setState({
+                    items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
+                    setSelectedIndex: index,
+                    prevItem: this.state.setSelectedIndex
+                })
+                console.log(this.keyDown, index)
+                await this._cursorScroll({ index });
+                console.log(this.keyDown, index)
+            }
+        }
 
     }
 
-    _cursorScroll = async ({ index, timer = 150 }) => new Promise(async res => {
+    _cursorScroll = ({ index, timer = 1000 }) => new Promise(async res => {
+        
         var stepTop = 1;
         let list = this.List;
         const scroll = this.Scroll;
@@ -162,13 +166,18 @@ class ListViewCore extends Component {
             var ticTimer = timer / (Math.abs(scrolling) / stepTop) < 1 ? 1 : timer / (Math.abs(scrolling) / stepTop)
             var step = Math.round(timer / ticTimer);
             var diff = scrolling / step
+            console.log('scroll start')
             for (var i = 1; i <= step; i++) {
                 var diffScroll = i * diff;
                 await (() => new Promise(resolve => setTimeout(resolve, ticTimer)))()
-                this.keyDown && scroll.scrollTop(scrollTop - scrolling + diffScroll)
+                //this.keyDown && 
+                scroll.scrollTop(scrollTop - scrolling + diffScroll)
             }
-            res();
+            console.log('scroll end')
+            
         }
+        res()
+        console.log('scroll await')
     })
 
     _getElem = (elem) => {
