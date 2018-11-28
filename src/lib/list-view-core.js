@@ -7,6 +7,8 @@ import { SvgArrowStart, SvgArrowEnd } from './Svg';
 //import './scroll.css'
 
 //@keydown
+var arrowKeys = []
+
 class ListViewCore extends Component {
 
     constructor(props) {
@@ -125,7 +127,7 @@ class ListViewCore extends Component {
     }
 
     _onKeyUpArrow = () => {
-        console.log('up')
+        console.log('up', arrowKeys)
         this.keyDown = false;
     }
 
@@ -137,6 +139,7 @@ class ListViewCore extends Component {
 
     _onKeyArrow = async ({ code }) => {
         console.log(code)
+        arrowKeys.push({time: new Date(), code})
         let index = this.state.setSelectedIndex
         this.keyDown = true;
         while (this.keyDown) {
@@ -152,7 +155,6 @@ class ListViewCore extends Component {
                 console.log(this.keyDown, index)
             }
         }
-
     }
 
     _cursorScroll = ({ index, timer = 1000 }) => new Promise(async res => {
@@ -176,6 +178,9 @@ class ListViewCore extends Component {
             console.log('scroll end')
             
         }
+        else {
+           // await (() => new Promise(resolve => setTimeout(resolve, timer)))()            
+        } 
         res()
         console.log('scroll await')
     })
