@@ -131,6 +131,8 @@ Common props you may want to specify include:
 * `isActive` - [boolean] If 'true' show window
 * `isField` - [boolean] 
 * `isModal` - [boolean] 
+* `isBtnScrollStart` - [boolean] button scroll to start list
+* `isBtnScrollEnd` - [boolean] button scroll to end list    
 
 'List' props you may want to specify include:
 
