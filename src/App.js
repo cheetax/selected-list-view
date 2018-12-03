@@ -53,6 +53,7 @@ class App extends Component {
     isModal
     isButtonExpand
     isButtonMore
+    //isActive
     //rowHeight={48}
     isBtnScrollStart
     isBtnScrollEnd

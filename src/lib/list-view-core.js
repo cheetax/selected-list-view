@@ -126,17 +126,19 @@ class ListViewCore extends Component {
             index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length - 1) && ++index)) || index)
             if (index !== this.state.setSelectedIndexm && this.keyDown) {
                 this.keyDown = false;
-                this.keyDown = await this._cursorScroll({ index });
                 this.setState({
                     items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
                     setSelectedIndex: index,
                     prevItem: this.state.setSelectedIndex
                 })
+                this.keyDown = await this._cursorScroll({ index });
+                
+                
             }
       //  }
     }
 
-    _cursorScroll = ({ index, timer = 50 }) => new Promise(async res => {
+    _cursorScroll = ({ index, timer = 20 }) => new Promise(async res => {
         var stepTop = 1;
         let list = this.List;
         const scroll = this.Scroll;
@@ -152,6 +154,7 @@ class ListViewCore extends Component {
                 scroll.scrollTop(scrollTop - scrolling + diffScroll)
             }
         }
+        else await (() => new Promise(resolve => setTimeout(resolve, timer)))()
         res(true)
     })
 
@@ -296,7 +299,7 @@ class ListViewCore extends Component {
         let list = this.List;
         const scroll = this.Scroll;
         const scrollTopList = list && list.getOffsetForRow({ alignment: '', index });
-        const scrollTopScroll = scroll.getScrollTop();
+        const scrollTopScroll = scroll && scroll.getScrollTop();
         return (scrollTopList !== scrollTopScroll)
     }
 

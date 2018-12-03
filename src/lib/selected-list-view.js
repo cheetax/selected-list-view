@@ -7,14 +7,14 @@ import ListViewCore from './list-view-core'
 import './selected-list-view-core.css'
 
 class SelectedListView extends Component {
-   
+
     constructor(props) {
         super(props)
 
         this.state = {
-            openModalFlex: false,
+            openModalFlex: props.isActive || false,
             openModalExpand: false,
-            openModal: false,
+            openModal: props.isActive || false,
             elemSize: null,
             elemSpin: null
         }
@@ -61,13 +61,15 @@ class SelectedListView extends Component {
     }
 
     _onClose = () => {
-        this.setState({
-            openModal: false
-        })
-        setTimeout(() => this.setState({
-            openModalFlex: false,
-            openModalExpand: false
-        }), 300)
+        if (!this.props.isActive) {
+            this.setState({
+                openModal: false
+            })
+            setTimeout(() => this.setState({
+                openModalFlex: false,
+                openModalExpand: false
+            }), 300)
+        }
     }
 
     _Modal = (openFlex) => <div ref={this._ref} style={{ position: 'relative', color: 'initial' }} >
@@ -84,12 +86,25 @@ class SelectedListView extends Component {
     </div>
 
     _btnOnClick = (status) => {
+
+
+        // this.setState({
+        //     openModalFlex: status,
+        //     openModalExpand: !status,
+        //     openModal: true,
+        //     openFlex: status
+        // })
         this.setState({
-            openModalFlex: status,
-            openModalExpand: !status,
-            openModal: true,
-            openFlex: status
+            openModal: !status ,
+            openModalExpand: !status ? !status : this.state.openModalExpand,
+            openModalFlex: status ? status : this.state.openModalFlex
         })
+        setTimeout(() => this.setState({
+            openModal: true,
+            openModalFlex: status,
+            openModalExpand: !status
+        }), 300)
+
     }
 
     _btnSpinMore = () => {
