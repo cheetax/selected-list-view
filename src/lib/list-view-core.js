@@ -20,7 +20,7 @@ class ListViewCore extends Component {
         // props.scrollerCls = "scroller" // className for scroller dom node
         // props.trackCls = "track"       // className for track dom node
         // props.barCls = "bar"           // className for bar dom node       
-
+        console.log('1',props.items)
         var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
         var setSelectedIndex = props.items ? props.items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
 
@@ -45,6 +45,15 @@ class ListViewCore extends Component {
             btnScrollStart: false,
             scrollActive: false,
         }
+    }
+
+    componentWillReceiveProps(props) {
+        var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
+        var setSelectedIndex = props.items ? props.items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
+        this.setState({
+            items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
+            setSelectedIndex: setSelectedIndex,
+        })
     }
 
     handleScroll = ({ target }) => {
@@ -93,6 +102,7 @@ class ListViewCore extends Component {
     resize = () => this._getElem(this.state.elem)
 
     componentDidUpdate() {
+        console.log(this.props.items)
         var elem = this.state.elem;
         let index = this.state.setSelectedIndex;
         if (index !== -1 && this.state.onScroll) {
@@ -188,6 +198,7 @@ class ListViewCore extends Component {
     _onSelected = (key) => {
         var _key = parseInt(key, 10)
         var _items_select = [...this.state.items_select];
+        console.log(this.state.prevItem, _items_select.length, _items_select)
         if (this.state.prevItem !== -1 && this.state.prevItem < _items_select.length) _items_select[this.state.prevItem].active = false;
         _items_select[_key].active = true;
         let props = this.props;
@@ -205,7 +216,7 @@ class ListViewCore extends Component {
 
     _rowHeight = () => this.props.rowHeight ? this.props.rowHeight : 48
 
-    _getClassName = (index) => this.state.items_select[index].active ? 'lv-collection-item active' : 'lv-collection-item'
+    _getClassName = (index) => this.state.items_select.length > 0 && (this.state.items_select[index].active ? 'lv-collection-item active' : 'lv-collection-item')
 
     _rowRendererElem = (param) => {
         var { index } = param;

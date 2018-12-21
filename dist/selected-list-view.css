@@ -1,3 +1,84 @@
+.btn-spin:not(input):hover {
+    cursor: pointer;
+    border: 2px solid #adb0b2; 
+}
+
+.btn-spin:not(input):active {
+    /* border: 2px solid red; */
+    background: #adb0b2;
+}
+
+a.btn-spin {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+}
+input.btn-spin, input.btn-flat {
+    cursor: pointer;  
+    user-select: none;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 99;
+    
+    border: none;
+}
+
+div.btn-spin {
+    cursor: pointer;        
+    height: 32px;
+    width: 32px;
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+    position: relative;
+    background: transparent;
+    border: 2px solid transparent;    
+    z-index: 99;
+    margin: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input.bth-flat {
+    color: #fff;  
+}
+
+div.btn-flat {
+    cursor: pointer;
+          
+    height: 40px;
+    width: 40px;
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    /* border-color: transparent; */
+    user-select: none;
+    position: relative;
+    background: #013a81;
+    /* border: 2px solid transparent;     */
+    z-index: 99;
+    margin: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+
+.btn-flat:not(input):hover {
+    cursor: pointer;
+    background-color: rgb(2, 80, 175);
+    /* border: 2px solid #adb0b2;  */
+}
+
+.btn-flat:not(input):active {
+    /* border: 2px solid red; */
+    background: rgb(76, 175, 80)
+}
 .modal-flex-row {
     display: flex;
     flex-direction: row;
@@ -175,60 +256,40 @@
     transition: .3s ease-out;
 }
 
-/* ::-webkit-scrollbar { 
-    width: 0; 
+.btn-scroll-end {
+    bottom: 16px;
+}
+
+.btn-scroll {
+    position: absolute;
+    transform: scale(0);
+    right: 16px;  
+    opacity: .2;
+    transition: .3s;
+}
+
+.btn-scroll:hover {
+    opacity: 1;
+}
+
+.btn-scroll-start {
+    top: 16px;
+}
+
+.btn-scroll-end.active, .btn-scroll-start.active  {    
+    transform: scale(1);    
+    transition: .3s;
+}
+
+
+/* .btn-scroll-flat:hover {
+    background-color: rgba(0,0,0,0.1);
+    box-shadow: none;
+}
+
+.btn-scroll-flat:active {
+    background: rgb(76, 175, 80)
 } */
-.btn-spin:not(input):hover {
-    cursor: pointer;
-    border: 2px solid #adb0b2; 
-}
-/* .btn-spin.hover {
-    cursor: pointer;
-    border: 2px solid #4caf50; 
-
-} */
-
-.btn-spin:not(input):active {
-    /* border: 2px solid red; */
-    background: #adb0b2;
-}
-
-a.btn-spin {
-    cursor: pointer;    
-    transition: all ease 0.3s;
-    border-radius: 50%;
-    border-color: transparent;
-    user-select: none;
-}
-input.btn-spin {
-    cursor: pointer;  
-    user-select: none;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    z-index: 99;
-    
-    border: none;
-}
-
-div.btn-spin {
-    cursor: pointer;        
-    height: 32px;
-    width: 32px;
-    transition: all ease 0.3s;
-    border-radius: 50%;
-    border-color: transparent;
-    user-select: none;
-    position: relative;
-    background: transparent;
-    border: 2px solid transparent;    
-    z-index: 99;
-    margin: 1px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .lv-collection-item.active {
     background-color: rgb(76, 175, 80);    

@@ -1,6 +1,6 @@
 {
   "name": "selected-list-view",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -60,8 +60,7 @@
     "material-inputfield": "^0.7.1",
     "react-custom-scrollbars": "^4.2.1",
     "react-virtualized": "^9.20.1",
-    "react-web-tabs": "^1.0.1",
-    "save": "^2.3.2"
+    "react-web-tabs": "^1.0.1"
   },
   "browserslist": [
     ">0.2%",
