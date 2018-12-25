@@ -30,7 +30,7 @@ class ListViewCore extends Component {
 
         this.state = {
             //items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
-            items,
+            items: {...items, },
             items_select: items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             setSelectedIndex: setSelectedIndex,
             prevItem: -1,
@@ -59,11 +59,11 @@ class ListViewCore extends Component {
         })
     }
 
-    _arrayToList = (array = []) => {
+    _arrayToList = (array = [], isGroup=false) => {
         var result = []
         array.map(item => {
             if (!Array.isArray(item)) {
-                result.push(item)
+                result.push({item, isGroup})
             }
             else {
                 result.push(...this._arrayToList(item))
