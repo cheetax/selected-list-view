@@ -2,6 +2,7 @@
 import { SelectedListView } from './lib/index'
 import React, { Component } from 'react';
 import { NumberField } from 'material-inputfield';
+import { getDataLocal } from './data'
 import 'material-inputfield/dist/material-inputfield.css';
 import './App.css';
 
@@ -26,6 +27,9 @@ var users = getUsers({
     email: 'john@mail.com'
   }
 })
+
+var data = getDataLocal();
+console.log(data)
 
 class App extends Component {
   constructor(props) {
