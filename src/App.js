@@ -20,7 +20,7 @@ const getUsers = ({ users, user }) => {
 }
 
 var users = getUsers({
-  users: [], 
+  users: [],
   user: {
     firstName: 'John',
     surName: 'Ivanov',
@@ -41,10 +41,17 @@ class App extends Component {
   }
 
   rowRenderer = ({ item }) => {
-    return [
-      <span>{item.firstName} {item.surName}</span>,
-      <span>{item.email}</span>
-    ]
+    return <div>
+      <div>{item.cn} {item.title}</div>
+      <div>{item.mail}</div>
+    </div>
+
+
+    // return [
+    //   <div>{item.cn} {item.title}</div>,
+    //   <div>{item.mail}</div>
+    // ]
+
   }
 
   _valueSelectedUser = () => this.state.selectUser ? this.state.selectUser.firstName + ' ' + this.state.selectUser.surName : ''
@@ -63,9 +70,9 @@ class App extends Component {
     isBtnScrollEnd
     Width={300}
     Height={300}
-    headerRenderer={this.headerRenderer}
+    //headerRenderer={this.headerRenderer}
     className='collection'
-    items={[...users]}
+    items={data.usersMap}
     itemsQuickSelection={[users[0], users[2]]}
     rowRenderer={this.rowRenderer}
     //setSelectedIndex={this.state.selectedIndex}
@@ -112,7 +119,7 @@ class App extends Component {
             outlined
             readOnly
             //onSpinButtons
-//            onChange={(event) => console.log(event)}
+            //            onChange={(event) => console.log(event)}
             name='label' value={this._valueSelectedUser()}
             type='text'
             label='Label'

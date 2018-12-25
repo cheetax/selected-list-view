@@ -10,7 +10,7 @@ class SelectedListView extends Component {
 
     constructor(props) {
         super(props)
-
+        console.log(props)
         this.state = {
             openModalFlex: props.isActive || false,
             openModalExpand: false,
