@@ -8,6 +8,7 @@ import { SvgArrowStart, SvgArrowEnd } from './Svg';
 
 //@keydown
 var arrowKeys = []
+var isGroup = false;
 
 class ListViewCore extends Component {
 
@@ -59,13 +60,18 @@ class ListViewCore extends Component {
         })
     }
 
-    _arrayToList = (array = [], isGroup=false) => {
+    
+
+    _arrayToList = (array = []) => {
         var result = []
+        
         array.map(item => {
             if (!Array.isArray(item)) {
-                result.push({item, isGroup})
+                result.push({ item, isGroup })
+                isGroup = false;
             }
             else {
+                isGroup = true;
                 result.push(...this._arrayToList(item))
             }
         })
