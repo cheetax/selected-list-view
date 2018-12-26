@@ -29,6 +29,7 @@ var users = getUsers({
 })
 
 var data = getDataLocal();
+new Map(data.usersMap)
 console.log(data)
 
 class App extends Component {

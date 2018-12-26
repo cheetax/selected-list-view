@@ -67,11 +67,11 @@ class ListViewCore extends Component {
         
         array.map(item => {
             if (!Array.isArray(item)) {
-                result.push({ item, isGroup })
-                isGroup = false;
+                result.push(item)
+                //isGroup = false;
             }
             else {
-                isGroup = true;
+                //isGroup = true;
                 result.push(...this._arrayToList(item))
             }
         })
