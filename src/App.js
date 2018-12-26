@@ -36,7 +36,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     //users = 
-    //var usersMap = this._arrayToList(data.usersMap)
+    var usersMap = this._arrayToMap(data.usersMap)
     this.state = {
       usersMap,
       selectUser: null,
@@ -50,17 +50,15 @@ class App extends Component {
     ]
   }
 
-  _arrayToList = (array = []) => {
-    var result = []
-   (new Map()).
-    array.map(item => {
-      if (!Array.isArray(item)) {
-        result.push(item)
-        //isGroup = false;
+  _arrayToMap = (array = []) => {
+    var result = new Map(array)    
+    result.forEach((item , key) => {
+      if (!item && !key) {
+        result = array;
       }
       else {
         //isGroup = true;
-        result.push(...this._arrayToList(item))
+        result.set(key, this._arrayToMap(item))
       }
     })
     return result
