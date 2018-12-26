@@ -20,7 +20,7 @@ const getUsers = ({ users, user }) => {
 }
 
 var users = getUsers({
-  users: [], 
+  users: [],
   user: {
     firstName: 'John',
     surName: 'Ivanov',
@@ -29,13 +29,16 @@ var users = getUsers({
 })
 
 var data = getDataLocal();
+var map = new Map()
 console.log(data)
 
 class App extends Component {
   constructor(props) {
     super(props)
     //users = 
+    //var usersMap = this._arrayToList(data.usersMap)
     this.state = {
+      usersMap,
       selectUser: null,
     }
   }
@@ -45,6 +48,22 @@ class App extends Component {
       <span>{item.firstName} {item.surName}</span>,
       <span>{item.email}</span>
     ]
+  }
+
+  _arrayToList = (array = []) => {
+    var result = []
+   (new Map()).
+    array.map(item => {
+      if (!Array.isArray(item)) {
+        result.push(item)
+        //isGroup = false;
+      }
+      else {
+        //isGroup = true;
+        result.push(...this._arrayToList(item))
+      }
+    })
+    return result
   }
 
   _valueSelectedUser = () => this.state.selectUser ? this.state.selectUser.firstName + ' ' + this.state.selectUser.surName : ''
@@ -112,7 +131,7 @@ class App extends Component {
             outlined
             readOnly
             //onSpinButtons
-//            onChange={(event) => console.log(event)}
+            //            onChange={(event) => console.log(event)}
             name='label' value={this._valueSelectedUser()}
             type='text'
             label='Label'
