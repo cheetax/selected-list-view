@@ -20,7 +20,8 @@ class ListViewCore extends Component {
         // props.scrollerCls = "scroller" // className for scroller dom node
         // props.trackCls = "track"       // className for track dom node
         // props.barCls = "bar"           // className for bar dom node       
-        console.log('1',props.items)
+        console.log('1', Array.isArray(props.items))
+        !Array.isArray(props.items) && this._mapToArray(props.items)
         var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
         var setSelectedIndex = props.items ? props.items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
 
@@ -54,6 +55,21 @@ class ListViewCore extends Component {
             items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             setSelectedIndex: setSelectedIndex,
         })
+    }
+
+    _mapToArray = (map = new Map()) => {
+        var result = []
+        map.forEach((item, key) => {
+            if (!Array.isArray(item)) {
+                console.log('1',item, key)
+               // result.push({isGroup: true, item});
+            }
+            else {
+                console.log('2', item, key)
+                //result.push(...this._mapToArray(item))
+            }
+        })
+        return result
     }
 
     handleScroll = ({ target }) => {
@@ -128,24 +144,24 @@ class ListViewCore extends Component {
         document.removeEventListener("keydown", this._onKeysDown);
         //document.removeEventListener('keyup', this._onKeysUp)
     }
-    
+
     _onKeysDown = ({ code, type }) => (((code === 'ArrowUp' || code === 'ArrowDown') && this._onKeyArrow({ code })))
 
     _onKeyArrow = async ({ code }) => {
         let index = this.state.setSelectedIndex
-            index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length - 1) && ++index)) || index)
-            if (index !== this.state.setSelectedIndexm && this.keyDown) {
-                this.keyDown = false;
-                this.setState({
-                    items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
-                    setSelectedIndex: index,
-                    prevItem: this.state.setSelectedIndex
-                })
-                this.keyDown = await this._cursorScroll({ index });
-                
-                
-            }
-      //  }
+        index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length - 1) && ++index)) || index)
+        if (index !== this.state.setSelectedIndexm && this.keyDown) {
+            this.keyDown = false;
+            this.setState({
+                items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
+                setSelectedIndex: index,
+                prevItem: this.state.setSelectedIndex
+            })
+            this.keyDown = await this._cursorScroll({ index });
+
+
+        }
+        //  }
     }
 
     _cursorScroll = ({ index, timer = 20 }) => new Promise(async res => {

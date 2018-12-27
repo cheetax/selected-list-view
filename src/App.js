@@ -82,7 +82,7 @@ class App extends Component {
     Height={300}
     headerRenderer={this.headerRenderer}
     className='collection'
-    items={[...users]}
+    items={this.state.usersMap}
     itemsQuickSelection={[users[0], users[2]]}
     rowRenderer={this.rowRenderer}
     //setSelectedIndex={this.state.selectedIndex}
