@@ -45,8 +45,8 @@ class App extends Component {
 
   rowRenderer = ({ item }) => {
     return [
-      <span>{item.firstName} {item.surName}</span>,
-      <span>{item.email}</span>
+      <span>{item.cn}</span>,
+      <span>{item.mail}</span>
     ]
   }
 
