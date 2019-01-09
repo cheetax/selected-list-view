@@ -63,6 +63,7 @@ class ListViewCore extends Component {
     _mapToArray = (map = new Map()) => {
         var result = []
         map.forEach((item, key) => {
+            //console.log(Object.prototype.toString.call(item), item)
             if (Object.prototype.toString.call(item) !== "[object Map]") {
               // console.log('1',item, key)
               result.push({isGroup: true, item: key});

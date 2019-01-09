@@ -44,10 +44,12 @@ class App extends Component {
   }
 
   rowRenderer = ({ item }) => {
+    if (!item) return <span>Error</span> 
+    else {
     return [
       <span>{item.cn}</span>,
       <span>{item.mail}</span>
-    ]
+    ]}
   }
 
   _arrayToMap = (array = []) => {
