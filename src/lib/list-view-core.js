@@ -82,7 +82,7 @@ class ListViewCore extends Component {
     handleScroll = ({ target }) => {
         const { scrollTop, scrollLeft, clientHeight } = target;
         const list = this.List;
-        console.log(scrollTop)
+        //console.log(list.Grid._rowStartIndex)
         list && list.scrollToPosition(scrollTop)
     }
 
@@ -362,6 +362,11 @@ class ListViewCore extends Component {
         this._setTimerScrollActive()
     }
 
+    _onScroll = (props) => {
+        var {scrollTop} = props
+        console.log(scrollTop/this._rowHeight()|0)
+    }
+
     _allowBtnScroll = (index) => {
         let list = this.List;
         const scroll = this.Scroll;
@@ -408,6 +413,7 @@ class ListViewCore extends Component {
                         ref={this.refScroll}
                     >
                         <List
+                            onScroll={this._onScroll}
                             ref={instance => (this.List = instance)}
                             className={this.props.className}
                             width={this.state.width}

@@ -81,7 +81,7 @@ class App extends Component {
     isBtnScrollStart
     isBtnScrollEnd
     Width={300}
-    Height={300}
+    Height={400}
     headerRenderer={this.headerRenderer}
     className='collection'
     items={this.state.usersMap}
