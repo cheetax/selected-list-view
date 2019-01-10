@@ -82,7 +82,7 @@ class ListViewCore extends Component {
     handleScroll = ({ target }) => {
         const { scrollTop, scrollLeft, clientHeight } = target;
         const list = this.List;
-        //console.log(scrollTop)
+        console.log(scrollTop)
         list && list.scrollToPosition(scrollTop)
     }
 
