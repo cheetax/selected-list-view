@@ -280,13 +280,15 @@ class ListViewCore extends Component {
     }
 
     _rowRenderer = (param) => {
-        var { key, style, index } = param;
+        var { key, style, index, isVisible } = param;
         //        console.log(key, index)
         
         var objItem = this.state.items[index]
         if (objItem.isGroup) {
             style = {
                 ...style,
+                position: isVisible ? 'sticky' : style.position,
+                top: isVisible ? 0 : style.top,
                 cursor: 'pointer',
             }
             return <div
@@ -419,10 +421,12 @@ class ListViewCore extends Component {
                             width={this.state.width}
                             height={this.state.height}
                             style={{ width: '100%', height: '100%', margin: 0, minHeight: 0, overflowX: false, overflowY: false }}
+                            containerStyle={{ overflow: 'unset' }}
                             rowCount={this.state.items.length}
                             rowHeight={this._rowHeight()}
                             rowRenderer={this._rowRenderer}
                             scrollToRow={this.state.setSelectedIndex + 1}
+                            overscanRowCount={40}
                         />
                     </Scrollbars>
                     {this.props.isBtnScrollStart && this._btnScrollStart()}
