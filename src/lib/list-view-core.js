@@ -21,7 +21,7 @@ class ListViewCore extends Component {
         // props.trackCls = "track"       // className for track dom node
         // props.barCls = "bar"           // className for bar dom node       
         //console.log('1', Array.isArray(props.items))
-        var items = !Array.isArray(props.items) ? this._mapToArray({items: props.items}) : props.items
+        var items = !Array.isArray(props.items) ? this._mapToArray({ items: props.items }) : props.items
         var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
         var setSelectedIndex = items ? items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
 
@@ -46,11 +46,12 @@ class ListViewCore extends Component {
             btnScrollEnd: false,
             btnScrollStart: false,
             scrollActive: false,
+            headerItems: new Map()
         }
     }
 
     componentWillReceiveProps(props) {
-        var items = !Array.isArray(props.items) ? this._mapToArray({items: props.items}) : props.items
+        var items = !Array.isArray(props.items) ? this._mapToArray({ items: props.items }) : props.items
         var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
         var setSelectedIndex = items ? items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
         this.setState({
@@ -60,7 +61,7 @@ class ListViewCore extends Component {
         })
     }
 
-    _mapToArray = ({items = new Map(), groupLevel = 0}) => {
+    _mapToArray = ({ items = new Map(), groupLevel = 0 }) => {
         var result = []
         //let level = groupLevel 
         items.forEach((item, key) => {
@@ -73,7 +74,7 @@ class ListViewCore extends Component {
             else {
                 //console.log('2', item, key)
                 result.push({ isGroup: true, groupLevel, item: key });
-                result.push(...this._mapToArray({items: item, groupLevel: groupLevel+1}))
+                result.push(...this._mapToArray({ items: item, groupLevel: groupLevel + 1 }))
             }
         })
         return result
@@ -282,20 +283,20 @@ class ListViewCore extends Component {
     _rowRenderer = (param) => {
         var { key, style, index, isVisible } = param;
         //        console.log(key, index)
-        
+
         var objItem = this.state.items[index]
         if (objItem.isGroup) {
             style = {
                 ...style,
-                position: isVisible ? 'sticky' : style.position,
-                top: isVisible ? 0 : style.top,
+                //position: isVisible ? 'sticky' : style.position,
+                //top: isVisible ? 0 : style.top,
                 cursor: 'pointer',
             }
             return <div
                 className={this._getClassName(index)}
                 key={key}
                 style={style}
-                //onMouseDown={() => this._onSelected(key)}
+            //onMouseDown={() => this._onSelected(key)}
             >
                 {this._rowHeaderRendererElem({ index, item: objItem.item, level: objItem.groupLevel })}
             </div>
@@ -307,16 +308,17 @@ class ListViewCore extends Component {
             }
             return (
 
-            <a
-                className={this._getClassName(index)}
-                key={key}
-                style={style}
-                //onMouseDown={() => this._onSelected(key)}
-                onClick={() => this._onClick(key)}
-            >
-                {this._rowRendererElem({ index, item: objItem.item })}
-            </a>
-        )}
+                <a
+                    className={this._getClassName(index)}
+                    key={key}
+                    style={style}
+                    //onMouseDown={() => this._onSelected(key)}
+                    onClick={() => this._onClick(key)}
+                >
+                    {this._rowRendererElem({ index, item: objItem.item })}
+                </a>
+            )
+        }
     }
 
     _setHeader = () => {
@@ -364,9 +366,20 @@ class ListViewCore extends Component {
         this._setTimerScrollActive()
     }
 
+    _onRowsRendered = ({ overscanStartIndex, overscanStopIndex, startIndex, stopIndex }) => {
+        console.log(overscanStartIndex, startIndex)
+        var headerItems = this.state.headerItems;
+        for (var i = startIndex; i <= stopIndex; i++) {
+            let item = this.state.items[i]
+            if (item.isGroup) headerItems.set(item.item, item);
+            else break;
+        }
+        this.setState({ headerItems })
+    }
+
     _onScroll = (props) => {
-        var {scrollTop} = props
-        console.log(scrollTop/this._rowHeight()|0)
+        var { scrollTop } = props
+        //console.log(scrollTop/this._rowHeight()|0)
     }
 
     _allowBtnScroll = (index) => {
@@ -396,7 +409,14 @@ class ListViewCore extends Component {
         <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: this.state.items.length - 1, timer: 150 })}><SvgArrowEnd fill='#fff' /></BtnFlat>
     </div>
 
+    _getMaptoArray = (map) => {
+        var arr = []
+        map.forEach(values => arr.push(values))
+        return arr;
+    }
+
     render() {
+        var headerItems = this._getMaptoArray(this.state.headerItems)
         return (
             <div style={{ width: 'auto', height: '100%', display: 'flex', flexDirection: 'column' }}
             >
@@ -406,6 +426,7 @@ class ListViewCore extends Component {
                     style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0, position: 'relative' }}
                     ref={this._getElem}
                 >
+
                     <Scrollbars
                         autoHide
                         onScrollStart={this._onScrollStart}
@@ -414,6 +435,21 @@ class ListViewCore extends Component {
                         onScroll={this.handleScroll}
                         ref={this.refScroll}
                     >
+                        {headerItems.map((item, index) => {
+                            var style = {
+                                position: 'sticky',
+                                top: item.groupLevel * this._rowHeight(),
+                                cursor: 'pointer',
+                            }
+                            return <div
+                                className={this._getClassName(index)}
+                                key={index}
+                                style={style}
+                            //onMouseDown={() => this._onSelected(key)}
+                            >
+                                {this._rowHeaderRendererElem({ index, item: item.item, level: item.groupLevel })}
+                            </div>
+                        })}
                         <List
                             onScroll={this._onScroll}
                             ref={instance => (this.List = instance)}
@@ -426,7 +462,7 @@ class ListViewCore extends Component {
                             rowHeight={this._rowHeight()}
                             rowRenderer={this._rowRenderer}
                             scrollToRow={this.state.setSelectedIndex + 1}
-                            overscanRowCount={40}
+                            onRowsRendered={this._onRowsRendered}
                         />
                     </Scrollbars>
                     {this.props.isBtnScrollStart && this._btnScrollStart()}
