@@ -21,18 +21,18 @@ class ListViewCore extends Component {
         // props.trackCls = "track"       // className for track dom node
         // props.barCls = "bar"           // className for bar dom node       
         //console.log('1', Array.isArray(props.items))
-        var items = !Array.isArray(props.items) ? this._mapToArray({ items: props.items }) : props.items
+        //var items = !Array.isArray(props.items) ? this._mapToArray({ items: props.items }) : props.items
         var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
-        var setSelectedIndex = items ? items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
+        var setSelectedIndex = props.items ? props.items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
 
         this.columnWidth = [];
         this._onKeysDown = this._onKeysDown.bind(this)
         this.keyDown = true;
         this._onRowsRendered = this._onRowsRendered.bind(this)
         this.state = {
-            //items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
-            items,
-            items_select: items.map((item, index) => ({ active: (setSelectedIndex === index) })),
+            items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
+            //items,
+            //items_select: items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             setSelectedIndex: setSelectedIndex,
             prevItem: -1,
             height: 0,
@@ -52,12 +52,12 @@ class ListViewCore extends Component {
     }
 
     componentWillReceiveProps(props) {
-        var items = !Array.isArray(props.items) ? this._mapToArray({ items: props.items }) : props.items
+        //var items = !Array.isArray(props.items) ? this._mapToArray({ items: props.items }) : props.items
         var selectItemJson = props.selectItem && JSON.stringify(props.selectItem)
-        var setSelectedIndex = items ? items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
+        var setSelectedIndex = props.items ? props.items.findIndex(item => JSON.stringify(item) === selectItemJson) : -1;
         this.setState({
-            items,
-            items_select: items.map((item, index) => ({ active: (setSelectedIndex === index) })),
+            //items,
+            items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             setSelectedIndex: setSelectedIndex,
         })
     }
@@ -158,11 +158,11 @@ class ListViewCore extends Component {
 
     _onKeyArrow = async ({ code }) => {
         let index = this.state.setSelectedIndex
-        index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.state.items.length - 1) && ++index)) || index)
+        index = (((code === 'ArrowUp') && (index <= 0 ? 0 : --index)) || ((code === 'ArrowDown') && ((index < this.props.items.length - 1) && ++index)) || index)
         if (index !== this.state.setSelectedIndexm && this.keyDown) {
             this.keyDown = false;
             this.setState({
-                items_select: this.state.items.map((item, i) => ({ active: (i === index) })),
+                items_select: this.props.items.map((item, i) => ({ active: (i === index) })),
                 setSelectedIndex: index,
                 prevItem: this.state.setSelectedIndex
             })
@@ -198,7 +198,7 @@ class ListViewCore extends Component {
             var elemHeight = elem.clientHeight;
             var elemWidth = elem.clientWidth;
             this.setState({
-                height: elemHeight ? elemHeight : this.state.items.length && this.state.items.length * this._rowHeight(),
+                height: elemHeight ? elemHeight : this.props.items.length && this.props.items.length * this._rowHeight(),
                 width: elemWidth,
                 elem: elem
             })
@@ -222,12 +222,12 @@ class ListViewCore extends Component {
 
     _onSelected = (key) => {
         var _key = parseInt(key, 10)
-        var _items_select = [...this.state.items_select];
+        var _items_select = [...this.props.items_select];
         console.log(this.state.prevItem, _items_select.length, _items_select)
         if (this.state.prevItem !== -1 && this.state.prevItem < _items_select.length) _items_select[this.state.prevItem].active = false;
         _items_select[_key].active = true;
         let props = this.props;
-        (props.onSelectedItem) && props.onSelectedItem(this.state.items[_key].item);
+        (props.onSelectedItem) && props.onSelectedItem(this.props.items[_key].item);
         (props.onSelectedIndex) && props.onSelectedIndex(_key);
         //console.log(key, _key, this.state.prevItem)
         this.setState({
@@ -285,7 +285,7 @@ class ListViewCore extends Component {
         var { key, style, index, isVisible } = param;
         //        console.log(key, index)
 
-        var objItem = this.state.items[index]
+        var objItem = this.props.items[index]
         if (objItem.isGroup) {
             style = {
                 ...style,
@@ -372,7 +372,7 @@ class ListViewCore extends Component {
         var headerItems = this.state.headerItems;
         var headerItemsArr = this.state.headerItemsArr;
         for (var i = startIndex; i <= stopIndex; i++) {
-            let item = this.state.items[i]
+            let item = this.props.items[i]
             if (item.isGroup) {
                 headerItems.set(item, true);
                 headerItemsArr.push(item)
@@ -397,7 +397,7 @@ class ListViewCore extends Component {
 
     _setScrollActive = () => {
 
-        !this.state.scrollActive && this.setState({ btnScrollEnd: this._allowBtnScroll(this.state.items.length - 1), btnScrollStart: this._allowBtnScroll(0) })
+        !this.state.scrollActive && this.setState({ btnScrollEnd: this._allowBtnScroll(this.props.items.length - 1), btnScrollStart: this._allowBtnScroll(0) })
     }
 
     _setTimerScrollActive = (timeOut = 500) => setTimeout(() => this._setScrollActive(), timeOut)
@@ -411,7 +411,7 @@ class ListViewCore extends Component {
     </div>
 
     _btnScrollEnd = () => <div className={(() => 'btn-scroll btn-scroll-end ' + this._classActive(this.state.btnScrollEnd))()}>
-        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: this.state.items.length - 1, timer: 150 })}><SvgArrowEnd fill='#fff' /></BtnFlat>
+        <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: this.props.items.length - 1, timer: 150 })}><SvgArrowEnd fill='#fff' /></BtnFlat>
     </div>
 
     _getMaptoArray = (map= new Map()) => {
@@ -463,7 +463,7 @@ class ListViewCore extends Component {
                             height={this.state.height}
                             style={{ width: '100%', height: '100%', margin: 0, minHeight: 0, overflowX: false, overflowY: false }}
                             containerStyle={{ overflow: 'unset' }}
-                            rowCount={this.state.items.length}
+                            rowCount={this.props.items.length}
                             rowHeight={this._rowHeight()}
                             rowRenderer={this._rowRenderer}
                             scrollToRow={this.state.setSelectedIndex + 1}

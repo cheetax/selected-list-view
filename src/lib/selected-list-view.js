@@ -10,14 +10,34 @@ class SelectedListView extends Component {
 
     constructor(props) {
         super(props)
-
+        var items = !Array.isArray(props.items) ? this._mapToArray({ items: props.items }) : props.items
         this.state = {
+            items,
             openModalFlex: props.isActive || false,
             openModalExpand: false,
             openModal: props.isActive || false,
             elemSize: null,
             elemSpin: null
         }
+    }
+
+    _mapToArray = ({ items = new Map(), groupLevel = 0 }) => {
+        var result = []
+        //let level = groupLevel 
+        items.forEach((item, key) => {
+            //console.log(Object.prototype.toString.call(item), item)
+            if (Object.prototype.toString.call(item) !== "[object Map]") {
+                // console.log('1',item, key)
+                result.push({ isGroup: true, groupLevel, item: key });
+                if (Array.isArray(item)) result.push(...item.map(item => ({ item, isGroup: false })));
+            }
+            else {
+                //console.log('2', item, key)
+                result.push({ isGroup: true, groupLevel, item: key });
+                result.push(...this._mapToArray({ items: item, groupLevel: groupLevel + 1 }))
+            }
+        })
+        return result
     }
 
     _ref = (elem) => {
@@ -77,7 +97,7 @@ class SelectedListView extends Component {
             !!this.state.elemSize && <Modal
                 {...this.props}
                 {...this.state}
-                items={(!openFlex && this.props.itemsQuickSelection) ? this.props.itemsQuickSelection : this.props.items}
+                items={(!openFlex && this.props.itemsQuickSelection) ? this.props.itemsQuickSelection : this.state.items}
                 Height={(openFlex || !this.props.itemsQuickSelection) && this.props.Height}
                 headerRenderer={openFlex && this.props.headerRenderer}
                 openFlex={openFlex}
