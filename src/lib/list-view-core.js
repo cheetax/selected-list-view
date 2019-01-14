@@ -28,7 +28,7 @@ class ListViewCore extends Component {
         this.columnWidth = [];
         this._onKeysDown = this._onKeysDown.bind(this)
         this.keyDown = true;
-
+        this._onRowsRendered = this._onRowsRendered.bind(this)
         this.state = {
             //items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             items,
@@ -46,7 +46,8 @@ class ListViewCore extends Component {
             btnScrollEnd: false,
             btnScrollStart: false,
             scrollActive: false,
-            headerItems: new Map()
+            headerItems: new Map(),
+            headerItemsArr: []
         }
     }
 
@@ -369,12 +370,16 @@ class ListViewCore extends Component {
     _onRowsRendered = ({ overscanStartIndex, overscanStopIndex, startIndex, stopIndex }) => {
         console.log(overscanStartIndex, startIndex)
         var headerItems = this.state.headerItems;
+        var headerItemsArr = this.state.headerItemsArr;
         for (var i = startIndex; i <= stopIndex; i++) {
             let item = this.state.items[i]
-            if (item.isGroup) headerItems.set(item.item, item);
+            if (item.isGroup) {
+                headerItems.set(item, true);
+                headerItemsArr.push(item)
+            }
             else break;
         }
-        this.setState({ headerItems })
+        this.setState({ headerItems, headerItemsArr })
     }
 
     _onScroll = (props) => {
@@ -409,9 +414,9 @@ class ListViewCore extends Component {
         <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: this.state.items.length - 1, timer: 150 })}><SvgArrowEnd fill='#fff' /></BtnFlat>
     </div>
 
-    _getMaptoArray = (map) => {
+    _getMaptoArray = (map= new Map()) => {
         var arr = []
-        map.forEach(values => arr.push(values))
+        map.forEach((values, key) => arr.push(key))
         return arr;
     }
 
