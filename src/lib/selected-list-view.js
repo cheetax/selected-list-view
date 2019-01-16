@@ -21,20 +21,20 @@ class SelectedListView extends Component {
         }
     }
 
-    _mapToArray = ({ items = new Map(), groupLevel = 0 }) => {
+    _mapToArray = ({ items = new Map(), groupLevel = 0, parent = null }) => {
         var result = []
         //let level = groupLevel 
         items.forEach((item, key) => {
             //console.log(Object.prototype.toString.call(item), item)
             if (Object.prototype.toString.call(item) !== "[object Map]") {
                 // console.log('1',item, key)
-                result.push({ isGroup: true, groupLevel, item: key });
-                if (Array.isArray(item)) result.push(...item.map(item => ({ item, isGroup: false })));
+                result.push({ isGroup: true, groupLevel, item: key, parent });
+                if (Array.isArray(item)) result.push(...item.map(item => ({ item, isGroup: false, parent })));
             }
             else {
                 //console.log('2', item, key)
-                result.push({ isGroup: true, groupLevel, item: key });
-                result.push(...this._mapToArray({ items: item, groupLevel: groupLevel + 1 }))
+                result.push({ isGroup: true, groupLevel, item: key, parent });
+                result.push(...this._mapToArray({ items: item, groupLevel: groupLevel + 1, parent: key }))
             }
         })
         return result
