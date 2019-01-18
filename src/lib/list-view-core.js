@@ -59,7 +59,7 @@ class ListViewCore extends Component {
             items_select: props.items.map((item, index) => ({ active: (setSelectedIndex === index) })),
             setSelectedIndex: setSelectedIndex,
         })
-    }    
+    }
 
     handleScroll = ({ target }) => {
         const { scrollTop, scrollLeft, clientHeight } = target;
@@ -247,7 +247,7 @@ class ListViewCore extends Component {
     _rowHeaderRendererElem = ({ index, item, level, parent }) => {
         var rowColumns = this.props.rowHeader ? this.props.rowHeader({ item }) : item
         var style = {
-
+            backgroundColor: 'green',
             flex: 'auto',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -351,11 +351,11 @@ class ListViewCore extends Component {
         console.log(overscanStartIndex, startIndex)
         var headerItems = this.state.headerItems;
         var headerItemsArr = this.state.headerItemsArr;
-        for (var i = startIndex; i <= stopIndex; i++) {
+        for (var i = startIndex+(headerItemsArr.length > 0 ? headerItemsArr.length - 1 : 0); i <= stopIndex; i++) {
             let item = this.props.items[i]
             if (item.isGroup) {
                 headerItems.set(item, true);
-                headerItemsArr.push(item)
+                headerItemsArr[item.groupLevel] = item
             }
             else break;
         }
@@ -394,7 +394,7 @@ class ListViewCore extends Component {
         <BtnFlat className='btn-scroll-flat' size={40} onClick={() => this._cursorScroll({ index: this.props.items.length - 1, timer: 150 })}><SvgArrowEnd fill='#fff' /></BtnFlat>
     </div>
 
-    _getMaptoArray = (map= new Map()) => {
+    _getMaptoArray = (map = new Map()) => {
         var arr = []
         map.forEach((values, key) => arr.push(key))
         return arr;
@@ -402,6 +402,7 @@ class ListViewCore extends Component {
 
     render() {
         var headerItems = this._getMaptoArray(this.state.headerItems)
+        var headerItemsArr = this.state.headerItemsArr;
         return (
             <div style={{ width: 'auto', height: '100%', display: 'flex', flexDirection: 'column' }}
             >
@@ -411,16 +412,18 @@ class ListViewCore extends Component {
                     style={{ width: '100%', height: '100%', display: 'flex', flex: 'auto', minHeight: 0, position: 'relative' }}
                     ref={this._getElem}
                 >
+                    <div
+                        style={{ width: '100%', 
+                            //height: '100%',
+                            //display: 'flex',
+                            backgroundColor: 'grey',
+                            flex: 'auto', 
+                            minHeight: 0,
+                            position: 'absolute',
+                            zIndex: '1000'
 
-                    <Scrollbars
-                        autoHide
-                        onScrollStart={this._onScrollStart}
-                        onScrollStop={this._onScrollStop}
-                        style={{ width: this.state.width, height: this.state.height }}
-                        onScroll={this.handleScroll}
-                        ref={this.refScroll}
-                    >
-                        {headerItems.map((item, index) => {
+                        }}>
+                        {headerItemsArr.map((item, index) => {
                             var style = {
                                 position: 'sticky',
                                 top: item.groupLevel * this._rowHeight(),
@@ -435,6 +438,17 @@ class ListViewCore extends Component {
                                 {this._rowHeaderRendererElem({ index, item: item.item, level: item.groupLevel })}
                             </div>
                         })}
+                    </div>
+
+                    <Scrollbars
+                        autoHide
+                        onScrollStart={this._onScrollStart}
+                        onScrollStop={this._onScrollStop}
+                        style={{ width: this.state.width, height: this.state.height }}
+                        onScroll={this.handleScroll}
+                        ref={this.refScroll}
+                    >
+
                         <List
                             onScroll={this._onScroll}
                             ref={instance => (this.List = instance)}
