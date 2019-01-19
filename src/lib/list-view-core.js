@@ -348,23 +348,40 @@ class ListViewCore extends Component {
     }
 
     _onRowsRendered = ({ overscanStartIndex, overscanStopIndex, startIndex, stopIndex }) => {
-        console.log(overscanStartIndex, startIndex)
-        var headerItems = this.state.headerItems;
+        
+        //var headerItems = this.state.headerItems;
         var headerItemsArr = this.state.headerItemsArr;
-        for (var i = startIndex+(headerItemsArr.length > 0 ? headerItemsArr.length - 1 : 0); i <= stopIndex; i++) {
-            let item = this.props.items[i]
-            if (item.isGroup) {
-                headerItems.set(item, true);
-                headerItemsArr[item.groupLevel] = item
-            }
-            else break;
+        var arrFilter = headerItemsArr;
+        
+        let item = this.props.items[startIndex + (headerItemsArr.length > 0 ? headerItemsArr.length - 1 : 0)]
+        console.log(startIndex, startIndex + (headerItemsArr.length > 0 ? headerItemsArr.length - 1 : 0), item)
+        if (item.isGroup) {
+            headerItemsArr = headerItemsArr.filter(itemArr => itemArr.groupLevel <= item.groupLevel)
+            headerItemsArr[item.groupLevel] = item;
         }
-        this.setState({ headerItems, headerItemsArr })
+        // for (var i = startIndex + (headerItemsArr.length > 0 ? headerItemsArr.length - 1 : 0); i <= stopIndex; i++) {
+        //     let item = this.props.items[i]
+        //     if (item.isGroup) {
+        //         //headerItems.set(item, true);
+        //         if (headerItemsArr.length > item.groupLevel) {
+        //             arrFilter = headerItemsArr.map(itemArr => {
+        //                 if (itemArr.groupLevel === item.groupLevel) {
+        //                     console.log(item.groupLevel, itemArr.groupLevel, item);
+        //                     return item
+        //                 }
+        //                 else if (itemArr.groupLevel < item.groupLevel) return itemArr
+        //             })
+        //         }
+        //         else arrFilter[i] = item
+
+        //     }
+        //     else break;
+        // }
+        this.setState({ headerItemsArr })
     }
 
     _onScroll = (props) => {
         var { scrollTop } = props
-        //console.log(scrollTop/this._rowHeight()|0)
     }
 
     _allowBtnScroll = (index) => {
@@ -413,11 +430,12 @@ class ListViewCore extends Component {
                     ref={this._getElem}
                 >
                     <div
-                        style={{ width: '100%', 
+                        style={{
+                            width: '100%',
                             //height: '100%',
                             //display: 'flex',
                             backgroundColor: 'grey',
-                            flex: 'auto', 
+                            flex: 'auto',
                             minHeight: 0,
                             position: 'absolute',
                             zIndex: '1000'
